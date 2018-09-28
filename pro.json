@@ -1,0 +1,172 @@
+{
+    "apps": [
+        {
+            "name": "GetBlockAddressBitnetTask",
+            "script": "./core/Tasks/GetBlockAddress/BitnetTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/GetBlockAddress/BitnetTask.out.log",
+            "error_file" : "./logs/GetBlockAddress/BitnetTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "GetBlockAddressEthTask",
+            "script": "./core/Tasks/GetBlockAddress/EthTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/GetBlockAddress/EthTask.out.log",
+            "error_file" : "./logs/GetBlockAddress/EthTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "GetBlockAddressERC20Task",
+            "script": "./core/Tasks/GetBlockAddress/ERC20Task.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/GetBlockAddress/ERC20Task.out.log",
+            "error_file" : "./logs/GetBlockAddress/ERC20Task.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "GetBlockAddressUSDTTask",
+            "script": "./core/Tasks/GetBlockAddress/USDTTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/GetBlockAddress/USDTTask.out.log",
+            "error_file" : "./logs/GetBlockAddress/USDTTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "DepositEthTask",
+            "script": "./core/Tasks/Deposit/EthTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Deposit/EthTask.out.log",
+            "error_file" : "./logs/Deposit/EthTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "DepositBitnetTask",
+            "script": "./core/Tasks/Deposit/BitnetTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Deposit/BitnetTask.out.log",
+            "error_file" : "./logs/Deposit/BitnetTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "DepositUSDTTask",
+            "script": "./core/Tasks/Deposit/USDTTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Deposit/USDTTask.out.log",
+            "error_file" : "./logs/Deposit/USDTTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "WithdrawBitnetTask",
+            "script": "./core/Tasks/Withdraw/BitnetTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Withdraw/BitnetTask.out.log",
+            "error_file" : "./logs/Withdraw/BitnetTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "WithdrawEthTask",
+            "script": "./core/Tasks/Withdraw/EthTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Withdraw/EthTask.out.log",
+            "error_file" : "./logs/Withdraw/EthTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "WithdrawERC20Task",
+            "script": "./core/Tasks/Withdraw/ERC20Task.js",
+            "exec_mode": "fork",
+            "watch": ["./core/Tasks/Withdraw/ERC20Task.js"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Withdraw/ERC20Task.out.log",
+            "error_file" : "./logs/Withdraw/ERC20Task.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "WithdrawUSDTTask",
+            "script": "./core/Tasks/Withdraw/USDTTask.js",
+            "exec_mode": "fork",
+            "watch": ["./core/Tasks/Withdraw/USDTTask.js"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Withdraw/USDTTask.out.log",
+            "error_file" : "./logs/Withdraw/USDTTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "AggregateEthTask",
+            "script": "./core/Tasks/Aggregate/EthTask.js",
+            "exec_mode": "fork",
+            "watch": ["./core/Tasks/Aggregate/EthTask.js"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Aggregate/EthTask.out.log",
+            "error_file" : "./logs/Aggregate/EthTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "AggregateUSDTTask",
+            "script": "./core/Tasks/Aggregate/USDTTask.js",
+            "exec_mode": "fork",
+            "watch": ["./core/Tasks/Aggregate/USDTTask.js"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Aggregate/USDTTask.out.log",
+            "error_file" : "./logs/Aggregate/USDTTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+            "name": "ExchangeMiningTask",
+            "script": "./core/Tasks/Mining/ExchangeMiningTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/BlockNumber","./core/Tasks/Deposit/ETCBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Mining/ExchangeMiningTask.out.log",
+            "error_file" : "./logs/Mining/ExchangeMiningTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        }
+    ]
+}
