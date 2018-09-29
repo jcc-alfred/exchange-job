@@ -54,7 +54,7 @@ try{
             let userBalanceList = [];//所有用户BTC USDT余额信息 有BTC
             let userBalanceList_NoneBTC = [];//所有用户BTC USDT余额信息 没有BTC
             for(let page = 1; page <= pageCount; page++){
-                let assetsList = await AssetsModel.getNoEmptyAssetsByCoinId(ethCoin.coin_id,page,pageSize);
+                let assetsList = await AssetsModel.getNoEmptyAssetsByCoinId(usdtCoin.coin_id,page,pageSize);
                 if(!assetsList|| !assetsList.list || !assetsList.list.length){
                     return;
                 }
@@ -82,7 +82,7 @@ try{
                 let trade_amount = userBalance.usdt_balance;
                 if(userBalance.btc_balance < aggregateFees){
                     userBalanceList_NoneBTC.push(userBalance);
-                    break;
+                    return;
                 }else{
                     let [txid] = await usdtService.omniSend(userBalance.block_address,to_block_address,trade_amount);
                     if(txid && txid != '' && !txid.hasOwnProperty('code')){
@@ -104,7 +104,7 @@ try{
                 let estAmount = Utils.add(aggregateFees,transferBTCFees);
                 if(btcMainBalance < estAmount){
                     console.error('btcMainBalance:' + btcMainBalance + ' estAmount:' + estAmount);
-                    break;
+                    return;
                 }
                 let [txid] = await usdtService.sendToAddress(userBalance.block_address,aggregateFees);
                 if(txid && txid != '' && !txid.hasOwnProperty('code')){
