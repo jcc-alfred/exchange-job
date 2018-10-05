@@ -99,26 +99,6 @@
       "out_file": "./logs/Withdraw/GTBERC20Task.out.log",
       "error_file": "./logs/Withdraw/GTBERC20Task.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "WithdrawUSDTTask",
-      "script": "./core/Tasks/Withdraw/USDTTask.js",
-      "exec_mode": "fork",
-      "watch": [
-        "./core/Tasks/Withdraw/USDTTask.js"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
-      "merge_logs": true,
-      "out_file": "./logs/Withdraw/USDTTask.out.log",
-      "error_file": "./logs/Withdraw/USDTTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
 }
