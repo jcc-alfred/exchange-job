@@ -1,4 +1,7 @@
 node_modules
 logs
+.idea
 
 core/Base/config.js
+core/Tasks/Deposit/ETCBlockNumber
+core/Tasks/Deposit/BlockNumber
