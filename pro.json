@@ -61,6 +61,18 @@
             "log_date_format": "YYYY-MM-DD HH:mm:ss"
         },
         {
+            "name": "DepositGTBTask",
+            "script": "./core/Tasks/Deposit/GTBTask.js",
+            "exec_mode": "fork",
+            "watch": ["core"],
+            "ignore_watch" : ["./core/Tasks/Deposit/GTBBlockNumber"],
+            "watch_options": {"usePolling": true},
+            "merge_logs": true,
+            "out_file"   : "./logs/Deposit/GTBTask.out.log",
+            "error_file" : "./logs/Deposit/GTBTask.err.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
             "name": "DepositBitnetTask",
             "script": "./core/Tasks/Deposit/BitnetTask.js",
             "exec_mode": "fork",
