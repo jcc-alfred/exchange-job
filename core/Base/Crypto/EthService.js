@@ -54,7 +54,7 @@ class EthService{
         return this.web3.utils.fromWei(weiVal.toString(),'ether');
     }
     hexToNumber(hexVal){
-        return this.web3.utils.hexToNumber(hexVal);
+        return this.web3.utils.toBN(this.web3.utils.hexToNumberString(hexVal));
     }
     isAddress(address){
         return this.web3.utils.isAddress(address);
@@ -160,7 +160,7 @@ class EthService{
         let privateKeyHex = new Buffer(privateKey, 'hex');
         var rawTx = {
             to: contractAddress,
-            value: '0x0', 
+            value: '0x0',
             gasPrice: gasPriceHex,
             from:account.address,
             nonce:nonceHex,
@@ -223,7 +223,7 @@ class EthService{
         let privateKeyHex = new Buffer(privateKey, 'hex');
         var rawTx = {
             to: contractAddress,
-            value: '0x0', 
+            value: '0x0',
             gasPrice: gasPriceHex,
             from:account.address,
             nonce:nonceHex,
