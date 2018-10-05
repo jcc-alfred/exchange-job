@@ -1,0 +1,84 @@
+{
+  "apps": [
+    {
+      "name": "WithdrawBitnetTask",
+      "script": "./core/Tasks/Withdraw/BitnetTask.js",
+      "exec_mode": "fork",
+      "watch": [
+        "core"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/BitnetTask.out.log",
+      "error_file": "./logs/Withdraw/BitnetTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "WithdrawEthTask",
+      "script": "./core/Tasks/Withdraw/EthTask.js",
+      "exec_mode": "fork",
+      "watch": [
+        "core"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/EthTask.out.log",
+      "error_file": "./logs/Withdraw/EthTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "WithdrawERC20Task",
+      "script": "./core/Tasks/Withdraw/ERC20Task.js",
+      "exec_mode": "fork",
+      "watch": [
+        "./core/Tasks/Withdraw/ERC20Task.js"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/ERC20Task.out.log",
+      "error_file": "./logs/Withdraw/ERC20Task.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "WithdrawUSDTTask",
+      "script": "./core/Tasks/Withdraw/USDTTask.js",
+      "exec_mode": "fork",
+      "watch": [
+        "./core/Tasks/Withdraw/USDTTask.js"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/USDTTask.out.log",
+      "error_file": "./logs/Withdraw/USDTTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    }
+  ]
+}

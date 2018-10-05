@@ -1,0 +1,84 @@
+{
+  "apps": [
+    {
+      "name": "GetBlockAddressBitnetTask",
+      "script": "./core/Tasks/GetBlockAddress/BitnetTask.js",
+      "exec_mode": "fork",
+      "watch": [
+        "core"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/GetBlockAddress/BitnetTask.out.log",
+      "error_file": "./logs/GetBlockAddress/BitnetTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "GetBlockAddressEthTask",
+      "script": "./core/Tasks/GetBlockAddress/EthTask.js",
+      "exec_mode": "fork",
+      "watch": [
+        "core"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/GetBlockAddress/EthTask.out.log",
+      "error_file": "./logs/GetBlockAddress/EthTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "GetBlockAddressERC20Task",
+      "script": "./core/Tasks/GetBlockAddress/ERC20Task.js",
+      "exec_mode": "fork",
+      "watch": [
+        "core"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/GetBlockAddress/ERC20Task.out.log",
+      "error_file": "./logs/GetBlockAddress/ERC20Task.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "GetBlockAddressUSDTTask",
+      "script": "./core/Tasks/GetBlockAddress/USDTTask.js",
+      "exec_mode": "fork",
+      "watch": [
+        "core"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/GetBlockAddress/USDTTask.out.log",
+      "error_file": "./logs/GetBlockAddress/USDTTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    }
+  ]
+}
