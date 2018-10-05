@@ -73,7 +73,7 @@ try {
                         let isAddress = ethService.isAddress(withdraw.to_block_address);
                         if (isAddress) {
                             transBlockAddrList.push(withdraw.to_block_address);
-                            transTotalAmount = Utis.add(transTotalAmount, withdraw.trade_amount);
+                            transTotalAmount = Utils.add(transTotalAmount, withdraw.trade_amount);
                             totalWithdrawList.push(withdraw);
                         }
 

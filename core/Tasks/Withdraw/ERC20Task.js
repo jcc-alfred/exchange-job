@@ -73,10 +73,10 @@ try{
                         let isAddress = ethService.isAddress(withdraw.to_block_address);
                         if(isAddress){
                             transBlockAddrList.push(withdraw.to_block_address);
-                            transTotalAmount = Utis.add(transTotalAmount,withdraw.trade_amount);
+                            transTotalAmount = Utils.add(transTotalAmount,withdraw.trade_amount);
                             totalWithdrawList.push(withdraw);
                         }
-                        return;
+
                     }));
                     if(!transBlockAddrList || transBlockAddrList.length <= 0 ){
                         continue;
@@ -118,7 +118,7 @@ try{
                                     );
                                 }
                                 console.log('interTransfer:',res);
-                                return;
+
                             }));
                         }
                     }else{
@@ -146,7 +146,7 @@ try{
                                 let res = await WithdrawModel.setTxIdById(txObj.transactionHash,item.user_withdraw_id);
                                 console.log(txObj.transactionHash,item.trade_amount);
                             }
-                            return;
+
                         }));                    
                     }
                 }            
@@ -187,13 +187,13 @@ try{
                                 }
                             }
                         }
-                        return;
+
                     }));
                 }
             }catch(error){
                 console.error(error);
             }
-            return;
+
         }));
          
         isRun = false;
