@@ -32,14 +32,16 @@ try {
             isRun = false;
             return;
         }
-        let [ethCoin] = coinList.filter(coin => coin.coin_api_type_id == 2 && coin.coin_id == 3);
-        let erc20List = coinList.filter(coin => coin.coin_api_type_id == 3);
+        // GTB(6)
+        // GTB ERC 20(7)
+        let [ethCoin] = coinList.filter(coin => coin.coin_api_type_id == 6 && coin.coin_id == 8);
+        let erc20List = coinList.filter(coin => coin.coin_api_type_id == 7);
         if (!ethCoin) {
             isRun = false;
             return;
         }
         try {
-            let lastProcBlockNum = fs.readFileSync(__dirname + '/BlockNumber', {encoding: 'utf-8', flag: 'r'});
+            let lastProcBlockNum = fs.readFileSync(__dirname + '/GTBBlockNumber', {encoding: 'utf-8', flag: 'r'});
             console.log('lastProcBlockNum', lastProcBlockNum);
             let ethService = new EthService(ethCoin.wallet_ip, ethCoin.wallet_port, ethCoin.wallet_passphrase);
             let currenctBlockNum = await ethService.getBlockNumber();
@@ -96,7 +98,7 @@ try {
                                         confirmStatus = 4;
                                     }
                                     if (confirmStatus >= 0) {
-                                        return;
+
                                     }
                                     else {
                                         let userId = userTxObj.userAssets.user_id;
@@ -170,7 +172,7 @@ try {
                                                 confirmStatus = 4;
                                             }
                                             if (confirmStatus >= 0) {
-                                                return;
+
                                             }
                                             else {
                                                 let userId = userAssetsItem.user_id;
@@ -206,7 +208,7 @@ try {
                         }
                     }
 
-                    fs.writeFileSync(__dirname + '/BlockNumber', blockNum, {encoding: 'utf-8', flag: 'w'});
+                    fs.writeFileSync(__dirname + '/GTBBlockNumber', blockNum, {encoding: 'utf-8', flag: 'w'});
                 }
             }
             //处理ETH未确认记录
