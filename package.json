@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start pro.json && pm2 monit",
     "dev": "pm2 start dev.json && pm2 logs",
-    "address": "pm2 start address.json && pm2 logs address.json",
-    "deposit": "pm2 start deposit.json && pm2 logs deposit.json",
-    "withdraw": "pm2 start withdraw.json && pm2 logs withdraw.json",
-    "aggregate": "pm2 start aggregate.json && pm2 logs aggregate.json"
+    "address": "pm2 start address.json && pm2 logs",
+    "deposit": "pm2 start deposit.json && pm2 logs",
+    "withdraw": "pm2 start withdraw.json && pm2 logs",
+    "aggregate": "pm2 start aggregate.json && pm2 logs"
   },
   "author": "",
   "license": "ISC",
