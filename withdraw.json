@@ -41,6 +41,26 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
+      "name": "WithdrawGTBTask",
+      "script": "./core/Tasks/Withdraw/GTBTask.js",
+      "exec_mode": "fork",
+      "watch": [
+        "core"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/GTBTask.out.log",
+      "error_file": "./logs/Withdraw/GTBTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
       "name": "WithdrawERC20Task",
       "script": "./core/Tasks/Withdraw/ERC20Task.js",
       "exec_mode": "fork",
@@ -58,6 +78,26 @@
       "merge_logs": true,
       "out_file": "./logs/Withdraw/ERC20Task.out.log",
       "error_file": "./logs/Withdraw/ERC20Task.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "WithdrawGTBERC20Task",
+      "script": "./core/Tasks/Withdraw/GTBERC20Task.js",
+      "exec_mode": "fork",
+      "watch": [
+        "./core/Tasks/Withdraw/GTBERC20Task.js"
+      ],
+      "ignore_watch": [
+        "./core/Tasks/Deposit/BlockNumber",
+        "./core/Tasks/Deposit/GTBBlockNumber",
+        "./core/Tasks/Deposit/ETCBlockNumber"
+      ],
+      "watch_options": {
+        "usePolling": true
+      },
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/GTBERC20Task.out.log",
+      "error_file": "./logs/Withdraw/GTBERC20Task.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
