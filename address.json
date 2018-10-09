@@ -61,26 +61,6 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
-      "name": "GetBlockAddressERC20Task",
-      "script": "./core/Tasks/GetBlockAddress/ERC20Task.js",
-      "exec_mode": "fork",
-      "watch": [
-        "core"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/ERC20Task.out.log",
-      "error_file": "./logs/GetBlockAddress/ERC20Task.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
       "name": "GetBlockAddressGTBERC20Task",
       "script": "./core/Tasks/GetBlockAddress/GTBERC20Task.js",
       "exec_mode": "fork",
