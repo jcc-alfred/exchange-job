@@ -4,17 +4,6 @@
       "name": "WithdrawBitnetTask",
       "script": "./core/Tasks/Withdraw/BitnetTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "core"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Withdraw/BitnetTask.out.log",
       "error_file": "./logs/Withdraw/BitnetTask.err.log",
@@ -24,17 +13,6 @@
       "name": "WithdrawEthTask",
       "script": "./core/Tasks/Withdraw/EthTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "core"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Withdraw/EthTask.out.log",
       "error_file": "./logs/Withdraw/EthTask.err.log",
@@ -44,17 +22,6 @@
       "name": "WithdrawGTBTask",
       "script": "./core/Tasks/Withdraw/GTBTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "core"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Withdraw/GTBTask.out.log",
       "error_file": "./logs/Withdraw/GTBTask.err.log",
@@ -64,17 +31,6 @@
       "name": "WithdrawGTBERC20Task",
       "script": "./core/Tasks/Withdraw/GTBERC20Task.js",
       "exec_mode": "fork",
-      "watch": [
-        "./core/Tasks/Withdraw/GTBERC20Task.js"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Withdraw/GTBERC20Task.out.log",
       "error_file": "./logs/Withdraw/GTBERC20Task.err.log",

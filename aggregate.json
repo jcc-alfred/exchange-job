@@ -4,17 +4,6 @@
       "name": "AggregateEthTask",
       "script": "./core/Tasks/Aggregate/EthTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "./core/Tasks/Aggregate/EthTask.js"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Aggregate/EthTask.out.log",
       "error_file": "./logs/Aggregate/EthTask.err.log",
@@ -24,17 +13,6 @@
       "name": "AggregateGTBTask",
       "script": "./core/Tasks/Aggregate/GTBTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "./core/Tasks/Aggregate/GTBTask.js"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Aggregate/GTBTask.out.log",
       "error_file": "./logs/Aggregate/GTBTask.err.log",

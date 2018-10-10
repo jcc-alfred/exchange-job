@@ -4,17 +4,6 @@
       "name": "DepositEthTask",
       "script": "./core/Tasks/Deposit/EthTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "core"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Deposit/EthTask.out.log",
       "error_file": "./logs/Deposit/EthTask.err.log",
@@ -24,15 +13,6 @@
       "name": "DepositGTBTask",
       "script": "./core/Tasks/Deposit/GTBTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "core"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/GTBBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Deposit/GTBTask.out.log",
       "error_file": "./logs/Deposit/GTBTask.err.log",
@@ -42,17 +22,6 @@
       "name": "DepositBitnetTask",
       "script": "./core/Tasks/Deposit/BitnetTask.js",
       "exec_mode": "fork",
-      "watch": [
-        "core"
-      ],
-      "ignore_watch": [
-        "./core/Tasks/Deposit/BlockNumber",
-        "./core/Tasks/Deposit/GTBBlockNumber",
-        "./core/Tasks/Deposit/ETCBlockNumber"
-      ],
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "out_file": "./logs/Deposit/BitnetTask.out.log",
       "error_file": "./logs/Deposit/BitnetTask.err.log",
