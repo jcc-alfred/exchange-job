@@ -8,15 +8,32 @@ class GTTService {
     }
 
     async createAccount(address, secret) {
-        let options = {
+        return this.client({
             method: 'POST',
             uri: '/api/user',
             form: {
                 address: address,
                 secret: secret
             }
-        };
-        return this.client(options);
+        });
+    }
+
+    async getBlockNumber() {
+        return this.client({
+            method: 'GET',
+            uri: '/api/getBlockNumber'
+        });
+    }
+
+    async getTransactionFromBlock(block) {
+        return this.client({
+            method: 'GET',
+            uri: '/api/getTransactionFromBlock',
+            qs: {
+                blockNumber: block
+            },
+            json: true
+        });
     }
 }
 

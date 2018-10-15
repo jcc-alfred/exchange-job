@@ -6,3 +6,4 @@ core/Base/config.js
 core/Tasks/Deposit/ETCBlockNumber
 core/Tasks/Deposit/BlockNumber
 core/Tasks/Deposit/GTBBlockNumber
+core/Tasks/Deposit/GTTBlockNumber
