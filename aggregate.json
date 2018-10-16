@@ -17,6 +17,15 @@
       "out_file": "./logs/Aggregate/GTBTask.out.log",
       "error_file": "./logs/Aggregate/GTBTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "AggregateGTTTask",
+      "script": "./core/Tasks/Aggregate/GTTTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Aggregate/GTTTask.out.log",
+      "error_file": "./logs/Aggregate/GTTTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
 }

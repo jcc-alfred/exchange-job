@@ -40,7 +40,7 @@ class GTTService {
     }
 
     async getBalance(address) {
-        return this.client({
+        let walletBalance = await this.client({
             method: 'GET',
             uri: '/balance',
             headers: {
@@ -48,6 +48,8 @@ class GTTService {
             },
             json: true
         });
+
+        return walletBalance.balances.find(b => b.currency == 'GTT').amount;
     }
 
     async getTransaction(id) {

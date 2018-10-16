@@ -65,7 +65,7 @@ try {
                         userETHBalanceList.push({
                             block_address: item.block_address,
                             private_key: item.private_key,
-                            eth_balance: balance
+                            gtt_balance: balance
                         });
 
                     }));
@@ -87,7 +87,7 @@ try {
                         }
 
                     }));
-                    if (userETHBalance.eth_balance > 0 && erc20BalanceList.length > 0) {
+                    if (userETHBalance.gtt_balance > 0 && erc20BalanceList.length > 0) {
                         userERC20BalanceList.push({...userETHBalance, erc20List: erc20BalanceList});
                     } else if (erc20BalanceList.length > 0) {
                         userERC20BalanceList_NoneETH.push({...userETHBalance, erc20List: erc20BalanceList});
@@ -104,7 +104,7 @@ try {
                         let token_decimals = erc20Balance.erc20Coin.token_decimals;
                         let estimateGas = await ethService.getTokenEstimateGas(to_block_address, trade_amount, privateKey, contract_address, token_decimals);
                         let fees = ethService.weiToEther(estimateGas * gasPrice);
-                        if (userERC20Balance.eth_balance < fees) {
+                        if (userERC20Balance.gtt_balance < fees) {
                             userERC20BalanceList_NoneETH.push(userERC20Balance);
                             break;
                         } else {
@@ -177,14 +177,14 @@ try {
                     eth_userETHBalanceList.push({
                         block_address: item.block_address,
                         private_key: item.private_key,
-                        eth_balance: balance
+                        gtt_balance: balance
                     });
 
                 }));
             }
             await Promise.all(eth_userETHBalanceList.map(async (userETHBalance) => {
                 let privateKey = CryptoUtils.aesDecode(userETHBalance.private_key);
-                let trade_amount = Utils.sub(userETHBalance.eth_balance, transferETHFees);
+                let trade_amount = Utils.sub(userETHBalance.gtt_balance, transferETHFees);
                 if (trade_amount > 0) {
                     let txObj = await eth_ethService.sendSignedTransaction(ethCoin.main_block_address, trade_amount, privateKey);
                     if (txObj && txObj.transactionHash) {

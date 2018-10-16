@@ -115,8 +115,7 @@ try {
                 //内部提现转账 end
                 if (transWithdrawList && transWithdrawList.length > 0) {
                     await Promise.all(transWithdrawList.map(async (item) => {
-                        let totalWalletBalance = await gttService.getBalance(gttCoin.main_block_address);
-                        let totalWalletAmount = totalWalletBalance.balances.find(b => b.currency == 'GTT').amount;
+                        let totalWalletAmount = await gttService.getBalance(gttCoin.main_block_address);
                         if (totalWalletAmount < Utils.add(item.trade_amount, 0.0004)) {
                             console.error('钱包余额不足：totalWalletAmount:' + totalWalletAmount + ' trade_amount:' + item.trade_amount);
                             return;
