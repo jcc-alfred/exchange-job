@@ -55,7 +55,7 @@ class GTTService {
     async getTransaction(id) {
         return this.client({
             method: 'GET',
-            uri: '/getTransaction',
+            uri: '/api/getTransaction',
             qs: {
                 id: id
             },
