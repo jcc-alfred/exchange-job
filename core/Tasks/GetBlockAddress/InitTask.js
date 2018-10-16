@@ -13,51 +13,51 @@ let AssetsModel = require('../../Model/AssetsModel');
 // │    └──────────────────── minute (0 - 59)
 // └───────────────────────── second (0 - 59, OPTIONAL)
 
-try{
+try {
     let isRun = false;
-    var job = schedule.scheduleJob('*/15 * * * * *',async()=>{
-        if(isRun){
+    schedule.scheduleJob('*/15 * * * * *', async () => {
+        if (isRun) {
             return;
         }
         isRun = true;
         let coinList = await CoinModel.getCoinList();
-        if(!coinList){
+        if (!coinList) {
             isRun = false;
             return;
         }
 
-        let res = await Promise.all(coinList.map(async(coin)=>{
-            try{
+        await Promise.all(coinList.map(async (coin) => {
+            try {
                 let userCount = await UserModel.getUserCount();
                 let userCountByCoinId = await AssetsModel.getUserCountByCoinId(coin.coin_id);
-                if(userCount <= userCountByCoinId){
+                if (userCount <= userCountByCoinId) {
                     return;
                 }
                 let pageSize = 500;
                 let pageCount = Math.ceil(userCount / pageSize);
 
-                for(let page = 1; page <= pageCount; page++){
-                    let userList = await UserModel.getUserList(page,pageSize);
-                    if(!userList || !userList.list || !userList.list.length){
+                for (let page = 1; page <= pageCount; page++) {
+                    let userList = await UserModel.getUserList(page, pageSize);
+                    if (!userList || !userList.list || !userList.list.length) {
                         return;
                     }
-                    let list = await Promise.all(userList.list.map(async(item)=>{
-                        let count = await AssetsModel.getUserCountByUserIdCoinId(item.user_id,coin.coin_id);
-                        if(count == 0){
+                    let list = await Promise.all(userList.list.map(async (item) => {
+                        let count = await AssetsModel.getUserCountByUserIdCoinId(item.user_id, coin.coin_id);
+                        if (count == 0) {
                             return item;
                         }
                     }));
-                    let result = await AssetsModel.insertUserAssets(list,coin.coin_id);
 
+                    await AssetsModel.insertUserAssets(list.filter(item => item), coin.coin_id);
                 }
-            }catch(error){
+            } catch (error) {
                 console.error(error);
             }
-            return;
-        }));    
+
+        }));
         isRun = false;
-    })    
-}catch(error){
+    })
+} catch (error) {
     isRun = false;
     throw error;
 }
