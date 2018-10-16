@@ -35,6 +35,15 @@
       "out_file": "./logs/Withdraw/GTBERC20Task.out.log",
       "error_file": "./logs/Withdraw/GTBERC20Task.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "WithdrawGTTTask",
+      "script": "./core/Tasks/Withdraw/GTTTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/GTTTask.out.log",
+      "error_file": "./logs/Withdraw/GTTTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
 }

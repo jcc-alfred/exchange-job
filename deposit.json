@@ -26,6 +26,15 @@
       "out_file": "./logs/Deposit/BitnetTask.out.log",
       "error_file": "./logs/Deposit/BitnetTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "DepositGTTTask",
+      "script": "./core/Tasks/Deposit/GTTTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Deposit/GTTTask.out.log",
+      "error_file": "./logs/Deposit/GTTTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
 }

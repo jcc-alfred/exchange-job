@@ -35,6 +35,15 @@
       "out_file": "./logs/GetBlockAddress/GTBERC20Task.out.log",
       "error_file": "./logs/GetBlockAddress/GTBERC20Task.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "AddressGTTTask",
+      "script": "./core/Tasks/GetBlockAddress/GTTTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/GetBlockAddress/GTTTask.out.log",
+      "error_file": "./logs/GetBlockAddress/GTTTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
 }
