@@ -10,7 +10,8 @@
     "address": "pm2 start address.json",
     "deposit": "pm2 start deposit.json",
     "withdraw": "pm2 start withdraw.json",
-    "aggregate": "pm2 start aggregate.json"
+    "aggregate": "pm2 start aggregate.json",
+    "mining": "pm2 start mining.json"
   },
   "author": "",
   "license": "ISC",
