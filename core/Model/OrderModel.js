@@ -1,7 +1,9 @@
 
 let DB = require('../Base/Data/DB');
 let Cache = require('../Base/Data/Cache');
-let config = require('../Base/config')
+let config = require('../Base/config');
+let SystemModel = require('./SystemModel');
+let moment = require('moment');
 
 class OrderModel{
 
@@ -28,7 +30,7 @@ class OrderModel{
     async getPre24HPriceByCoinExchangeId(coin_exchange_id){
         try{
             let cnt =  await DB.cluster('slave');
-            let sql = `SELECT AVG(trade_price) as trade_price FROM m_order where coin_exchange_id = ? and create_time >= ((SELECT create_time from m_order where coin_exchange_id = ? ORDER BY order_id desc LIMIT 1) - interval 24 hour) `
+            let sql = `SELECT AVG(trade_price) as trade_price FROM m_order where coin_exchange_id = ? and create_time >= ((SELECT create_time from m_order where coin_exchange_id = ? ORDER BY order_id desc LIMIT 1) - interval 24 hour) `;
             let res =  await cnt.execReader(sql,[coin_exchange_id,coin_exchange_id]);
             cnt.close();
 

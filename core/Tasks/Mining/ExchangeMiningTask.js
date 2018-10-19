@@ -90,7 +90,7 @@ try {
                                     buyFees = Utils.div(order.buy_fees, miningCoinPrice);
                                 }
                             } else if (p_miningCoinPair) {
-                                let p_miningCoinPrice = await OrderModel.getPre24HPriceByCoinExchangeId(miningCoinPair.coin_exchange_id);
+                                let p_miningCoinPrice = await OrderModel.getPre24HPriceByCoinExchangeId(p_miningCoinPair.coin_exchange_id);
                                 if (p_miningCoinPrice) {
                                     buyFees = Utils.mul(order.buy_fees, p_miningCoinPrice);
                                 }
@@ -133,8 +133,8 @@ try {
                         }
                         console.log('buyFees------', buyFees, '----order.buy_fees:', order.buy_fees);
                         if (buyFees > 0) {
-                            let userInfo = await UserModel.getUserByIdNoCache(buy_user_id);
-                            await OrderModel.addExBonus(buy_user_id, miningCoinId, buyFees, userInfo.referral_path);
+                            let userInfo = await UserModel.getUserByIdNoCache(order.buy_user_id);
+                            await OrderModel.addExBonus(order.buy_user_id, miningCoinId, buyFees, userInfo.referral_path);
                         }
                     }
                     if (order.sell_fees > 0) {
@@ -193,8 +193,8 @@ try {
                         }
                         console.log('sellFees-------', sellFees);
                         if (sellFees > 0) {
-                            let userInfo = await UserModel.getUserByIdNoCache(sell_user_id);
-                            await OrderModel.addExBonus(sell_user_id, miningCoinId, sellFees, userInfo.referral_path);
+                            let userInfo = await UserModel.getUserByIdNoCache(order.sell_user_id);
+                            await OrderModel.addExBonus(order.sell_user_id, miningCoinId, sellFees, userInfo.referral_path);
                         }
                     }
                     //orderIdList.push(order.order_id);
@@ -202,8 +202,6 @@ try {
                 catch (error) {
                     console.error(error);
                 }
-
-
             });
 
             //OrderModel.updateOrderByOrderIdList()
