@@ -1,5 +1,4 @@
 let schedule = require('node-schedule');
-let _ = require('lodash');
 let Utils = require('../../Base/Utils/Utils');
 let CoinModel = require('../../Model/CoinModel');
 let UserModel = require('../../Model/UserModel');
@@ -23,8 +22,7 @@ try {
     rule.minute = 0;
 
     let isRun = false;
-    var job = schedule.scheduleJob(rule, async () => {
-
+    schedule.scheduleJob(rule, async () => {
         if (isRun) {
             return;
         }
@@ -39,43 +37,19 @@ try {
             let orderList = await OrderModel.getUnProcBonusList();
             //1基本配置 2 客服配置 3邮件接口配置 4 短信接口配置 5 注册挖矿配置 6 交易挖矿配置
             let exMiningConfig = await SystemModel.getSysConfigByTypeId(6);
-            let isEnableDividend = exMiningConfig.find((item) => {
-                return item.config_key == 'isEnableDividend'
-            }).config_value == '1' ? true : false;
-            let DividendCoinId = parseInt(exMiningConfig.find((item) => {
-                return item.config_key == 'DividendCoinId'
-            }).config_value);
-            let DividendRate = parseFloat(exMiningConfig.find((item) => {
-                return item.config_key == 'DividendRate'
-            }).config_value);
             let isEnableExMining = exMiningConfig.find((item) => {
                 return item.config_key == 'isEnableExMining'
-            }).config_value == '1' ? true : false;
-            let exMiningLevel = parseInt(exMiningConfig.find((item) => {
-                return item.config_key == 'exMiningLevel'
-            }).config_value);
+            }).config_value == '1';
             let miningCoinId = parseInt(exMiningConfig.find((item) => {
                 return item.config_key == 'coinId'
-            }).config_value);
-            let L0Rate = parseFloat(exMiningConfig.find((item) => {
-                return item.config_key == 'L0Rate'
-            }).config_value);
-            let L1Rate = parseFloat(exMiningConfig.find((item) => {
-                return item.config_key == 'L1Rate'
-            }).config_value);
-            let L2Rate = parseFloat(exMiningConfig.find((item) => {
-                return item.config_key == 'L2Rate'
-            }).config_value);
-            let L3Rate = parseFloat(exMiningConfig.find((item) => {
-                return item.config_key == 'L3Rate'
             }).config_value);
             let btcId = 1;
             if (!isEnableExMining) {
                 isRun = false;
                 return;
             }
-            let orderIdList = [];
-            orderList.map(async (order) => {
+            let max_order_id = 0;
+            await Promise.all(orderList.map(async (order) => {
                 try {
                     if (order.buy_fees > 0) {
                         let buyFees = 0;
@@ -197,14 +171,18 @@ try {
                             await OrderModel.addExBonus(order.sell_user_id, miningCoinId, sellFees, userInfo.referral_path);
                         }
                     }
-                    //orderIdList.push(order.order_id);
+
+                    if (order.max_order_id > max_order_id) {
+                        max_order_id = order.max_order_id;
+                    }
                 }
                 catch (error) {
                     console.error(error);
                 }
-            });
+            }));
 
-            //OrderModel.updateOrderByOrderIdList()
+            console.log('max order id: ', max_order_id);
+            await OrderModel.updateOrderByMaxOrderId(max_order_id);
         } catch (error) {
             console.error(error);
         }
