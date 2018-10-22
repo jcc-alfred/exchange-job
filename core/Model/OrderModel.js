@@ -111,8 +111,8 @@ class OrderModel{
                 user_assets_log_type_id:user_assets_log_type_id,
                 user_assets_log_type_name:user_assets_log_type_name
             });
-            let user_bonus_type_id = level > 0 ? 2 : 3; //2 推荐奖励 1 推荐奖励
-            let user_bonus_type_name = level > 0 ? '推荐奖励' : '推荐奖励'; //2 推荐奖励 3 推荐奖励
+            let user_bonus_type_id = level > 0 ? 2 : 3; //2 推荐奖励 3 交易奖励
+            let user_bonus_type_name = level > 0 ? '推荐奖励' : '交易奖励'; //2 推荐奖励 3 交易奖励
             //增加用户奖励记录 
             let addUserBonus = await cnt.edit('m_user_bonus',{
                 user_id:userId,
