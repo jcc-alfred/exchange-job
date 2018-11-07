@@ -71,14 +71,14 @@ class RedisHelper {
 
     async hget(key,field){
         let async = promisify(this.client.hget).bind(this.client);
-        let data = await async(key,field)
+        let data = await async(key,field);
         return JSON.parse(data);
     }
 
     async hset(key,field,value,ex=0){
         let async =  promisify(this.client.hset).bind(this.client);
         let res = await async(key,field,JSON.stringify(value));
-        await this.expire(key,ex)
+        await this.expire(key,ex);
         return res
     }
 

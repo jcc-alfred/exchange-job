@@ -170,6 +170,15 @@
       "out_file": "./logs/Mining/ExchangeMiningTask.out.log",
       "error_file": "./logs/Mining/ExchangeMiningTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "BaseCoinPrice",
+      "script": "./core/Tasks/Mining/ExchangeMiningTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Mining/ExchangeMiningTask.out.log",
+      "error_file": "./logs/Mining/ExchangeMiningTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
 }
