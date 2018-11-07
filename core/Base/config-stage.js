@@ -1,7 +1,9 @@
 const config = {
-    socketDomain: 'http://socket.lan:5000/',
+    socketDomain: 'http://54.169.107.53:5000/',
     coinmarket_api:'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest',
     coinmarket_secret:'c236b6e8-ede0-40a8-9a66-e60a039aff80',
+    currency_api: 'http://www.apilayer.net/api/live',
+    currency_secret:'0baf27b3065f8dd0ae4eb51f1ae6a24a',
     sys:{
         domain:'www.asiaedx.com',     //域名
         ipRegisterMaxNum:100,       //IP注册最大次数

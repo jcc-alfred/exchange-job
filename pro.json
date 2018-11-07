@@ -173,11 +173,11 @@
     },
     {
       "name": "BaseCoinPrice",
-      "script": "./core/Tasks/Mining/ExchangeMiningTask.js",
+      "script": "./core/Tasks/Exchange/Base_Coin_price.js",
       "exec_mode": "fork",
       "merge_logs": true,
-      "out_file": "./logs/Mining/ExchangeMiningTask.out.log",
-      "error_file": "./logs/Mining/ExchangeMiningTask.err.log",
+      "out_file": "./logs/Mining/Base_Coin_price.out.log",
+      "error_file": "./logs/Mining/Base_Coin_price.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
