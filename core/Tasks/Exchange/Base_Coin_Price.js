@@ -34,20 +34,28 @@ try{
         }
         isRun = true;
         let res = [];
-        let currency = JSON.parse(await rp({
-            method:'GET',
-            uri:config.currency_api,
-            qs:{
-                access_key:config.currency_secret,
+        try {
+            let currency = JSON.parse(await rp({
+                method:'GET',
+                uri:config.currency_api,
+                qs:{
+                    app_id:config.currency_app_id,
+                    base:'usd'
+                }
+            }));
+            if (currency){
+                let gtt_value={
+                    name: 'GTT',
+                    symbol: 'GTT',
+                    price_usd: 1/currency.rates.CNY,
+                    last_updated: new Date(currency.timestamp*1000).toISOString()
+                };
+                res.push(gtt_value);
             }
-        }));
-        let gtt_value={
-            name: 'GTT',
-            symbol: 'GTT',
-            price_usd: 1/currency.quotes.USDCNY,
-            last_updated: new Date(currency.timestamp*1000).toISOString()
-        };
-        res.push(gtt_value);
+        }catch (e) {
+            console.error(e);
+        }
+
 
         const requestOptions = {
             method: 'GET',
@@ -100,6 +108,7 @@ try{
                 Promise.all(res.map(item=>{
                     return cache.hset(ckey,item.symbol.toLowerCase(),item);
                 }));
+                console.log(res);
                 // await cache.expire(ckey, 600);
                 // console.log(new Date(),res);
             }catch (e) {
@@ -112,7 +121,7 @@ try{
     });
 }catch(error){
     isRun = false;
-    throw error;
+    console.error(error);
 }
 
 
