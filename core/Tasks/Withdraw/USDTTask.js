@@ -199,7 +199,7 @@ try{
     }); 
 }catch(error){
     isRun = false;
-    throw error;
+    console.error(error);
 }
 
 

@@ -109,11 +109,11 @@ try {
             }
         } catch (error) {
             console.error(error);
-            throw error;
+            // throw error;
         }
         isRun = false;
     });
 } catch (error) {
     isRun = false;
-    throw error;
+    console.error(error);
 }

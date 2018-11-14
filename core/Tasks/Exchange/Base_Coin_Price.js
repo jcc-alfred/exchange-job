@@ -108,7 +108,7 @@ try{
                 Promise.all(res.map(item=>{
                     return cache.hset(ckey,item.symbol.toLowerCase(),item);
                 }));
-                console.log(res);
+                console.log(JSON.stringify(res));
                 // await cache.expire(ckey, 600);
                 // console.log(new Date(),res);
             }catch (e) {
