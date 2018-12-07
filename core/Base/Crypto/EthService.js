@@ -148,10 +148,10 @@ class EthService{
             "type": "function"
         }];
         let tokenContract = new web3.eth.Contract(contractABI,contractAddress);
-        let amountWei = tradeAmount * Math.pow(10,tokenDecimals);
+        let amountWei = web3.utils.toBN(tradeAmount * Math.pow(10,tokenDecimals));
         console.log(tokenDecimals);
-        console.log(trade_amount);
-        console.log(amountWei);
+        console.log(tradeAmount);
+        console.log(amountWei.toString());
         let amountHex =  web3.utils.toHex(amountWei);
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
