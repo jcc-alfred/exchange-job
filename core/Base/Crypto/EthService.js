@@ -152,7 +152,10 @@ class EthService{
         let amountHex =  web3.utils.toHex(amountWei);
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
-        let gasPriceHex = web3.utils.toHex(gasPrice);
+        console.log("gasPrice"+gasPrice);
+        console.log("web3.utils.toBN(gasPrice)"+web3.utils.toBN(gasPrice));
+        let gasPriceHex = web3.utils.toHex(web3.utils.toBN(gasPrice));
+        console.log(gasPriceHex);
         let account = web3.eth.accounts.privateKeyToAccount(privateKey);
         let nonce = await web3.eth.getTransactionCount(account.address);
         let nonceHex =  web3.utils.toHex(nonce);
@@ -161,9 +164,9 @@ class EthService{
         var rawTx = {
             to: contractAddress,
             value: '0x0',
-            gasPrice: gasPriceHex,
             from:account.address,
             nonce:nonceHex,
+           gasPrice: gasPriceHex,
             data: transferABI
         };
         return web3.eth.estimateGas(rawTx);
