@@ -169,7 +169,7 @@ class EthService{
             to: contractAddress,
             value: '0x0',
             from:account.address,
-            nonce:nonceHex,
+            // nonce:nonceHex,
            gasPrice: gasPriceHex,
             data: transferABI
         };
