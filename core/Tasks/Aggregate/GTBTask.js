@@ -24,9 +24,9 @@ let TransferFeesLogModel = require('../../Model/TransferFeesLogModel');
 
 try {
     var rule = new schedule.RecurrenceRule();
-    var times = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,48,49,50,51,57,58,59];
-    // rule.hour = times;
-    rule.minute = times;
+    var times = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+    rule.hour = times;
+    rule.minute = 0;
 
     let isRun = false;
     var job = schedule.scheduleJob(rule, async () => {
@@ -84,7 +84,7 @@ try {
                     let erc20Service = new EthService(coin.wallet_ip, coin.wallet_port, coin.wallet_passphrase);
                     let balanceWei = await erc20Service.getTokenBalance(userETHBalance.block_address, coin.contract_address);
                     let balance = balanceWei / Math.pow(10, coin.token_decimals);
-                    //let min_aggregate_amount = coin.min_aggregate_amount * Math.pow(10,coin.token_decimals);
+                    // let min_aggregate_amount = coin.min_aggregate_amount * Math.pow(10,coin.token_decimals);
                     if (coin.min_aggregate_amount > 0 && balance >= coin.min_aggregate_amount) {
                         erc20BalanceList.push({erc20Coin: coin, balance: balance});
                     }
@@ -130,7 +130,6 @@ try {
                 let privateKey = CryptoUtils.aesDecode(userERC20Balance.private_key);
                 for (let erc20Balance of userERC20Balance.erc20List) {
                     let ethMainBalance = await ethService.getBalance(ethCoin.main_block_address);
-                    // console.log("ethMainBalance:"+ethCoin.main_block_address+ethMainBalance);
                     let to_block_address = erc20Balance.erc20Coin.main_block_address;
                     let trade_amount = erc20Balance.balance;
                     let contract_address = erc20Balance.erc20Coin.contract_address;

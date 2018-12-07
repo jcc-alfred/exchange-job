@@ -148,21 +148,13 @@ class EthService{
             "type": "function"
         }];
         let tokenContract = new web3.eth.Contract(contractABI,contractAddress);
-        // let amountWei = web3.utils.toBN(tradeAmount * Math.pow(10,tokenDecimals));
         let amountHex =  this.web3.utils.toHex(this.web3.utils.toWei(tradeAmount.toString(), 'ether'));
-        console.log(tokenDecimals);
-        console.log(tradeAmount);
-        // console.log(amountWei.toString());
-        // let amountHex =  web3.utils.toHex(amountWei);
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
-        console.log("gasPrice"+gasPrice);
-        console.log("web3.utils.toBN(gasPrice)"+web3.utils.toBN(gasPrice));
         let gasPriceHex = web3.utils.toHex(web3.utils.toBN(gasPrice));
-        console.log(gasPriceHex);
         let account = web3.eth.accounts.privateKeyToAccount(privateKey);
         let nonce = await web3.eth.getTransactionCount(account.address);
-        let nonceHex =  web3.utils.toHex(nonce);
+        // let nonceHex =  web3.utils.toHex(nonce);
         privateKey = privateKey.startsWith('0x') ? privateKey.substring(2) : privateKey;
         let privateKeyHex = new Buffer(privateKey, 'hex');
         var rawTx = {
@@ -218,8 +210,7 @@ class EthService{
             "type": "function"
         }];
         let tokenContract = new web3.eth.Contract(contractABI,contractAddress);
-        let amountWei = tradeAmount * Math.pow(10,tokenDecimals);
-        let amountHex =  web3.utils.toHex(amountWei);
+        let amountHex =  this.web3.utils.toHex(this.web3.utils.toWei(tradeAmount.toString(), 'ether'));
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
         let gasPriceHex = web3.utils.toHex(gasPrice);
