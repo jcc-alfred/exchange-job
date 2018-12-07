@@ -58,7 +58,7 @@ try {
                     //eth的充值记录 - txObj.to 是否为用户资产地址
                     let blockAddrList = [];
                     transList.forEach((tx) => {
-                        if (tx.to) {
+                        if (tx && tx.to) {
                             blockAddrList.push(tx.to);
                         }
                     });
@@ -66,7 +66,7 @@ try {
                         let userAssetsList = await AssetsModel.getUserAssetsByBlockAddrListCoinId(blockAddrList, ethCoin.coin_id);
                         let ethTxList = [];
                         transList.forEach((tx) => {
-                            if (tx.to) {
+                            if (tx && tx.to) {
                                 let [userAssetsItem] = userAssetsList.filter((userAssetsItem) => userAssetsItem.block_address.toLowerCase() == tx.to.toLowerCase());
                                 if (userAssetsItem && userAssetsItem.block_address) {
                                     ethTxList.push({txObj: tx, userAssets: userAssetsItem});

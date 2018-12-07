@@ -52,7 +52,7 @@ try {
                     let userAssetsList = await AssetsModel.getUserAssetsByBlockAddrListCoinId(blockAddrList, gttCoin.coin_id);
                     let ethTxList = [];
                     transList.forEach((tx) => {
-                        if (tx.opponentUserWalletAddress) {
+                        if (tx && tx.opponentUserWalletAddress) {
                             let [userAssetsItem] = userAssetsList.filter((userAssetsItem) => userAssetsItem.block_address.toLowerCase() == tx.opponentUserWalletAddress.toLowerCase());
                             if (userAssetsItem && userAssetsItem.block_address) {
                                 ethTxList.push({
