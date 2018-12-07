@@ -149,11 +149,11 @@ class EthService{
         }];
         let tokenContract = new web3.eth.Contract(contractABI,contractAddress);
         // let amountWei = web3.utils.toBN(tradeAmount * Math.pow(10,tokenDecimals));
-        let amountWei =  web3.toWei(tradeAmount * 1e18);
+        let amountHex =  this.web3.utils.toHex(this.web3.utils.toWei(tradeAmount.toString(), 'ether'));
         console.log(tokenDecimals);
         console.log(tradeAmount);
-        console.log(amountWei.toString());
-        let amountHex =  web3.utils.toHex(amountWei);
+        // console.log(amountWei.toString());
+        // let amountHex =  web3.utils.toHex(amountWei);
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
         console.log("gasPrice"+gasPrice);
