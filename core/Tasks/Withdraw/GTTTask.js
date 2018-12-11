@@ -56,13 +56,12 @@ try {
                 }
                 let transBlockAddrList = [];
                 await Promise.all(withdrawList.list.map(async (withdraw) => {
-                    let isAddress = gttService.isAddress(withdraw.to_block_address);
-                    if (isAddress) {
-                        transBlockAddrList.push(withdraw.to_block_address);
-                        transTotalAmount = Utils.add(transTotalAmount, withdraw.trade_amount);
-                        totalWithdrawList.push(withdraw);
-                    }
-
+                    // let isAddress = gttService.isAddress(withdraw.to_block_address);
+                    // if (isAddress) {
+                    transBlockAddrList.push(withdraw.to_block_address);
+                    transTotalAmount = Utils.add(transTotalAmount, withdraw.trade_amount);
+                    totalWithdrawList.push(withdraw);
+                    // }
                 }));
                 if (!transBlockAddrList || transBlockAddrList.length <= 0) {
                     continue;
