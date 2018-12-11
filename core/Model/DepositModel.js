@@ -112,7 +112,7 @@ class DepositModel{
                     //增加用户资产
                     let updAssets = await cnt.execQuery(`update m_user_assets set balance = balance + ? , available = available + ? 
                     where user_id = ? and coin_id = ?`,[deposit.trade_amount,deposit.trade_amount,deposit.user_id,deposit.coin_id]);
-                    console.log(updAssets.affectedRows,'updAssets.affectedRows')
+                    console.log(updAssets.affectedRows,'updAssets.affectedRows');
                     if(updAssets.affectedRows){
                         let [coin] = await cnt.execQuery("select * from m_coin where record_status=1 and coin_id = ?",deposit.coin_id);
                         //增加用户资产日志 
@@ -127,7 +127,7 @@ class DepositModel{
                             user_assets_log_type_id:1,
                             user_assets_log_type_name:'充值'
                         });
-                        console.log(addAssetsLog.affectedRows,'addAssetsLog.affectedRows')
+                        console.log(addAssetsLog.affectedRows,'addAssetsLog.affectedRows');
                         if(addAssetsLog.affectedRows){
                             cnt.commit();
                             console.log('-----------提交了------')
@@ -138,7 +138,7 @@ class DepositModel{
                             if(await cache.exists(ckey)){
                                 let sql = `select user_assets_id,a.user_id,a.coin_id,b.coin_name,b.is_enable_deposit,b.is_enable_withdraw,b.is_enable_transfer,a.block_address,a.balance,a.available,a.frozen,a.loan 
                                 from m_user_assets as a LEFT JOIN m_coin as b on a.coin_id = b.coin_id
-                                where a.record_status=1 and a.user_id = ? order by b.order_by_num asc  `
+                                where a.record_status=1 and a.user_id = ? order by b.order_by_num asc  `;
                                 let res = await cnt.execQuery(sql,deposit.user_id);
                                 await Promise.all(res.map(async (row)=>{
                                     return cache.hset(ckey,row.coin_id,row);

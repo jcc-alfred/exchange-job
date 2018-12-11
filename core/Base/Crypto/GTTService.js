@@ -70,7 +70,12 @@ class GTTService {
             amount,
             remarks: 'asiaedx.com'
         };
-        const payload = querystring.stringify(body);
+        // const payload = querystring.stringify(body);
+        const payload = "fromAddress=" + body.fromAddress + "&" +
+            "toAddress=" + body.toAddress + "&" +
+            "amount=" + body.amount + "&" +
+            "remarks=" + body.remarks;
+
         const signature = crypto
             .createHmac('sha256', secret)
             .update(payload)
