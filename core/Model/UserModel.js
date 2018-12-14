@@ -99,7 +99,7 @@ class UserModel {
     async sendAlert(userId, type, lang, amount, unit) {
         try {
             if (type === 4) {
-                await Promise.all(res.map((each) => {
+                await Promise.all(config.Sys_Notifications.map((each) => {
                     return MQ.push(config.MQKey.Send_Alert,
                         {
                             type: "phone",
@@ -110,7 +110,7 @@ class UserModel {
                 }));
             }
             else if (type === 5) {
-                await Promise.all(res.map((each) => {
+                await Promise.all(config.Sys_Notifications.map((each) => {
                     return MQ.push(config.MQKey.Send_Alert,
                         {
                             type: "phone",
