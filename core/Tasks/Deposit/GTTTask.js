@@ -18,7 +18,6 @@ let UserModel = require('../../Model/UserModel');
 // └───────────────────────── second (0 - 59, OPTIONAL)
 
 try {
-    console.log("aaaaa");
     let isRun = false;
     schedule.scheduleJob('1 * * * * *', async () => {
         if (isRun) {
