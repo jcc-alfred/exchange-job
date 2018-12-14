@@ -44,7 +44,7 @@ try {
             let gttService = new GTTService(gttCoin.wallet_ip);
             let currentBlockNum =await gttService.getBlockNumber();
             console.log('******currentBlockNum:' + currentBlockNum);
-            if (parseInt(currenctBlockNum) >= parseInt(lastProcBlockNum)) {
+            if (parseInt(currentBlockNum) >= parseInt(lastProcBlockNum)) {
                 let transactions = await gttService.getTransactionFromBlock(lastProcBlockNum);
                 let transList = transactions.filter(tx => tx.currency == 'GTT');
                 let blockAddrList = transList.map(tx => tx.opponentUserWalletAddress);
