@@ -21,8 +21,7 @@ let UserModel = require('../../Model/UserModel');
 
 try {
     let isRun = false;
-    var job = schedule.scheduleJob('5 * * * * *', async () => {
-
+    var job = schedule.scheduleJob('1 * * * * *', async () => {
         if (isRun) {
             return;
         }
@@ -46,7 +45,7 @@ try {
             let ethService = new EthService(ethCoin.wallet_ip, ethCoin.wallet_port, ethCoin.wallet_passphrase);
             let currenctBlockNum = await ethService.getBlockNumber();
             console.log('******currenctBlockNum:' + currenctBlockNum);
-            if (currenctBlockNum >= lastProcBlockNum) {
+            if (parseInt(currenctBlockNum) >= parseInt(lastProcBlockNum)) {
                 for (var blockNum = parseInt(lastProcBlockNum) + 1; blockNum <= currenctBlockNum; blockNum++) {
                     let block = await ethService.getBlock(blockNum);
                     if (block == null || block.transactions == null) {

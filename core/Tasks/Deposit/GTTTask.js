@@ -18,8 +18,9 @@ let UserModel = require('../../Model/UserModel');
 // └───────────────────────── second (0 - 59, OPTIONAL)
 
 try {
+    console.log("aaaaa");
     let isRun = false;
-    schedule.scheduleJob('*/15 * * * * *', async () => {
+    schedule.scheduleJob('1 * * * * *', async () => {
         if (isRun) {
             return;
         }
@@ -41,9 +42,9 @@ try {
             });
             console.log('lastProcBlockNum', lastProcBlockNum);
             let gttService = new GTTService(gttCoin.wallet_ip);
-            let currentBlockNum = await gttService.getBlockNumber();
+            let currentBlockNum =await gttService.getBlockNumber();
             console.log('******currentBlockNum:' + currentBlockNum);
-            if (currentBlockNum >= lastProcBlockNum) {
+            if (parseInt(currenctBlockNum) >= parseInt(lastProcBlockNum)) {
                 let transactions = await gttService.getTransactionFromBlock(lastProcBlockNum);
                 let transList = transactions.filter(tx => tx.currency == 'GTT');
                 let blockAddrList = transList.map(tx => tx.opponentUserWalletAddress);
