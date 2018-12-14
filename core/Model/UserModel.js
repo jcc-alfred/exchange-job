@@ -94,6 +94,23 @@ class UserModel{
 
     async sendAlert(userId,type,lang,amount,unit){
         try{
+            if(type === 4  ){
+                let SysRes = await MQ.push(config.MQKey.Send_Alert,
+                    {
+                        type:"phone",
+                        phone_number:"87140718",
+                        area_code:"65",
+                        msg:userId +" Deposite " + unit +" : "+amount});
+            }
+            else if (type===5){
+                let SysRes = await MQ.push(config.MQKey.Send_Alert,
+                    {
+                        type:"phone",
+                        phone_number:"87140718",
+                        area_code:"65",
+                        msg:userId +" Withdraw " + unit +" : "+amount});
+            }
+
             if(!await this.isOpenAlert(userId,type)){
                 return;
             }
