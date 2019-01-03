@@ -81,7 +81,6 @@ const config = {
         User_Alert_Type:'User_Alert_Type',                      // 用户通知类型 data:15 hash
         User_Code:'User_Code_',                                 // 用户验证码
         Sys_Base_Coin_Prices:'Sys_Base_Coin_Prices',
-
         User_Assets:'User_Assets_',                             //用户资产 data:15 hash
 
         Sys_Lang:'Sys_Lang',                                    // 系统语言 data:0 hash
@@ -93,6 +92,8 @@ const config = {
 
         Sys_Coin_OTC:'Sys_Coin_OTC',                            // 所有OTC币种 data:0 hash
         User_Assets_OTC:"User_Assets_OTC_",                     // 用户OTC资产信息 data:15 hash
+        Sell_Entrust_OTC:'Sell_Entrust_OTC_',
+
 
     },
 
