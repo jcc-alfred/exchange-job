@@ -172,12 +172,21 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
+      "name": "Clean_Invalid_EntrustTask",
+      "script": "./core/Tasks/Exchange/OTC/Clean_Invalid_Entrust.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Exchange/Clean_Invalid_EntrustTask.out.log",
+      "error_file": "./logs/Exchange/Clean_Invalid_EntrustTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
       "name": "BaseCoinPrice",
       "script": "./core/Tasks/Exchange/Base_Coin_Price.js",
       "exec_mode": "fork",
       "merge_logs": true,
-      "out_file": "./logs/Mining/Base_Coin_Price.out.log",
-      "error_file": "./logs/Mining/Base_Coin_Price.err.log",
+      "out_file": "./logs/Exchange/Base_Coin_Price.out.log",
+      "error_file": "./logs/Exchange/Base_Coin_Price.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]
