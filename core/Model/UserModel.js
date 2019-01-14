@@ -116,7 +116,7 @@ class UserModel {
                             type: "phone",
                             phone_number: each.phone_number,
                             area_code: each.area_code,
-                            msg: "User " + userId + " Deposite " + unit + " : " + amount
+                            msg: "User " + userId + " Withdraw " + unit + " : " + amount
                         });
                 }));
             }
