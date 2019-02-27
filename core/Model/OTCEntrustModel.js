@@ -14,7 +14,7 @@ class OTCEntrustModel {
 
     }
 
-    async getEntrustByID(entrust_id, type, refresh = false) {
+    async getEntrustByID(entrust_id, refresh = false) {
         let cnt = await DB.cluster('slave');
         let entrust = null;
         try {
@@ -27,6 +27,7 @@ class OTCEntrustModel {
                     min_trade_amount,
                     trade_fee_rate,
                     trade_type,
+                    status,
                     min_trade_amount*price as min_money,
                     remaining_amount*price as max_money,
                     support_payments_id,valid_duration,
@@ -34,7 +35,7 @@ class OTCEntrustModel {
                     secret_remark,
                     create_time 
                     from m_otc_entrust
-                    where id={0}) entrust
+                    where id= {0} ) entrust
                     left join 
                     (select user_id,(case when full_name is null or full_name ="" then email else full_name end) name from m_user) a
                     on a.user_id =entrust.ad_user_id`;
@@ -44,6 +45,7 @@ class OTCEntrustModel {
                 entrust.support_payments_id = entrust.support_payments_id.split(',');
                 let ckey = (entrust.trade_type === 1 ? config.cacheKey.Buy_Entrust_OTC : config.cacheKey.Sell_Entrust_OTC) + entrust.coin_id;
                 let ckey_all = (entrust.trade_type === 1 ? config.cacheKey.Buy_Entrust_OTC : config.cacheKey.Sell_Entrust_OTC) + "all";
+                let ckey_user = config.cacheKey.Entrust_OTC_UserId + entrust.ad_user_id;
                 let cache = await Cache.init(config.cacheDB.otc);
                 if (await cache.exists(ckey)) {
                     if (entrust.remaining_amount > 0) {
@@ -59,6 +61,14 @@ class OTCEntrustModel {
                         await cache.hdel(ckey_all, entrust.id);
                     }
                 }
+                if (await cache.exists(ckey_user)) {
+                    if (entrust.remaining_amount > 0) {
+                        await cache.hset(ckey_user, entrust.id, entrust);
+                    } else {
+                        await cache.hdel(ckey_user, entrust.id);
+                    }
+                }
+                await cache.close();
             }
             return entrust;
         } catch (error) {
