@@ -8,7 +8,6 @@ let UserAlertModel = require('../../Model/UserAlertModel');
 let UserModel = require('../../Model/UserModel');
 let TransferFeesLogModel = require('../../Model/TransferFeesLogModel');
 let AssetsLogModel = require('../../Model/AssetsLogModel');
-
 // *    *    *    *    *    *
 // ┬    ┬    ┬    ┬    ┬    ┬
 // │    │    │    │    │    │
@@ -21,10 +20,13 @@ let AssetsLogModel = require('../../Model/AssetsLogModel');
 
 try {
     let rule = new schedule.RecurrenceRule();
-    let times = [1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56];
+    let times = [1, 6,8,9,10, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56];
     rule.minute = times;
     let isRun = false;
-    schedule.scheduleJob(rule, async () => {
+
+    schedule.scheduleJob('1 * * * * *', async () => {
+
+    // schedule.scheduleJob(rule, async () => {
         if (isRun) {
             return;
         }
@@ -119,6 +121,10 @@ try {
                             console.error('钱包余额不足：totalWalletAmount:' + totalWalletAmount + ' trade_amount:' + item.trade_amount);
                             return;
                         }
+
+                        //sleep for 1 second to decrease the frequency.
+                        await setTimeout[Object.getOwnPropertySymbols(setTimeout)[0]](1000);
+
                         let secret = gttCoin.main_block_address_private_key;
                         let txObj = await gttService.sendSignedTransaction(gttCoin.main_block_address, item.to_block_address, item.trade_amount, secret);
                         if (txObj && txObj.id) {
