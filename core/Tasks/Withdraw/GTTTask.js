@@ -115,14 +115,15 @@ try {
                 }
                 //内部提现转账 end
                 if (transWithdrawList && transWithdrawList.length > 0) {
-                    await Promise.all(transWithdrawList.map(async (item) => {
+                    for (let i in transWithdrawList){
+                        let item= transWithdrawList[i];
                         let totalWalletAmount = await gttService.getBalance(gttCoin.main_block_address);
                         if (totalWalletAmount < Utils.add(item.trade_amount, 0.0004)) {
                             console.error('钱包余额不足：totalWalletAmount:' + totalWalletAmount + ' trade_amount:' + item.trade_amount);
                             return;
                         }
 
-                        //sleep for 1 second to decrease the frequency.
+                        // sleep for 1 second to decrease the frequency.
                         await setTimeout[Object.getOwnPropertySymbols(setTimeout)[0]](1000);
 
                         let secret = gttCoin.main_block_address_private_key;
@@ -132,8 +133,7 @@ try {
                             let res = await WithdrawModel.setTxIdById(txObj.id, item.user_withdraw_id);
                             console.log(txObj.id, item.trade_amount);
                         }
-
-                    }));
+                    }
                 }
             }
         } catch (error) {
