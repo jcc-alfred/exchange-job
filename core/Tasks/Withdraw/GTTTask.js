@@ -24,7 +24,7 @@ try {
     rule.minute = times;
     let isRun = false;
 
-    schedule.scheduleJob('1 * * * * *', async () => {
+    schedule.scheduleJob('* * * * * *', async () => {
 
     // schedule.scheduleJob(rule, async () => {
         if (isRun) {
@@ -127,12 +127,20 @@ try {
                         await setTimeout[Object.getOwnPropertySymbols(setTimeout)[0]](1000);
 
                         let secret = gttCoin.main_block_address_private_key;
-                        let txObj = await gttService.sendSignedTransaction(gttCoin.main_block_address, item.to_block_address, item.trade_amount, secret);
-                        if (txObj && txObj.id) {
-                            // 修改数据库
-                            let res = await WithdrawModel.setTxIdById(txObj.id, item.user_withdraw_id);
-                            console.log(txObj.id, item.trade_amount);
+                        try {
+                            let txObj = await gttService.sendSignedTransaction(gttCoin.main_block_address, item.to_block_address, item.trade_amount, secret);
+                            if (txObj && txObj.id) {
+                                // 修改数据库
+                                let res = await WithdrawModel.setTxIdById(txObj.id, item.user_withdraw_id);
+                                console.log(txObj.id, item.trade_amount);
+                            }
+                        }catch (e) {
+                            if (e.statusCode==400){
+                                let res = await WithdrawModel.failWithdraw(item);
+                            }
+                            console.error(e)
                         }
+                        
                     }
                 }
             }

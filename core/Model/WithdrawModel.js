@@ -94,6 +94,36 @@ class WithdrawModel{
             throw error
         }
     }
+    async failWithdraw(withdraw){
+        let cnt = await DB.cluster('master');
+        try {
+            let confirmStatus = 3;
+            let confirmStatusName ='提现失败';
+            await cnt.transaction();
+            //修改提现记录状态
+            let res = await cnt.edit('m_user_withdraw',
+                {
+                    confirm_status:confirmStatus,
+                    confirm_status_name:confirmStatusName,
+                    confirm_time: moment().format('YYYY-MM-DD HH:mm:ss')
+                },
+                {
+                    user_withdraw_id:withdraw.user_withdraw_id
+                }
+            );
+            let updAssets = await cnt.execQuery(`update m_user_assets set balance = balance + ? , available = available + ? 
+                where user_id = ? and coin_id = ?`,[withdraw.submit_amount,withdraw.submit_amount,withdraw.user_id,withdraw.coin_id]);
+            if(res.affectedRows && updAssets.affectedRows){
+                await cnt.commit();
+                return true
+            }else {
+                await cnt.rollback();
+                return false
+            }
+        } catch (error) {
+            throw error
+        }
+    }
     /**
      * 内部转账
      */
