@@ -29,7 +29,7 @@ class WithdrawModel{
         try {
             let cnt = await DB.cluster('slave');
             let sql = `select count(1) from m_user_withdraw where coin_id=? and confirm_status = 1 and (txid = '' or txid is null) and record_status=1`;
-            let res = cnt.execScalar(sql,[coinId]);
+            let res = await cnt.execScalar(sql,[coinId]);
             cnt.close();
             return res;
         } catch (error) {
@@ -39,7 +39,7 @@ class WithdrawModel{
     async setTxIdByCoinIdBlockAddrList(txid,coinId,blockAddrList){
         try {
             let cnt = await DB.cluster('master');
-            let res = cnt.execQuery(`update m_user_withdraw set txid = ?
+            let res = await cnt.execQuery(`update m_user_withdraw set txid = ?
             where coin_id = ? and to_block_address in (?)`,[txid,coinId,blockAddrList]);
             cnt.close();
             return res;
@@ -50,10 +50,20 @@ class WithdrawModel{
     async setTxIdById(txid,userWithdrawId){
         try {
             let cnt = await DB.cluster('master');
-            let res = cnt.execQuery(`update m_user_withdraw set txid = ?
+            let res = await cnt.execQuery(`update m_user_withdraw set txid = ?
             where user_withdraw_id = ?`,[txid,userWithdrawId]);
             cnt.close();
             return res;
+        } catch (error) {
+            throw error
+        }
+    }
+    async getCoinWithdrawSumary(coin_id,date=moment().format('YYYY-MM-DD')){
+        try {
+            let cnt = await DB.cluster('slave');
+            let res = await cnt.execQuery(`select COALESCE(sum(submit_amount),0) as withdraw_amount, count(1) as count , count(distinct user_id) as unique_user from m_user_withdraw where coin_id = ? and txid !="" and confirm_status =2 and date(update_time)=?`,[coin_id,date]);
+            cnt.close();
+            return res[0];
         } catch (error) {
             throw error
         }
@@ -62,7 +72,7 @@ class WithdrawModel{
         try {
             let cnt = await DB.cluster('slave');
             let sql = `select * from m_user_withdraw where coin_id in (?) and confirm_status = 1 and txid != '' and txid is not null and record_status = 1`;
-            let res = cnt.execQuery(sql,[coinIdList]);
+            let res = await cnt.execQuery(sql,[coinIdList]);
             cnt.close();
             return res;
         } catch (error) {

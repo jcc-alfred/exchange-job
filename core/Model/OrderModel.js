@@ -26,6 +26,18 @@ class OrderModel {
             throw error;
         }
     }
+    async getcoin_exchange_amount(coin_exchange_id,date=moment().format('YYYY-MM-DD')){
+        let cnt= await DB.cluster('slave');
+        try {
+            let sql= 'select COALESCE(sum(trade_amount),0) as trade_amount ,count(1) as count from m_order where coin_exchange_id = ? and (buy_user_id!=2 or sell_user_id!=2) and date(create_time)=?';
+            let res = await cnt.execQuery(sql,[coin_exchange_id,date]);
+            return res[0]
+        }catch (e) {
+            throw e;
+        }finally {
+            await cnt.close()
+        }
+    }
 
     async getPre24HPriceByCoinExchangeId(coin_exchange_id) {
         try {
@@ -166,7 +178,7 @@ class OrderModel {
         try {
             let cnt = await DB.cluster('master');
             let sql = `update m_order set proc_bonus_status = 2 where order_id <= ?`;
-            let res = cnt.execQuery(sql, max_order_id);
+            let res = await cnt.execQuery(sql, max_order_id);
             cnt.close();
             return res;
         } catch (error) {

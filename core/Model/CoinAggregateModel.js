@@ -13,7 +13,7 @@ class CoinAggregateModel{
         try {
             let cnt = await DB.cluster('slave');
             let sql = `select * from m_coin_aggregate where txid=?`;
-            let res = cnt.execQuery(sql,[txId]);
+            let res = await cnt.execQuery(sql,[txId]);
             cnt.close();
             return res;
         } catch (error) {

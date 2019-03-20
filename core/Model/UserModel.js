@@ -14,7 +14,7 @@ class UserModel {
         try {
             let cnt = await DB.cluster('slave');
             let sql = `select count(1) from m_user where record_status=1`
-            let res = cnt.execScalar(sql)
+            let res = await cnt.execScalar(sql)
             cnt.close();
             return res;
         } catch (error) {

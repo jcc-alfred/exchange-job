@@ -4,6 +4,8 @@ const config = {
     coinmarket_secret:'c236b6e8-ede0-40a8-9a66-e60a039aff80',
     currency_api: 'https://openexchangerates.org/api/latest.json',
     currency_app_id:'e1a28f4ff94b410787a1a3e581dc468c',
+    report_emails:['jie.xiao@gtdollar.com'],
+
     Sys_Notifications:[
         {
             area_code:"65",

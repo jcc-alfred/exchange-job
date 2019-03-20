@@ -15,7 +15,7 @@ class DepositModel{
         try {
             let cnt = await DB.cluster('slave');
             let sql = `select * from m_user_deposit where txid=?`;
-            let res = cnt.execQuery(sql,[txid]);
+            let res = await cnt.execQuery(sql,[txid]);
             cnt.close();
             return res;
         } catch (error) {
@@ -27,7 +27,7 @@ class DepositModel{
         try {
             let cnt = await DB.cluster('slave');
             let sql = `select * from m_user_deposit where coin_id in (?) and confirm_status = 0 and record_status = 1`;
-            let res = cnt.execQuery(sql,[coinIdList]);
+            let res = await cnt.execQuery(sql,[coinIdList]);
             cnt.close();
             return res;
         } catch (error) {
@@ -35,11 +35,23 @@ class DepositModel{
             throw error; 
         }
     }
+    async getDepostSumarybyCoinIdDate(coin_id,date=moment().format('YYYY-MM-DD')){
+        let cnt = await DB.cluster('slave');
+        try {
+            let sql = `select count(distinct(user_id)) as distinct_user, count(1) as count, COALESCE(sum(trade_amount),0) as total_deposit_amount,coin_id from m_user_deposit where date(confirm_time)=? and coin_id =? `;
+            let res = await cnt.execQuery(sql,[coin_id,date]);
+            return res[0];
+        } catch (error) {
+            throw error;
+        }finally {
+            cnt.close();
+        }
+    }
     async getDepositListByTxIdList(txidList){
         try {
             let cnt = await DB.cluster('slave');
             let sql = `select * from m_user_deposit where txid in (?)`;
-            let res = cnt.execQuery(sql,[txidList]);
+            let res = await cnt.execQuery(sql,[txidList]);
             cnt.close();
             return res;
         } catch (error) {
