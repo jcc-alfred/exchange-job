@@ -22,7 +22,7 @@ let config = require('../../Base/config');
 
 try {
     let isRun = false;
-    let job = schedule.scheduleJob('* * * * * *', async () => {
+    let job = schedule.scheduleJob('0 0 1 * * *', async () => {
         if (isRun) {
             return;
         }
