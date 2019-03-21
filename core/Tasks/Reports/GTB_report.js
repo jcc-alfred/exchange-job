@@ -25,7 +25,9 @@ let ejs = require('ejs');
 try {
     let isRun = false;
     let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-        if (isRun) {
+        // let job = schedule.scheduleJob('0 50 23 * * *', async () => {
+
+            if (isRun) {
             return;
         }
         isRun = true;

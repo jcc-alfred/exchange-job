@@ -182,7 +182,7 @@
     },
     {
       "name": "GTB_report",
-      "script": "./core/Tasks/Reports/OTC/GTB_report.js",
+      "script": "./core/Tasks/Reports/GTB_report.js",
       "exec_mode": "fork",
       "merge_logs": true,
       "out_file": "./logs/Reports/GTB_report.out.log",
