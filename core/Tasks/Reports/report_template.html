@@ -1,0 +1,145 @@
+<html>
+<head>
+    <title>Table Data Addition</title>
+    <meta charset="utf-8">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>-->
+</head>
+<style type="text/css">
+    td, th {
+        padding: 5px;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<body>
+<h1><%= date %> GTB交易所数据统计</h1>
+<div class="container">
+    <h2 style="margin-top: 10px">GTB解锁总共数据</h2>
+    <table id="GTB_UNLOCK_TOTAL_table" data-height=80>
+        <thead>
+        <tr>
+            <th data-field="startDate">开始日期</th>
+            <th data-field="endDate">结束日期</th>
+            <th data-field="unlockTimes">解锁次数</th>
+            <th data-field="unlockAmount">解锁数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><%= GTB_UNLOCK_TOTAL.startDate %></td>
+            <td><%= GTB_UNLOCK_TOTAL.endDate %></td>
+            <td><%= GTB_UNLOCK_TOTAL.unlockTimes %></td>
+            <td><%= GTB_UNLOCK_TOTAL.unlockAmount %></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 style="margin-top: 10px">GTB当日解锁数据</h2>
+    <table id="GTB_UNLOCK_DAY_table" data-height=80>
+        <thead>
+        <tr>
+            <th data-field="startDate">开始日期</th>
+            <th data-field="endDate">结束日期</th>
+            <th data-field="unlockTimes">解锁次数</th>
+            <th data-field="unlockAmount">解锁数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><%= GTB_UNLOCK_DAY.startDate %></td>
+            <td><%= GTB_UNLOCK_DAY.endDate %></td>
+            <td><%= GTB_UNLOCK_DAY.unlockTimes %></td>
+            <td><%= GTB_UNLOCK_DAY.unlockAmount %></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 style="margin-top: 10px">GTB存币数据</h2>
+    <table id="GTB_DEPOSIT_DAY_table" data-height=80>
+        <thead>
+        <tr>
+            <th data-field="distinct_user">用户数</th>
+            <th data-field="count">次数</th>
+            <th data-field="total_deposit_amount">存币数额</th>
+            <th data-field="coin_id">货币id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><%= GTB_DEPOSIT_DAY.distinct_user %></td>
+            <td><%= GTB_DEPOSIT_DAY.count %></td>
+            <td><%= GTB_DEPOSIT_DAY.total_deposit_amount %></td>
+            <td><%= GTB_DEPOSIT_DAY.coin_id %></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 style="margin-top: 10px">GTB/GTT交易额数据</h2>
+    <table id="GTB_TRASACTION_DAY_table" data-height=80>
+        <thead>
+        <tr>
+            <th data-field="trade_amount">交易额</th>
+            <th data-field="count">次数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><%= GTB_TRASACTION_DAY.trade_amount %></td>
+            <td><%= GTB_TRASACTION_DAY.count %></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 style="margin-top: 10px">GTT提现数据</h2>
+    <table id="GTB_WITHDRAW_DAY_table" data-height=80>
+        <thead>
+        <tr>
+            <th data-field="withdraw_amount">提现数额</th>
+            <th data-field="count">次数</th>
+            <th data-field="unique_user">用户数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><%= GTB_WITHDRAW_DAY.withdraw_amount %></td>
+            <td><%= GTB_WITHDRAW_DAY.count %></td>
+            <td><%= GTB_WITHDRAW_DAY.unique_user %></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--<script type="text/javascript">-->
+<!--var GTB_UNLOCK_TOTAL =[-->
+<!--{0}];-->
+<!--var GTB_UNLOCK_DAY =[-->
+<!--{1}];-->
+<!--var GTB_DEPOSIT_DAY =[-->
+<!--{2}];-->
+<!--var GTB_TRASACTION_DAY=[-->
+<!--{3}];-->
+<!--var GTB_WITHDRAW_DAY =[-->
+<!--{4}];-->
+
+<!--$(function () {-->
+<!--$('#GTB_UNLOCK_TOTAL_table').bootstrapTable({-->
+<!--data: GTB_UNLOCK_TOTAL-->
+<!--});-->
+<!--$('#GTB_UNLOCK_DAY_table').bootstrapTable({-->
+<!--data: GTB_UNLOCK_DAY-->
+<!--});-->
+<!--$('#GTB_DEPOSIT_DAY_table').bootstrapTable({-->
+<!--data: GTB_DEPOSIT_DAY-->
+<!--});-->
+<!--$('#GTB_TRASACTION_DAY_table').bootstrapTable({-->
+<!--data: GTB_TRASACTION_DAY-->
+<!--});-->
+<!--$('#GTB_WITHDRAW_DAY_table').bootstrapTable({-->
+<!--data: GTB_WITHDRAW_DAY-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+</body>
+</html>

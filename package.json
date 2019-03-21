@@ -26,6 +26,8 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "web3": "^1.0.0-beta.34",
-    "nodemailer": "^5.1.1"
+    "nodemailer": "^5.1.1",
+    "fs": "^0.0.1-security",
+    "ejs": "^2.6.1"
   }
 }

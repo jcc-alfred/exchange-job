@@ -9,6 +9,8 @@ let OrderModel = require('../../Model/OrderModel');
 let moment = require('moment');
 let SystemModel = require('../../Model/SystemModel');
 let config = require('../../Base/config');
+let fs = require('fs');
+let ejs = require('ejs');
 
 // *    *    *    *    *    *
 // ┬    ┬    ┬    ┬    ┬    ┬
@@ -22,7 +24,7 @@ let config = require('../../Base/config');
 
 try {
     let isRun = false;
-    let job = schedule.scheduleJob('0 0 1 * * *', async () => {
+    let job = schedule.scheduleJob('0 50 23 * * *', async () => {
         if (isRun) {
             return;
         }
@@ -38,84 +40,29 @@ try {
             },
             json:true
         });
-        let list = Object.entries(GTB_unlock_Data['data']['allData']);
-        let p="";
-        let content ="";
-        for (let i in list){
-            p=p+Utils.formatString('<p>{0}</p>',[list[i][0]+":"+list[i][1]])
-        }
-        content = content+ "<br><div class='data'>"+"<h2>GTB解锁总共数据</h2>"+p +"</div>";
 
-        list = Object.entries(GTB_unlock_Data['data']['filterData']);
-        p="";
-        for (let i in list){
-            p=p+Utils.formatString('<p>{0}</p>',[list[i][0]+":"+list[i][1]])
-        }
-        content = content+"<br><div class='data'>"+Utils.formatString("<h2>GTB解锁数据{0}-{1}</h2>",[GTB_unlock_Data['data']['filterData']['startDate'],GTB_unlock_Data['data']['filterData']['endDate']])+p +"</div>";
 
         let coin_list = await CoinModel.getCoinList();
         let GTB_Coin= coin_list.find(i=>i.coin_name==="GTB");
         let GTT_Coin= coin_list.find(i=>i.coin_name==="GTT");
         let GTB_Deposit =await DepositModel.getDepostSumarybyCoinIdDate(GTB_Coin.coin_id,date);
-        list = Object.entries(GTB_Deposit);
-        p="";
-        for (let i in list){
-            p=p+Utils.formatString('<p>{0}</p>',[list[i][0]+":"+list[i][1]])
-        }
-        content = content+"<br><div class='data'>"+Utils.formatString("<h2>GTB存币数据 {0}</h2>",[date])+p +"</div>";
-
 
         let coin_exchange_list = await CoinModel.getCoinExchangeList();
         let GTB_GTT= coin_exchange_list.find(i=> i.coin_id===GTB_Coin.coin_id&& i.exchange_coin_id===GTT_Coin.coin_id);
         let GTB_GTT_transaction_sumary= await OrderModel.getcoin_exchange_amount(GTB_GTT.coin_exchange_id,date);
-        list = Object.entries(GTB_GTT_transaction_sumary);
-        p="";
-        for (let i in list){
-            p=p+Utils.formatString('<p>{0}</p>',[list[i][0]+":"+list[i][1]])
-        }
-        content = content+"<br><div class='data'>"+Utils.formatString("<h2>GTB/GTT交易额数据 {0}</h2>",[date])+p +"</div>";
-        let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id,date);
-        list = Object.entries(GTT_Withdraw);
-        p="";
-        for (let i in list){
-            p=p+Utils.formatString('<p>{0}</p>',[list[i][0]+":"+list[i][1]])
-        }
-        content = content+"<br><div class='data'>"+Utils.formatString("<h2>GTT提币数据 {0}</h2>",[date])+p +"</div>";
-        let html = '<!DOCTYPE html>' +
-            '<html>' +
-            '<head>' +
-            '<title>{0} GTB交易所数据统计</title>' +
-            '</head>' +
-            '<style type="text/css">' +
-            'body { align-items: center;background-color: white }' +
-            'h1,h2 {text-align: center;}' +
-            'table {' +
-            'margin-left: 50%;' +
-            '}' +
-            'table, th,td{' +
-            'border:1px solid blue;' +
-            'border-collapse: collapse;' +
-            '}' +
-            '' +
-            '.data {' +
-            'border:1px solid blue;' +
-            'display: inline-block;' +
-            'margin-left: 50%' +
-            '}' +
-            '.data p,h2 {' +
-            'text-align: center;' +
-            'border-bottom:1px solid blue;' +
-            'margin: unset;' +
-            '}' +
-            '' +
-            '</style>' +
-            '<body>' +
-            '<h1>{1} GTB交易所数据统计</h1>' +
-            '{2}' +
-            '</body>' +
-            '</html>'
 
-        html = Utils.formatString(html,[date,date,content]);
+        let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id,date);
+
+        let html = fs.readFileSync('report_template.html',{encoding: 'utf-8'});
+
+        let email_content = ejs.render(html,{
+            GTB_UNLOCK_TOTAL:GTB_unlock_Data['data']['allData'],
+            GTB_UNLOCK_DAY:GTB_unlock_Data['data']['filterData'],
+            GTB_DEPOSIT_DAY:GTB_Deposit,
+            GTB_TRASACTION_DAY:GTB_GTT_transaction_sumary,
+            GTB_WITHDRAW_DAY:GTT_Withdraw,
+            date:date
+        });
 
 
 
@@ -148,7 +95,7 @@ try {
             let email = config.report_emails[i];
             try {
                 sendResult = await MailUtils.sendMail({
-                    to: email,
+                    to: email_content,
                     title: Utils.formatString("{0} GTB交易所数据统计",[date]),
                     text: '',
                     html: html
