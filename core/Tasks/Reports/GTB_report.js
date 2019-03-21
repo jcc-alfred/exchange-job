@@ -92,13 +92,13 @@ try {
 
         MailUtils.init(host, port, secure, secureConnection, user, pass, mailFrom);
         for (let i in config.report_emails){
-            let email = config.report_emails[i];
+            let toemail = config.report_emails[i];
             try {
                 sendResult = await MailUtils.sendMail({
-                    to: email_content,
+                    to: toemail,
                     title: Utils.formatString("{0} GTB交易所数据统计",[date]),
                     text: '',
-                    html: html
+                    html: email_content
                 })
             }
             catch (error) {
