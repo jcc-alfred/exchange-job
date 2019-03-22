@@ -25,48 +25,47 @@ let ejs = require('ejs');
 try {
     let isRun = false;
     let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-        // let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-
-            if (isRun) {
+    // let job = schedule.scheduleJob('* * * * * *', async () => {
+        if (isRun) {
             return;
         }
         isRun = true;
-        let date= moment().format('YYYY-MM-DD');
+        // let date= moment().format('YYYY-MM-DD');
+        let date = '2019-03-21';
+        console.log(Utils.formatString("ruh report for date : {0}", [date]));
 
-        let GTB_unlock_Data= await rp({
-            method:'POST',
-            uri:'https://www.gttdollar.com:8090/gtb/unlock-analysis',
-            body:{
-                startDate:date,
-                endDate:date
+        let GTB_unlock_Data = await rp({
+            method: 'POST',
+            uri: 'https://www.gttdollar.com:8090/gtb/unlock-analysis',
+            formData: {
+                startDate: date,
+                endDate: date
             },
-            json:true
+            json: true
         });
 
 
         let coin_list = await CoinModel.getCoinList();
-        let GTB_Coin= coin_list.find(i=>i.coin_name==="GTB");
-        let GTT_Coin= coin_list.find(i=>i.coin_name==="GTT");
-        let GTB_Deposit =await DepositModel.getDepostSumarybyCoinIdDate(GTB_Coin.coin_id,date);
+        let GTB_Coin = coin_list.find(i => i.coin_name === "GTB");
+        let GTT_Coin = coin_list.find(i => i.coin_name === "GTT");
+        let GTB_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(GTB_Coin.coin_id, date);
 
         let coin_exchange_list = await CoinModel.getCoinExchangeList();
-        let GTB_GTT= coin_exchange_list.find(i=> i.coin_id===GTB_Coin.coin_id&& i.exchange_coin_id===GTT_Coin.coin_id);
-        let GTB_GTT_transaction_sumary= await OrderModel.getcoin_exchange_amount(GTB_GTT.coin_exchange_id,date);
+        let GTB_GTT = coin_exchange_list.find(i => i.coin_id === GTB_Coin.coin_id && i.exchange_coin_id === GTT_Coin.coin_id);
+        let GTB_GTT_transaction_sumary = await OrderModel.getcoin_exchange_amount(GTB_GTT.coin_exchange_id, date);
 
-        let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id,date);
+        let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id, date);
 
-        let html = fs.readFileSync('report_template.html',{encoding: 'utf-8'});
+        let html = fs.readFileSync('report_template.html', {encoding: 'utf-8'});
 
-        let email_content = ejs.render(html,{
-            GTB_UNLOCK_TOTAL:GTB_unlock_Data['data']['allData'],
-            GTB_UNLOCK_DAY:GTB_unlock_Data['data']['filterData'],
-            GTB_DEPOSIT_DAY:GTB_Deposit,
-            GTB_TRASACTION_DAY:GTB_GTT_transaction_sumary,
-            GTB_WITHDRAW_DAY:GTT_Withdraw,
-            date:date
+        let email_content = ejs.render(html, {
+            GTB_UNLOCK_TOTAL: GTB_unlock_Data['data']['allData'],
+            GTB_UNLOCK_DAY: GTB_unlock_Data['data']['filterData'],
+            GTB_DEPOSIT_DAY: GTB_Deposit,
+            GTB_TRASACTION_DAY: GTB_GTT_transaction_sumary,
+            GTB_WITHDRAW_DAY: GTT_Withdraw,
+            date: date
         });
-
-
 
 
         let mailConfig = await SystemModel.getSysConfigByTypeId(3);
@@ -93,22 +92,22 @@ try {
         }).config_value;
 
         MailUtils.init(host, port, secure, secureConnection, user, pass, mailFrom);
-        for (let i in config.report_emails){
+        for (let i in config.report_emails) {
             let toemail = config.report_emails[i];
             try {
                 sendResult = await MailUtils.sendMail({
                     to: toemail,
-                    title: Utils.formatString("{0} GTB交易所数据统计",[date]),
+                    title: Utils.formatString("{0} GTB交易所数据统计", [date]),
                     text: '',
                     html: email_content
-                })
+                });
+                console.log("Send Report Mail successfully")
             }
             catch (error) {
                 console.log(error);
                 sendResult = false;
             }
         }
-
 
         isRun = false;
 
