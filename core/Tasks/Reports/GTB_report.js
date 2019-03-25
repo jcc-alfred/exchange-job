@@ -24,6 +24,7 @@ let ejs = require('ejs');
 
 try {
     let isRun = false;
+    let File_DIR= __dirname;
     let job = schedule.scheduleJob('0 50 23 * * *', async () => {
     // let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
@@ -56,7 +57,7 @@ try {
 
         let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id, date);
 
-        let html = fs.readFileSync('report_template.html', {encoding: 'utf-8'});
+        let html = fs.readFileSync(File_DIR+'/report_template.html', {encoding: 'utf-8'});
 
         let email_content = ejs.render(html, {
             GTB_UNLOCK_TOTAL: GTB_unlock_Data['data']['allData'],
