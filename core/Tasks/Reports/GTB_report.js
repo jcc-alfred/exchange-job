@@ -31,8 +31,8 @@ try {
             return;
         }
         isRun = true;
-        // let date= moment().format('YYYY-MM-DD');
-        let date = '2019-03-21';
+        let date= moment().format('YYYY-MM-DD');
+        // let date = '2019-03-28';
         console.log(Utils.formatString("ruh report for date : {0}", [date]));
 
         let GTB_unlock_Data = await rp({
@@ -109,7 +109,6 @@ try {
                 sendResult = false;
             }
         }
-
         isRun = false;
 
 
