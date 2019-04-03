@@ -125,6 +125,35 @@ class OTCEntrustModel {
             cnt.close();
         }
     }
+    async getOrderByID(order_id ) {
+        let cache = await Cache.init(config.cacheDB.otc);
+        try {
+            let ckey = config.cacheKey.Order_OTC_UserId + user_id;
+            let cnt = await DB.cluster('slave');
+            let sql = 'select * from ' +
+                '(select * from m_otc_order where id={0} ) a ' +
+                'left join (select coin_name, coin_id ,type,trade_fee_rate from m_otc_exchange_area)b  ' +
+                'on a.coin_id = b.coin_id and a.trigger_type = b.type';
+            let res = await cnt.execQuery(Utils.formatString(sql, [order_id]));
+            await cnt.close();
+            if (res.length > 0) {
+                let cRes = await Promise.all(res.map(async (order) => {
+                    let ckey_other = config.cacheKey.Order_OTC_UserId + (user_id === order.buy_user_id ? order.sell_user_id : order.buy_user_id);
+                    if(await cache.exists(ckey)){
+                        await cache.hset(ckey, order.id, order);
+                    }
+                    if(await cache.exists(ckey_other)){
+                        await cache.hset(ckey_other, order.id, order);
+                    }                }));
+                return res.find(item => item.id == order_id);
+            }
+            return null
+        } catch (e) {
+            throw e;
+        } finally {
+            await cache.close();
+        }
+    }
 
     async InvalidOpenOrder(order) {
         let cnt = await DB.cluster('master');
@@ -145,7 +174,14 @@ class OTCEntrustModel {
             if (unlock_asset && update_entrust.affectedRows && update_order.affectedRows) {
                 cnt.commit();
                 //update entrust cache
+                let sql = 'select * from ' +
+                    '(select * from m_otc_order where buy_user_id = {0} or sell_user_id = {1} order by  update_time) a ' +
+                    'left join (select coin_name, coin_id ,type, trade_fee_rate from m_otc_exchange_area)b  ' +
+                    'on a.coin_id = b.coin_id and a.trigger_type = b.type';
+                let res = await cnt.execQuery(Utils.formatString(sql, [user_id, user_id]));
+
                 await this.getEntrustByID(order.entrust_id,true);
+                await this.getOrderByID(order.order_id);
                 console.log('invalid order '+order.id+' successfully');
                 return true
             } else {
@@ -159,6 +195,7 @@ class OTCEntrustModel {
             cnt.close();
         }
     }
+
 
     async getEntrustByUserID(user_id, status = null, refresh = false) {
         let cnt = await DB.cluster('slave');

@@ -69,6 +69,7 @@ const config = {
         system:0,
         order:1,
         kline:2,
+        otc: 3
     },
     cacheKey:{
         Users:'users_',                                         // 用户信息 data:15 String 用户id做索引,
@@ -91,9 +92,13 @@ const config = {
         Sys_Coin:'Sys_Coin',                                    // 所有币种 data:0 hash
         Sys_Coin_Exchange:'Sys_Coin_Exchange',                  // 所有币种交易对 data:0 hash
 
-        Sys_Coin_OTC:'Sys_Coin_OTC',                            // 所有OTC币种 data:0 hash
-        User_Assets_OTC:"User_Assets_OTC_",                     // 用户OTC资产信息 data:15 hash
-        Sell_Entrust_OTC:'Sell_Entrust_OTC_',
+        Sys_OTC_Coin: 'Sys_OTC_Coin',                            // 所有OTC币种 data:0 hash
+        User_OTC_Secret_Remark: "User_OTC_Secret_Remark",
+        User_Assets_OTC: "User_Assets_OTC_",                     // 用户OTC资产信息 data:15 hash
+        Buy_Entrust_OTC: "Buy_Entrust_OTC_",                     //买单委托OTC
+        Sell_Entrust_OTC: "Sell_Entrust_OTC_",                   //卖单委托OTC
+        Entrust_OTC_UserId: "Entrust_OTC_UserId_",               //用户委托OTC
+        Order_OTC_UserId: "Order_OTC_UserId_"                   //用户订单OTC
 
 
     },
