@@ -145,7 +145,7 @@ class OTCEntrustModel {
             if (unlock_asset && update_entrust.affectedRows && update_order.affectedRows) {
                 cnt.commit();
                 //update entrust cache
-                await this.getEntrustByID(order.entrust_id);
+                await this.getEntrustByID(order.entrust_id,true);
                 console.log('invalid order '+order.id+' successfully');
                 return true
             } else {
