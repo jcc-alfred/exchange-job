@@ -21,44 +21,126 @@
 <body>
 <h1><%= date %> GTB交易所数据统计</h1>
 <div class="container">
-    <h2 style="margin-top: 10px">GTB解锁总共数据</h2>
-    <table id="GTB_UNLOCK_TOTAL_table" data-height=80>
-        <thead>
-        <tr>
-            <th data-field="startDate">开始日期</th>
-            <th data-field="endDate">结束日期</th>
-            <th data-field="unlockTimes">解锁次数</th>
-            <th data-field="unlockAmount">解锁数量</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><%= GTB_UNLOCK_TOTAL.startDate %></td>
-            <td><%= GTB_UNLOCK_TOTAL.endDate %></td>
-            <td><%= GTB_UNLOCK_TOTAL.unlockTimes %></td>
-            <td><%= GTB_UNLOCK_TOTAL.unlockAmount %></td>
-        </tr>
-        </tbody>
-    </table>
-    <h2 style="margin-top: 10px">GTB当日解锁数据</h2>
-    <table id="GTB_UNLOCK_DAY_table" data-height=80>
-        <thead>
-        <tr>
-            <th data-field="startDate">开始日期</th>
-            <th data-field="endDate">结束日期</th>
-            <th data-field="unlockTimes">解锁次数</th>
-            <th data-field="unlockAmount">解锁数量</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><%= GTB_UNLOCK_DAY.startDate %></td>
-            <td><%= GTB_UNLOCK_DAY.endDate %></td>
-            <td><%= GTB_UNLOCK_DAY.unlockTimes %></td>
-            <td><%= GTB_UNLOCK_DAY.unlockAmount %></td>
-        </tr>
-        </tbody>
-    </table>
+    <div style="display: inline-block;">
+        <h2 style="margin-top: 10px">GTB解锁总共数据</h2>
+        <table id="GTB_UNLOCK_TOTAL_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="startDate">开始日期</th>
+                <th data-field="endDate">结束日期</th>
+                <th data-field="unlockTimes">解锁次数</th>
+                <th data-field="unlockAmount">解锁数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= GTB_UNLOCK_TOTAL.startDate %></td>
+                <td><%= GTB_UNLOCK_TOTAL.endDate %></td>
+                <td><%= GTB_UNLOCK_TOTAL.unlockTimes %></td>
+                <td><%= GTB_UNLOCK_TOTAL.unlockAmount %></td>
+            </tr>
+            </tbody>
+        </table>
+        <h2 style="margin-top: 10px">GTB当日解锁数据</h2>
+        <table id="GTB_UNLOCK_DAY_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="startDate">开始日期</th>
+                <th data-field="endDate">结束日期</th>
+                <th data-field="unlockTimes">解锁次数</th>
+                <th data-field="unlockAmount">解锁数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= GTB_UNLOCK_DAY.startDate %></td>
+                <td><%= GTB_UNLOCK_DAY.endDate %></td>
+                <td><%= GTB_UNLOCK_DAY.unlockTimes %></td>
+                <td><%= GTB_UNLOCK_DAY.unlockAmount %></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="display: inline-block;">
+        <h2 style="margin-top: 10px">FAC解锁总共数据</h2>
+        <table id="FAC_UNLOCK_TOTAL_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="startDate">开始日期</th>
+                <th data-field="endDate">结束日期</th>
+                <th data-field="unlockTimes">解锁次数</th>
+                <th data-field="unlockAmount">解锁数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= FAC_UNLOCK_TOTAL.startDate %></td>
+                <td><%= FAC_UNLOCK_TOTAL.endDate %></td>
+                <td><%= FAC_UNLOCK_TOTAL.unlockTimes %></td>
+                <td><%= FAC_UNLOCK_TOTAL.unlockAmount %></td>
+            </tr>
+            </tbody>
+        </table>
+        <h2 style="margin-top: 10px">FAC当日解锁数据</h2>
+        <table id="FAC_UNLOCK_DAY_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="startDate">开始日期</th>
+                <th data-field="endDate">结束日期</th>
+                <th data-field="unlockTimes">解锁次数</th>
+                <th data-field="unlockAmount">解锁数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= FAC_UNLOCK_DAY.startDate %></td>
+                <td><%= FAC_UNLOCK_DAY.endDate %></td>
+                <td><%= FAC_UNLOCK_DAY.unlockTimes %></td>
+                <td><%= FAC_UNLOCK_DAY.unlockAmount %></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="display: inline-block;">
+        <h2 style="margin-top: 10px">FGTB解锁总共数据</h2>
+        <table id="FGTB_UNLOCK_TOTAL_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="startDate">开始日期</th>
+                <th data-field="endDate">结束日期</th>
+                <th data-field="unlockTimes">解锁次数</th>
+                <th data-field="unlockAmount">解锁数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= FGTB_UNLOCK_TOTAL.startDate %></td>
+                <td><%= FGTB_UNLOCK_TOTAL.endDate %></td>
+                <td><%= FGTB_UNLOCK_TOTAL.unlockTimes %></td>
+                <td><%= FGTB_UNLOCK_TOTAL.unlockAmount %></td>
+            </tr>
+            </tbody>
+        </table>
+        <h2 style="margin-top: 10px">FGTB当日解锁数据</h2>
+        <table id="FGTB_UNLOCK_DAY_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="startDate">开始日期</th>
+                <th data-field="endDate">结束日期</th>
+                <th data-field="unlockTimes">解锁次数</th>
+                <th data-field="unlockAmount">解锁数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= FGTB_UNLOCK_DAY.startDate %></td>
+                <td><%= FGTB_UNLOCK_DAY.endDate %></td>
+                <td><%= FGTB_UNLOCK_DAY.unlockTimes %></td>
+                <td><%= FGTB_UNLOCK_DAY.unlockAmount %></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <h2 style="margin-top: 10px">GTB存币数据</h2>
     <table id="GTB_DEPOSIT_DAY_table" data-height=80>
         <thead>
@@ -111,35 +193,5 @@
         </tbody>
     </table>
 </div>
-<!--<script type="text/javascript">-->
-<!--var GTB_UNLOCK_TOTAL =[-->
-<!--{0}];-->
-<!--var GTB_UNLOCK_DAY =[-->
-<!--{1}];-->
-<!--var GTB_DEPOSIT_DAY =[-->
-<!--{2}];-->
-<!--var GTB_TRASACTION_DAY=[-->
-<!--{3}];-->
-<!--var GTB_WITHDRAW_DAY =[-->
-<!--{4}];-->
-
-<!--$(function () {-->
-<!--$('#GTB_UNLOCK_TOTAL_table').bootstrapTable({-->
-<!--data: GTB_UNLOCK_TOTAL-->
-<!--});-->
-<!--$('#GTB_UNLOCK_DAY_table').bootstrapTable({-->
-<!--data: GTB_UNLOCK_DAY-->
-<!--});-->
-<!--$('#GTB_DEPOSIT_DAY_table').bootstrapTable({-->
-<!--data: GTB_DEPOSIT_DAY-->
-<!--});-->
-<!--$('#GTB_TRASACTION_DAY_table').bootstrapTable({-->
-<!--data: GTB_TRASACTION_DAY-->
-<!--});-->
-<!--$('#GTB_WITHDRAW_DAY_table').bootstrapTable({-->
-<!--data: GTB_WITHDRAW_DAY-->
-<!--});-->
-<!--});-->
-<!--</script>-->
 </body>
 </html>

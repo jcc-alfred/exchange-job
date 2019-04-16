@@ -24,18 +24,18 @@ let ejs = require('ejs');
 
 try {
     let isRun = false;
-    let File_DIR= __dirname;
+    let File_DIR = __dirname;
     let job = schedule.scheduleJob('0 50 23 * * *', async () => {
     // let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
             return;
         }
         isRun = true;
-        let date= moment().format('YYYY-MM-DD');
+        let date = moment().format('YYYY-MM-DD');
         // let date = '2019-03-28';
         console.log(Utils.formatString("ruh report for date : {0}", [date]));
 
-        let GTB_unlock_Data = await rp({
+        let unlock_Data = await rp({
             method: 'POST',
             uri: 'https://www.gttdollar.com:8090/gtb/unlock-analysis',
             formData: {
@@ -44,7 +44,6 @@ try {
             },
             json: true
         });
-
 
         let coin_list = await CoinModel.getCoinList();
         let GTB_Coin = coin_list.find(i => i.coin_name === "GTB");
@@ -57,16 +56,35 @@ try {
 
         let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id, date);
 
-        let html = fs.readFileSync(File_DIR+'/report_template.html', {encoding: 'utf-8'});
+        let html = fs.readFileSync(File_DIR + '/report_template.html', {encoding: 'utf-8'});
 
-        let email_content = ejs.render(html, {
-            GTB_UNLOCK_TOTAL: GTB_unlock_Data['data']['allData'],
-            GTB_UNLOCK_DAY: GTB_unlock_Data['data']['filterData'],
+        let data = {
+            GTB_UNLOCK_TOTAL: unlock_Data['data']['allData'],
+            GTB_UNLOCK_DAY: unlock_Data['data']['filterData'],
             GTB_DEPOSIT_DAY: GTB_Deposit,
             GTB_TRASACTION_DAY: GTB_GTT_transaction_sumary,
             GTB_WITHDRAW_DAY: GTT_Withdraw,
             date: date
-        });
+        };
+
+        if ("filterTokenDataMap" in unlock_Data['data']) {
+            if ("FAC" in unlock_Data['data']["filterTokenDataMap"]) {
+                data.FAC_UNLOCK_DAY= unlock_Data['data']["filterTokenDataMap"]["FAC"]
+
+            }
+            if ("FGTB" in unlock_Data['data']["filterTokenDataMap"]) {
+                    data.FGTB_UNLOCK_DAY= unlock_Data['data']["filterTokenDataMap"]["FGTB"]
+            }
+        }
+        if ("allTokenDataMap" in unlock_Data['data']) {
+            if ("FAC" in unlock_Data['data']["allTokenDataMap"]) {
+                    data.FAC_UNLOCK_TOTAL= unlock_Data['data']["allTokenDataMap"]["FAC"]
+            }
+            if ("FGTB" in unlock_Data['data']["allTokenDataMap"]) {
+                    data.FGTB_UNLOCK_TOTAL= unlock_Data['data']["allTokenDataMap"]["FGTB"]
+            }
+        }
+        let email_content = ejs.render(html, data);
 
 
         let mailConfig = await SystemModel.getSysConfigByTypeId(3);
