@@ -5,12 +5,14 @@ let DepositModel = require('../../Model/DepositModel');
 let MailUtils = require('../../Base/Utils/MailUtils');
 let rp = require('request-promise');
 let WithdrawModel = require('../../Model/WithdrawModel');
+let AssetsModel =require('../../Model/AssetsModel');
 let OrderModel = require('../../Model/OrderModel');
 let moment = require('moment');
 let SystemModel = require('../../Model/SystemModel');
 let config = require('../../Base/config');
 let fs = require('fs');
 let ejs = require('ejs');
+let Cache = require('../../Base/Data/Cache');
 
 // *    *    *    *    *    *
 // ┬    ┬    ┬    ┬    ┬    ┬
@@ -56,6 +58,24 @@ try {
 
         let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id, date);
 
+        let UserAssets = await AssetsModel.getUserAssetsSummary();
+        let AssetsSumary = {};
+        let cache= await Cache.init(config.cacheDB.order);
+        let coin_price = await cache.hgetall(config.cacheKey.Sys_Base_Coin_Prices);
+        await cache.select(config.cacheDB.system);
+        let gtt_price = await cache.hget(config.cacheKey.Sys_Base_Coin_Prices,'gtt');
+        coin_price[17]=gtt_price.price_usd;
+
+        await cache.close();
+        UserAssets.map(item=>{
+            AssetsSumary[item.coin_name]=item;
+            if(coin_price[item.coin_id]) {
+                AssetsSumary[item.coin_name]['price_usd'] = Utils.checkDecimal(Utils.mul(coin_price[item.coin_id], item.total_assets), 2)
+            }else {
+                AssetsSumary[item.coin_name]['price_usd'] =0
+            }
+        });
+
         let html = fs.readFileSync(File_DIR + '/report_template.html', {encoding: 'utf-8'});
 
         let data = {
@@ -64,6 +84,7 @@ try {
             GTB_DEPOSIT_DAY: GTB_Deposit,
             GTB_TRASACTION_DAY: GTB_GTT_transaction_sumary,
             GTB_WITHDRAW_DAY: GTT_Withdraw,
+            AssetsSumary:AssetsSumary,
             date: date
         };
 

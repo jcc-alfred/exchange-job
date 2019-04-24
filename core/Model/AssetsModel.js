@@ -127,6 +127,25 @@ class AssetsModel{
             throw error; 
         }
     }
+    async getUserAssetsSummary(){
+        let cnt = await DB.cluster('slave');
+        try {
+            let sql = `select * from 
+                    (select coin_id, round(sum(balance),1) as total_assets ,
+                      count(distinct user_id) as distinct_user 
+                      from m_user_assets 
+                      where user_id not in (2,9,91) and balance >0 group by  coin_id) a
+                      left join 
+                      (select coin_id, coin_name from m_coin)b 
+                      on b.coin_id = a.coin_id;`;
+            let res = await cnt.execQuery(sql);
+            return res;
+        } catch (error) {
+            throw error;
+        }finally {
+            cnt.close();
+        }
+    }
     async getUserCountByUserIdCoinId(userId,coinId){
         try {
             let cnt = await DB.cluster('slave');
