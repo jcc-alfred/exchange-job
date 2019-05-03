@@ -27,8 +27,8 @@ let Cache = require('../../Base/Data/Cache');
 try {
     let isRun = false;
     let File_DIR = __dirname;
-    // let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-    let job = schedule.scheduleJob('* * * * * *', async () => {
+    let job = schedule.scheduleJob('0 50 23 * * *', async () => {
+    // let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
             return;
         }
