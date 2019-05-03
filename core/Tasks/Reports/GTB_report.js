@@ -27,8 +27,8 @@ let Cache = require('../../Base/Data/Cache');
 try {
     let isRun = false;
     let File_DIR = __dirname;
-    let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-    // let job = schedule.scheduleJob('* * * * * *', async () => {
+    // let job = schedule.scheduleJob('0 50 23 * * *', async () => {
+    let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
             return;
         }
@@ -46,7 +46,23 @@ try {
             },
             json: true
         });
-
+        let startTime = moment(date).add(-7,'d').format('x');
+        let endTime = moment(date).format('x');
+        let res = await rp({
+            method: 'POST',
+            uri: 'http://api.gtdollar.com/insurance/dashboard',
+            formData: {
+                startTime: startTime,
+                endTime: endTime
+            },
+            json: true
+        });
+        let dica= res.payload;
+        dica.dailyStatisticsResponseList= dica.dailyStatisticsResponseList.map(function (item) {
+            item.date= moment.unix(item.dateTime/1000).format('YYYY-MM-DD');
+            return item
+        });
+        // console.log(JSON.stringify(dica));
         let coin_list = await CoinModel.getCoinList();
         let GTB_Coin = coin_list.find(i => i.coin_name === "GTB");
         let GTT_Coin = coin_list.find(i => i.coin_name === "GTT");
@@ -63,9 +79,10 @@ try {
         let cache= await Cache.init(config.cacheDB.order);
         let coin_price = await cache.hgetall(config.cacheKey.Sys_Base_Coin_Prices);
         await cache.select(config.cacheDB.system);
-        let gtt_price = await cache.hget(config.cacheKey.Sys_Base_Coin_Prices,'gtt');
-        coin_price[17]=gtt_price.price_usd;
-
+        let base_price = await cache.hgetall(config.cacheKey.Sys_Base_Coin_Prices);
+        coin_price[17]=JSON.parse(base_price.gtt).price_usd;
+        coin_price[1]=JSON.parse(base_price.btc).price_usd;
+        coin_price[3]=JSON.parse(base_price.eth).price_usd;
         await cache.close();
         UserAssets.map(item=>{
             AssetsSumary[item.coin_name]=item;
@@ -75,7 +92,14 @@ try {
                 AssetsSumary[item.coin_name]['price_usd'] =0
             }
         });
-
+        UserAssets=UserAssets.map(function (item) {
+            if(coin_price[item.coin_id]) {
+                item['price_usd'] = Utils.checkDecimal(Utils.mul(coin_price[item.coin_id], item.total_assets), 2);
+            }else {
+                item['price_usd'] = 0
+            }
+            return item
+        });
         let html = fs.readFileSync(File_DIR + '/report_template.html', {encoding: 'utf-8'});
 
         let data = {
@@ -84,8 +108,9 @@ try {
             GTB_DEPOSIT_DAY: GTB_Deposit,
             GTB_TRASACTION_DAY: GTB_GTT_transaction_sumary,
             GTB_WITHDRAW_DAY: GTT_Withdraw,
-            AssetsSumary:AssetsSumary,
-            date: date
+            UserAssets:UserAssets,
+            date: date,
+            dica:dica
         };
 
         if ("filterTokenDataMap" in unlock_Data['data']) {

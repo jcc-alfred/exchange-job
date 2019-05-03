@@ -17,11 +17,15 @@
         border: 1px solid black;
         border-collapse: collapse;
     }
+    .myblock {
+        display: inline-block;
+        margin: 10px;
+    }
 </style>
 <body>
-<h1><%= date %> GTB交易所数据统计</h1>
-<div class="container">
-    <div style="display: inline-block;">
+<div class="container" style="display:inline-block;width: 50%">
+    <h1><%= date %> GTB交易所数据统计</h1>
+    <div class="myblock">
         <h2 style="margin-top: 10px">GTB解锁总共数据</h2>
         <table id="GTB_UNLOCK_TOTAL_table" data-height=80>
             <thead>
@@ -61,7 +65,7 @@
             </tbody>
         </table>
     </div>
-    <div style="display: inline-block;">
+    <div class="myblock">
         <h2 style="margin-top: 10px">FAC解锁总共数据</h2>
         <table id="FAC_UNLOCK_TOTAL_table" data-height=80>
             <thead>
@@ -101,97 +105,104 @@
             </tbody>
         </table>
     </div>
-    <div style="display: inline-block;">
-        <h2 style="margin-top: 10px">FGTB解锁总共数据</h2>
-        <table id="FGTB_UNLOCK_TOTAL_table" data-height=80>
+    <!-- <div class="myblock"> -->
+        <!--<h2 style="margin-top: 10px">FGTB解锁总共数据</h2>-->
+        <!--<table id="FGTB_UNLOCK_TOTAL_table" data-height=80>-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th data-field="startDate">开始日期</th>-->
+                <!--<th data-field="endDate">结束日期</th>-->
+                <!--<th data-field="unlockTimes">解锁次数</th>-->
+                <!--<th data-field="unlockAmount">解锁数量</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td><%= FGTB_UNLOCK_TOTAL.startDate %></td>-->
+                <!--<td><%= FGTB_UNLOCK_TOTAL.endDate %></td>-->
+                <!--<td><%= FGTB_UNLOCK_TOTAL.unlockTimes %></td>-->
+                <!--<td><%= FGTB_UNLOCK_TOTAL.unlockAmount %></td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<h2 style="margin-top: 10px">FGTB当日解锁数据</h2>-->
+        <!--<table id="FGTB_UNLOCK_DAY_table" data-height=80>-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th data-field="startDate">开始日期</th>-->
+                <!--<th data-field="endDate">结束日期</th>-->
+                <!--<th data-field="unlockTimes">解锁次数</th>-->
+                <!--<th data-field="unlockAmount">解锁数量</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td><%= FGTB_UNLOCK_DAY.startDate %></td>-->
+                <!--<td><%= FGTB_UNLOCK_DAY.endDate %></td>-->
+                <!--<td><%= FGTB_UNLOCK_DAY.unlockTimes %></td>-->
+                <!--<td><%= FGTB_UNLOCK_DAY.unlockAmount %></td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+    <div class="myblock">
+        <h2 style="margin-top: 10px">GTB存币数据</h2>
+        <table id="GTB_DEPOSIT_DAY_table" data-height=80>
             <thead>
             <tr>
-                <th data-field="startDate">开始日期</th>
-                <th data-field="endDate">结束日期</th>
-                <th data-field="unlockTimes">解锁次数</th>
-                <th data-field="unlockAmount">解锁数量</th>
+                <th data-field="distinct_user">用户数</th>
+                <th data-field="count">次数</th>
+                <th data-field="total_deposit_amount">存币数额</th>
+                <th data-field="coin_id">货币id</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td><%= FGTB_UNLOCK_TOTAL.startDate %></td>
-                <td><%= FGTB_UNLOCK_TOTAL.endDate %></td>
-                <td><%= FGTB_UNLOCK_TOTAL.unlockTimes %></td>
-                <td><%= FGTB_UNLOCK_TOTAL.unlockAmount %></td>
-            </tr>
-            </tbody>
-        </table>
-        <h2 style="margin-top: 10px">FGTB当日解锁数据</h2>
-        <table id="FGTB_UNLOCK_DAY_table" data-height=80>
-            <thead>
-            <tr>
-                <th data-field="startDate">开始日期</th>
-                <th data-field="endDate">结束日期</th>
-                <th data-field="unlockTimes">解锁次数</th>
-                <th data-field="unlockAmount">解锁数量</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><%= FGTB_UNLOCK_DAY.startDate %></td>
-                <td><%= FGTB_UNLOCK_DAY.endDate %></td>
-                <td><%= FGTB_UNLOCK_DAY.unlockTimes %></td>
-                <td><%= FGTB_UNLOCK_DAY.unlockAmount %></td>
+                <td><%= GTB_DEPOSIT_DAY.distinct_user %></td>
+                <td><%= GTB_DEPOSIT_DAY.count %></td>
+                <td><%= GTB_DEPOSIT_DAY.total_deposit_amount %></td>
+                <td><%= GTB_DEPOSIT_DAY.coin_id %></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <h2 style="margin-top: 10px">GTB存币数据</h2>
-    <table id="GTB_DEPOSIT_DAY_table" data-height=80>
-        <thead>
-        <tr>
-            <th data-field="distinct_user">用户数</th>
-            <th data-field="count">次数</th>
-            <th data-field="total_deposit_amount">存币数额</th>
-            <th data-field="coin_id">货币id</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><%= GTB_DEPOSIT_DAY.distinct_user %></td>
-            <td><%= GTB_DEPOSIT_DAY.count %></td>
-            <td><%= GTB_DEPOSIT_DAY.total_deposit_amount %></td>
-            <td><%= GTB_DEPOSIT_DAY.coin_id %></td>
-        </tr>
-        </tbody>
-    </table>
-    <h2 style="margin-top: 10px">GTB/GTT交易额数据</h2>
-    <table id="GTB_TRASACTION_DAY_table" data-height=80>
-        <thead>
-        <tr>
-            <th data-field="trade_amount">交易额</th>
-            <th data-field="count">次数</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><%= GTB_TRASACTION_DAY.trade_amount %></td>
-            <td><%= GTB_TRASACTION_DAY.count %></td>
-        </tr>
-        </tbody>
-    </table>
-    <h2 style="margin-top: 10px">GTT提现数据</h2>
-    <table id="GTB_WITHDRAW_DAY_table" data-height=80>
-        <thead>
-        <tr>
-            <th data-field="withdraw_amount">提现数额</th>
-            <th data-field="count">次数</th>
-            <th data-field="unique_user">用户数</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><%= GTB_WITHDRAW_DAY.withdraw_amount %></td>
-            <td><%= GTB_WITHDRAW_DAY.count %></td>
-            <td><%= GTB_WITHDRAW_DAY.unique_user %></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="myblock">
+        <h2 style="margin-top: 10px">GTB/GTT交易额数据</h2>
+        <table id="GTB_TRASACTION_DAY_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="trade_amount">交易额</th>
+                <th data-field="count">次数</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= GTB_TRASACTION_DAY.trade_amount %></td>
+                <td><%= GTB_TRASACTION_DAY.count %></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="myblock">
+        <h2 style="margin-top: 10px">GTT提现数据</h2>
+        <table id="GTB_WITHDRAW_DAY_table" data-height=80>
+            <thead>
+            <tr>
+                <th data-field="withdraw_amount">提现数额</th>
+                <th data-field="count">次数</th>
+                <th data-field="unique_user">用户数</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= GTB_WITHDRAW_DAY.withdraw_amount %></td>
+                <td><%= GTB_WITHDRAW_DAY.count %></td>
+                <td><%= GTB_WITHDRAW_DAY.unique_user %></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
     <h2 style="margin-top: 10px">交易所资产数据</h2>
     <table id="AssetSumaryTable" data-height=80>
         <thead>
@@ -203,93 +214,61 @@
         </tr>
         </thead>
         <tbody>
+        <% for(var i=0; i < UserAssets.length; i++) { %>
         <tr>
-            <td><%= AssetsSumary.BTC.coin_name %></td>
-            <td><%= AssetsSumary.BTC.distinct_user %></td>
-            <td><%= AssetsSumary.BTC.total_assets %></td>
-            <td><%= AssetsSumary.BTC.price_usd %></td>
+            <td><%= UserAssets[i].coin_name %></td>
+            <td><%= UserAssets[i].distinct_user %></td>
+            <td><%= UserAssets[i].total_assets %></td>
+            <td><%= UserAssets[i].price_usd %></td>
         </tr>
-        <tr>
-            <td><%= AssetsSumary.ETH.coin_name %></td>
-            <td><%= AssetsSumary.ETH.distinct_user %></td>
-            <td><%= AssetsSumary.ETH.total_assets %></td>
-            <td><%= AssetsSumary.ETH.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.GTB.coin_name %></td>
-            <td><%= AssetsSumary.GTB.distinct_user %></td>
-            <td><%= AssetsSumary.GTB.total_assets %></td>
-            <td><%= AssetsSumary.GTB.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.TVB.coin_name %></td>
-            <td><%= AssetsSumary.TVB.distinct_user %></td>
-            <td><%= AssetsSumary.TVB.total_assets %></td>
-            <td><%= AssetsSumary.TVB.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.ISC.coin_name %></td>
-            <td><%= AssetsSumary.ISC.distinct_user %></td>
-            <td><%= AssetsSumary.ISC.total_assets %></td>
-            <td><%= AssetsSumary.ISC.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.SEV.coin_name %></td>
-            <td><%= AssetsSumary.SEV.distinct_user %></td>
-            <td><%= AssetsSumary.SEV.total_assets %></td>
-            <td><%= AssetsSumary.SEV.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.ROBO.coin_name %></td>
-            <td><%= AssetsSumary.ROBO.distinct_user %></td>
-            <td><%= AssetsSumary.ROBO.total_assets %></td>
-            <td><%= AssetsSumary.ROBO.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.ANTB.coin_name %></td>
-            <td><%= AssetsSumary.ANTB.distinct_user %></td>
-            <td><%= AssetsSumary.ANTB.total_assets %></td>
-            <td><%= AssetsSumary.ANTB.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.MEBC.coin_name %></td>
-            <td><%= AssetsSumary.MEBC.distinct_user %></td>
-            <td><%= AssetsSumary.MEBC.total_assets %></td>
-            <td><%= AssetsSumary.MEBC.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.VOTEC.coin_name %></td>
-            <td><%= AssetsSumary.VOTEC.distinct_user %></td>
-            <td><%= AssetsSumary.VOTEC.total_assets %></td>
-            <td><%= AssetsSumary.VOTEC.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.PROPB.coin_name %></td>
-            <td><%= AssetsSumary.PROPB.distinct_user %></td>
-            <td><%= AssetsSumary.PROPB.total_assets %></td>
-            <td><%= AssetsSumary.PROPB.price_usd %></td>
-
-        </tr>
-        <tr>
-            <td><%= AssetsSumary.GTT.coin_name %></td>
-            <td><%= AssetsSumary.GTT.distinct_user %></td>
-            <td><%= AssetsSumary.GTT.total_assets %></td>
-            <td><%= AssetsSumary.GTT.price_usd %></td>
-
-        </tr>
-
+        <% } %>
         </tbody>
+    </table>
+    <h2 style="margin-top: 10px">DICA总数据</h2>
+    <table id="DICA" data-height=80>
+        <thead>
+        <tr>
+            <th data-field="numberOfAuthorisedCreator">授权商家数量</th>
+            <th data-field="numberOfDICAInsuranceItems">DICA保单总数</th>
+            <th data-field="totalAmountOfDICAInsuranceItems">DICA保单总额（GTT）</th>
+            <th data-field="totalGTTRewardAmount">总共返现的GTT</th>
+            <th data-field="numberOfDICAUser">购买DICA的用户</th>
+        </tr>
+        </thead>
+        <tbody>
+        <td><%= dica.numberOfAuthorisedCreator %></td>
+        <td><%= dica.numberOfDICAInsuranceItems %></td>
+        <td><%= dica.totalAmountOfDICAInsuranceItems %></td>
+        <td><%= dica.totalGTTRewardAmount %></td>
+        <td><%= dica.numberOfDICAUser %></td>
+        </tbody>
+    </table>
 
+    <h2 style="margin-top: 10px">DICA天数据</h2>
+    <table id="DICA-daily" data-height=80>
+        <thead>
+        <tr>
+            <th data-field="date">日期</th>
+            <th data-field="numberOfDICAInsuranceItemsByDate">DICA保单总数</th>
+            <th data-field="totalAmountOfDICAInsuranceItemsByDate">DICA保单总额（GTT）</th>
+            <th data-field="totalGTTRewardAmountByDate">总共返现的GTT</th>
+            <th data-field="numberOfDICAUserByDate">购买DICA的用户</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i < dica.dailyStatisticsResponseList.length; i++) { %>
+        <tr>
+            <td><%= dica.dailyStatisticsResponseList[i].date %></td>
+            <td><%= dica.dailyStatisticsResponseList[i].numberOfDICAInsuranceItemsByDate %></td>
+            <td><%= dica.dailyStatisticsResponseList[i].totalAmountOfDICAInsuranceItemsByDate %></td>
+            <td><%= dica.dailyStatisticsResponseList[i].totalGTTRewardAmountByDate %></td>
+            <td><%= dica.dailyStatisticsResponseList[i].numberOfDICAUserByDate %></td>
+        </tr>
+        <% } %>
+        </tbody>
     </table>
 </div>
+
 </body>
 </html>
