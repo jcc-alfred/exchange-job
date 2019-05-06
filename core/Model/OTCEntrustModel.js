@@ -162,8 +162,8 @@ class OTCEntrustModel {
             cnt.transaction();
             if (order.trigger_type === 1) {
                 //如果是买币的广告，那生成order的用户是已经被冻结币了，需要解冻
-                let unlock = await cnt.execQuery('update m_user_assets set available = available + ? , frozen = frozen - ? , balance = balance + ? ' +
-                    'where user_id = ? and coin_id = ? and frozen >= ?', [order.coin_amount, order.coin_amount, order.coin_amount, order.sell_user_id, order.coin_id,order.coin_amount]);
+                let unlock = await cnt.execQuery('update m_user_assets set available = available + ? , frozen = frozen - ?  ' +
+                    'where user_id = ? and coin_id = ? and frozen >= ?', [order.coin_amount, order.coin_amount, order.sell_user_id, order.coin_id,order.coin_amount]);
                 unlock_asset = unlock.affectedRows;
             }
             // 更新对应的广告的剩余可用额度
