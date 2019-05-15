@@ -73,6 +73,10 @@ try {
 
                 }));
             }
+            if (userETHBalanceList.length>100){
+                userETHBalanceList=userETHBalanceList.slice(0,100)
+            }
+
             let userERC20BalanceList = [];//需要汇总ERC20的列表有eth余额
             let userERC20BalanceList_NoneETH = [];//需要汇总ERC20的列表没有eth余额
             await Promise.all(userETHBalanceList.map(async (userETHBalance) => {
