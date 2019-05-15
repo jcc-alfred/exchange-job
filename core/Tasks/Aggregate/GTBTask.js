@@ -25,8 +25,8 @@ let TransferFeesLogModel = require('../../Model/TransferFeesLogModel');
 try {
     var rule = new schedule.RecurrenceRule();
     var times = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-    rule.hour = times;
-    rule.minute = 0;
+    rule.minute = times;
+    rule.hour = 0;
 
     let isRun = false;
     var job = schedule.scheduleJob(rule, async () => {
@@ -76,6 +76,7 @@ try {
             if (userETHBalanceList.length>100){
                 userETHBalanceList=userETHBalanceList.slice(0,100)
             }
+            console.log(userETHBalanceList);
 
             let userERC20BalanceList = [];//需要汇总ERC20的列表有eth余额
             let userERC20BalanceList_NoneETH = [];//需要汇总ERC20的列表没有eth余额
