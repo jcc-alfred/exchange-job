@@ -1,7 +1,7 @@
 let schedule = require('node-schedule');
 let CryptoUtils = require('../../Base/Utils/CryptoUtils');
 let EthService = require('../../Base/Crypto/EthService');
-let GTTService = require('../../Base/Crypto/GTTService');
+let GTHService = require('../../Base/Crypto/GTHService');
 let CoinModel = require('../../Model/CoinModel');
 let AssetsModel = require('../../Model/AssetsModel');
 
@@ -28,7 +28,7 @@ try {
             return;
         }
         let gtbCoin = coinList.filter(coin => coin.coin_id == 8);
-        let gttList = coinList.filter(coin => coin.coin_api_type_id == 8 && coin.coin_id == 17);
+        let gttList = coinList.filter(coin => coin.coin_api_type_id == 8 && coin.coin_id == 20);
         if (!gttList) {
             isRun = false;
             return;
@@ -39,7 +39,7 @@ try {
             }
             try {
                 let ethService = new EthService(gtbCoin.wallet_ip, gtbCoin.wallet_port, gtbCoin.wallet_passphrase);
-                let gttService = new GTTService(coin.wallet_ip);
+                let gttService = new GTHService(coin.wallet_ip);
                 let userCount = await AssetsModel.getUserCountByCoinId(coin.coin_id);
                 let pageSize = 500;
                 let pageCount = Math.ceil(userCount / pageSize);

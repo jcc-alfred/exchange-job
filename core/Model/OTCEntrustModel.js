@@ -125,7 +125,21 @@ class OTCEntrustModel {
             cnt.close();
         }
     }
-    async getOrderByID(order_id ) {
+
+    async getFinishedEntrust(limit = 100) {
+        let cnt = await DB.cluster('slave');
+        try {
+            let sql = 'select id,trade_type,coin_id from m_otc_entrust where remaining_amount = 0  and status != 3 limit ?';
+            let res = await cnt.execQuery(sql, limit);
+            return res;
+        } catch (e) {
+            throw e
+        } finally {
+            cnt.close();
+        }
+    }
+
+    async getOrderByID(order_id) {
         let cache = await Cache.init(config.cacheDB.otc);
         try {
             let ckey = config.cacheKey.Order_OTC_UserId + user_id;
@@ -139,12 +153,13 @@ class OTCEntrustModel {
             if (res.length > 0) {
                 let cRes = await Promise.all(res.map(async (order) => {
                     let ckey_other = config.cacheKey.Order_OTC_UserId + (user_id === order.buy_user_id ? order.sell_user_id : order.buy_user_id);
-                    if(await cache.exists(ckey)){
+                    if (await cache.exists(ckey)) {
                         await cache.hset(ckey, order.id, order);
                     }
-                    if(await cache.exists(ckey_other)){
+                    if (await cache.exists(ckey_other)) {
                         await cache.hset(ckey_other, order.id, order);
-                    }                }));
+                    }
+                }));
                 return res.find(item => item.id == order_id);
             }
             return null
@@ -163,7 +178,7 @@ class OTCEntrustModel {
             if (order.trigger_type === 1) {
                 //如果是买币的广告，那生成order的用户是已经被冻结币了，需要解冻
                 let unlock = await cnt.execQuery('update m_user_assets set available = available + ? , frozen = frozen - ?  ' +
-                    'where user_id = ? and coin_id = ? and frozen >= ?', [order.coin_amount, order.coin_amount, order.sell_user_id, order.coin_id,order.coin_amount]);
+                    'where user_id = ? and coin_id = ? and frozen >= ?', [order.coin_amount, order.coin_amount, order.sell_user_id, order.coin_id, order.coin_amount]);
                 unlock_asset = unlock.affectedRows;
             }
             // 更新对应的广告的剩余可用额度
@@ -178,11 +193,11 @@ class OTCEntrustModel {
                     '(select * from m_otc_order where buy_user_id = {0} or sell_user_id = {1} order by  update_time) a ' +
                     'left join (select coin_name, coin_id ,type, trade_fee_rate from m_otc_exchange_area)b  ' +
                     'on a.coin_id = b.coin_id and a.trigger_type = b.type';
-                let res = await cnt.execQuery(Utils.formatString(sql, [user_id, user_id]));
+                let res = await cnt.execQuery(Utils.formatString(sql, [order.buy_user_id, order.sell_user_id]));
 
-                await this.getEntrustByID(order.entrust_id,true);
+                await this.getEntrustByID(order.entrust_id, true);
                 await this.getOrderByID(order.order_id);
-                console.log('invalid order '+order.id+' successfully');
+                console.log('invalid order ' + order.id + ' successfully');
                 return true
             } else {
                 cnt.rollback();
@@ -193,6 +208,24 @@ class OTCEntrustModel {
             throw e
         } finally {
             cnt.close();
+        }
+    }
+
+    async invalidFinishedEntrust(entrust) {
+        let cnt = await DB.cluster('master');
+        try {
+            let sql= 'update m_otc_entrust set status=2 where id=?';
+            let update_entrust = await cnt.execQuery(sql,entrust.id);
+            if(update_entrust.affectedRows>0){
+                let cacheCnt= await Cache.init(config.cacheDB.otc);
+                let ckey = (entrust.trade_type === 1 ? config.cacheKey.Buy_Entrust_OTC : config.cacheKey.Sell_Entrust_OTC) + entrust.coin_id;
+                await  cacheCnt.hdel(ckey,entrust.id);
+                await cacheCnt.close()
+            }
+        }catch (e) {
+            throw e
+        }finally {
+            await cnt.close()
         }
     }
 

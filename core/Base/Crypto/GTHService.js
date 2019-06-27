@@ -3,53 +3,58 @@ const crypto = require('crypto');
 const web3 = require('web3');
 // const querystring = require('querystring');
 
-class GTTService {
+class GTHService {
     constructor(host) {
         this.client = rp.defaults({
             baseUrl: host
         });
+        this.transactionFee=0.01;
     }
 
     async createAccount(address, secret) {
         return this.client({
             method: 'POST',
-            uri: '/api/user',
+            uri: '/wallet/create',
             form: {
-                address: address,
-                secret: secret
+                walletAddr: address,
+                hashKey: secret
             }
         });
     }
 
     async getBlockNumber() {
-        return this.client({
+        let res= await this.client({
             method: 'GET',
-            uri: '/api/getBlockNumber'
+            uri: '/transaction/getBlockNumber',
+            json:true
         });
+        return res.data
     }
 
     async getTransactionFromBlock(block) {
-        return this.client({
+        let res= await this.client({
             method: 'GET',
-            uri: '/api/getTransactionFromBlock',
+            uri: '/transaction/history/after-block',
             qs: {
-                blockNumber: block
+                blockNumber: block,
+                tokenName:'GTH'
             },
             json: true
         });
+        return res.data
     }
 
     async getBalance(address) {
         let walletBalance = await this.client({
             method: 'GET',
-            uri: '/balance',
-            headers: {
-                'User-ID': address
+            uri: '/wallet/balance',
+            qs: {
+                'walletAddr': address
             },
             json: true
         });
 
-        return walletBalance.balances.find(b => b.currency == 'GTT').amount;
+        return walletBalance.data.find(b => b.token == 'GTH').balance;
     }
 
     async getTransaction(id) {
@@ -63,17 +68,21 @@ class GTTService {
         });
     }
 
-    async sendSignedTransaction(fromAddress, toAddress, amount, secret) {
+    async sendSignedTransaction(fromAddress, toAddress, amount, secret,tokenName='GTH') {
         const body = {
-            fromAddress,
-            toAddress,
-            amount,
-            remarks: 'asiaedx.com'
+            tokenName:tokenName,
+            from:fromAddress,
+            to:toAddress,
+            value:amount-this.transactionFee,
+            note: 'asiaedx.com'
         };
-        const payload = "fromAddress=" + body.fromAddress + "&" +
-            "toAddress=" + body.toAddress + "&" +
-            "amount=" + body.amount + "&" +
-            "remarks=" + body.remarks;
+        // const payload = querystring.stringify(body);
+        const payload =
+            "tokenName=" + body.tokenName + "&"+
+            "from=" + body.from + "&" +
+            "to=" + body.to + "&" +
+            "value=" + body.value + "&" +
+            "note=" + body.note;
 
         const signature = crypto
             .createHmac('sha256', secret)
@@ -83,7 +92,7 @@ class GTTService {
 
         return this.client({
             method: 'POST',
-            url: '/api/transfer',
+            url: '/transaction/transfer',
             form: body,
             json: true
         });
@@ -94,4 +103,4 @@ class GTTService {
     }
 }
 
-module.exports = GTTService;
+module.exports = GTHService;
