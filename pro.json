@@ -10,6 +10,42 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
+      "name": "AddressGTHTask",
+      "script": "./core/Tasks/GetBlockAddress/GTHTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/GetBlockAddress/GTHTask.out.log",
+      "error_file": "./logs/GetBlockAddress/GTHTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "WithdrawGTHTask",
+      "script": "./core/Tasks/Withdraw/GTHTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Withdraw/GTHTask.out.log",
+      "error_file": "./logs/Withdraw/GTHTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "DepositGTHTask",
+      "script": "./core/Tasks/Deposit/GTHTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Deposit/GTHTask.out.log",
+      "error_file": "./logs/Deposit/GTHTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
+      "name": "AggregateGTHTask",
+      "script": "./core/Tasks/Aggregate/GTHTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Aggregate/GTHTask.out.log",
+      "error_file": "./logs/Aggregate/GTHTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
       "name": "AddressBitnetTask",
       "script": "./core/Tasks/GetBlockAddress/BitnetTask.js",
       "exec_mode": "fork",

@@ -10,6 +10,15 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
+      "name": "AggregateGTHTask",
+      "script": "./core/Tasks/Aggregate/GTHTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Aggregate/GTHTask.out.log",
+      "error_file": "./logs/Aggregate/GTHTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
       "name": "AggregateGTBTask",
       "script": "./core/Tasks/Aggregate/GTBTask.js",
       "exec_mode": "fork",

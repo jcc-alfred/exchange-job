@@ -10,6 +10,15 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
+      "name": "DepositGTHTask",
+      "script": "./core/Tasks/Deposit/GTHTask.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Deposit/GTHTask.out.log",
+      "error_file": "./logs/Deposit/GTHTask.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
       "name": "DepositGTBTask",
       "script": "./core/Tasks/Deposit/GTBTask.js",
       "exec_mode": "fork",
