@@ -1,6 +1,6 @@
 const config = {
     socketDomain: 'http://54.169.107.53:5000/',
-    coinmarket_api:'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest',
+    coinmarket_api:'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
     coinmarket_secret:'c236b6e8-ede0-40a8-9a66-e60a039aff80',
     currency_api: 'https://openexchangerates.org/api/latest.json',
     currency_app_id:'e1a28f4ff94b410787a1a3e581dc468c',
