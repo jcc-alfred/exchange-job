@@ -20,13 +20,13 @@ let AssetsLogModel = require('../../Model/AssetsLogModel');
 
 try {
     let rule = new schedule.RecurrenceRule();
-    let times = [1, 6,8,9,10, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56];
+    let times = [1, 6, 8, 9, 10, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56];
     rule.minute = times;
     let isRun = false;
+    console.log('start');
+    schedule.scheduleJob('*/15 * * * * *', async () => {
 
-    schedule.scheduleJob('* * * * * *', async () => {
-
-    // schedule.scheduleJob(rule, async () => {
+        // schedule.scheduleJob(rule, async () => {
         if (isRun) {
             return;
         }
@@ -60,9 +60,9 @@ try {
                 await Promise.all(withdrawList.list.map(async (withdraw) => {
                     let isAddress = gthService.isAddress(withdraw.to_block_address);
                     if (isAddress) {
-                    transBlockAddrList.push(withdraw.to_block_address);
-                    transTotalAmount = Utils.add(transTotalAmount, withdraw.trade_amount);
-                    totalWithdrawList.push(withdraw);
+                        transBlockAddrList.push(withdraw.to_block_address);
+                        transTotalAmount = Utils.add(transTotalAmount, withdraw.trade_amount);
+                        totalWithdrawList.push(withdraw);
                     }
                 }));
                 if (!transBlockAddrList || transBlockAddrList.length <= 0) {
@@ -115,8 +115,8 @@ try {
                 }
                 //内部提现转账 end
                 if (transWithdrawList && transWithdrawList.length > 0) {
-                    for (let i in transWithdrawList){
-                        let item= transWithdrawList[i];
+                    for (let i in transWithdrawList) {
+                        let item = transWithdrawList[i];
                         let totalWalletAmount = await gthService.getBalance(gttCoin.main_block_address);
                         if (totalWalletAmount < Utils.add(item.trade_amount, 0.0004)) {
                             console.error('钱包余额不足：totalWalletAmount:' + totalWalletAmount + ' trade_amount:' + item.trade_amount);
@@ -134,13 +134,13 @@ try {
                                 let res = await WithdrawModel.setTxIdById(txObj.id, item.user_withdraw_id);
                                 console.log(txObj.id, item.trade_amount);
                             }
-                        }catch (e) {
-                            if (e.statusCode==400){
+                        } catch (e) {
+                            if (e.statusCode == 400) {
                                 let res = await WithdrawModel.failWithdraw(item);
                             }
                             console.error(e)
                         }
-                        
+
                     }
                 }
             }

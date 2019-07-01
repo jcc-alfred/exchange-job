@@ -58,14 +58,15 @@ class GTHService {
     }
 
     async getTransaction(id) {
-        return this.client({
+        let res= await this.client({
             method: 'GET',
-            uri: '/api/getTransaction',
+            uri: '/transaction/get-by-id',
             qs: {
                 id: id
             },
             json: true
         });
+        return res.data
     }
 
     async sendSignedTransaction(fromAddress, toAddress, amount, secret,tokenName='GTH') {
@@ -90,12 +91,13 @@ class GTHService {
             .digest('hex');
         body.signature = signature;
 
-        return this.client({
+        let res =  await this.client({
             method: 'POST',
             url: '/transaction/transfer',
             form: body,
             json: true
         });
+        return res.data
     }
 
     isAddress(address) {
