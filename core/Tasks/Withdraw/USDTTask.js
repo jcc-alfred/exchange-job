@@ -61,7 +61,7 @@ try{
             }
             if(usdtCoin.wallet_passphrase){
                 await usdtService.WalletLock();
-                await usdtService.walletPassphrase();
+                await usdtService.WalletPassphrase();
             }
             for(let page = 1; page <= pageCount; page++){
                 //未处理的提现列表
