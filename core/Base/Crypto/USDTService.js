@@ -86,7 +86,7 @@ class USDTService{
     async omniGetBalance(address){
         return this.usdtClient.command([
             {
-                method:'getbalance',
+                method:'omni_getbalance',
                 parameters:[address,31]
             }
         ]);

@@ -24,6 +24,6 @@ class MQ {
 
 }
 
-MQ.init()
+MQ.init();
 
 module.exports = MQ;

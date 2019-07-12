@@ -45,7 +45,7 @@ try{
             let usdtService = new USDTService(usdtCoin.wallet_ip,usdtCoin.wallet_port,usdtCoin.wallet_rpc_user,usdtCoin.wallet_rpc_pass,usdtCoin.wallet_passphrase);
             let [transList] = await usdtService.omniListTransactions();
             if(transList && Array.isArray(transList) && transList.length > 0){
-                usdtTransList = transList.filter((tx)=>tx.propertyid == '2');
+                usdtTransList = transList.filter((tx)=>tx.propertyid == '31');
                 let txidList = [];
                 usdtTransList.forEach((tx)=>{
                     if(tx && tx.txid && tx.amount > 0 && tx.confirmations > 0 && tx.valid == true){

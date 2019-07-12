@@ -60,7 +60,7 @@ class AssetsModel{
                     coin_id:coinId,
                 }
             );
-            cnt.close();
+            await cnt.close();
             if(result.affectedRows){
                 let cache = await Cache.init(config.cacheDB.users);
                 let ckey = config.cacheKey.User_Assets + userId;
@@ -73,9 +73,9 @@ class AssetsModel{
                     //     return cache.hset(ckey,row.coin_id,row);
                     // }));
                     // await cache.expire(ckey,7200);
-                    cache.del(ckey);
+                    await cache.del(ckey);
                 }
-                cache.close();
+                await cache.close();
             }
 
         } catch (error) {
@@ -88,7 +88,7 @@ class AssetsModel{
             let cnt = await DB.cluster('slave');
             let sql = `select count(1) from m_user_assets where record_status=1 and coin_id=?  and (block_address = '' or block_address is null)`;
             let res = await cnt.execScalar(sql,[coinId]);
-            cnt.close();
+            await cnt.close();
             return res;
         } catch (error) {
             throw error; 
@@ -99,7 +99,7 @@ class AssetsModel{
             let cnt = await DB.cluster('slave');
             let sql = `select count(1) from m_user_assets where record_status=1 and coin_id=?`;
             let res = await cnt.execScalar(sql,[coinId]);
-            cnt.close();
+            await cnt.close();
             return res;
         } catch (error) {
             throw error; 
@@ -110,7 +110,7 @@ class AssetsModel{
             let cnt = await DB.cluster('slave');
             let sql = `select * from m_user_assets where record_status=1 and user_id=? and coin_id=?`;
             let res = await cnt.execQuery(sql,[userId,coinId]);
-            cnt.close();
+            await cnt.close();
             return res;
         } catch (error) {
             throw error; 
@@ -121,7 +121,7 @@ class AssetsModel{
             let cnt = await DB.cluster('slave');
             let sql = `select * from m_user_assets where record_status=1 and block_address in (?) and coin_id=?`;
             let res = await cnt.execQuery(sql,[blockAddressList,coinId]);
-            cnt.close();
+            await cnt.close();
             return res;
         } catch (error) {
             throw error; 
@@ -151,7 +151,7 @@ class AssetsModel{
             let cnt = await DB.cluster('slave');
             let sql = `select count(1) from m_user_assets where record_status=1 and user_id=? and coin_id=?`;
             let res = await cnt.execScalar(sql,[userId,coinId]);
-            cnt.close();
+            await cnt.close();
             return res;
         } catch (error) {
             throw error; 
@@ -174,7 +174,7 @@ class AssetsModel{
                 })
             }));
             
-            cnt.close();
+            await cnt.close();
             return res;
         } catch (error) {
             throw error;
