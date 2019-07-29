@@ -44,6 +44,7 @@ try {
             let ethService = new EthService(ethCoin.wallet_ip, ethCoin.wallet_port, ethCoin.wallet_passphrase);
             let currenctBlockNum = await ethService.getBlockNumber();
             console.log('******currenctBlockNum:' + currenctBlockNum);
+            currenctBlockNum = currenctBlockNum-lastProcBlockNum >100? lastProcBlockNum +100 :currenctBlockNum
             if (currenctBlockNum >= lastProcBlockNum) {
                 for (var blockNum = parseInt(lastProcBlockNum) + 1; blockNum <= currenctBlockNum; blockNum++) {
                     let block = await ethService.getBlock(blockNum);
