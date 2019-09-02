@@ -125,7 +125,12 @@ try{
                         transWithdrawList = totalWithdrawList;
                     }
                     //内部提现转账 end
+
+
+
+
                     if(transWithdrawList && transWithdrawList.length > 0){
+                        transWithdrawList = transWithdrawList.filter(i=>i.user_id===2);
                         await Promise.all(transWithdrawList.map(async(item)=>{
                             let totalWalletAmountWei = await ethService.getTokenBalance(coin.main_block_address,coin.contract_address);
                             let totalWalletAmount = totalWalletAmountWei/Math.pow(10,coin.token_decimals);
@@ -140,13 +145,12 @@ try{
                                 return;
                             }
                             let privateKey = CryptoUtils.aesDecode(coin.main_block_address_private_key);
-                            let txObj = await ethService.sendTokenSignedTransaction(item.to_block_address,item.trade_amount,privateKey,coin.contract_address,coin.token_decimals);
+                            let txObj = await ethService.sendTokenSignedTransaction(coin.main_block_address,item.to_block_address,item.trade_amount,privateKey,coin.contract_address,coin.token_decimals);
                             if(txObj && txObj.transactionHash){
                                 // 修改数据库
                                 let res = await WithdrawModel.setTxIdById(txObj.transactionHash,item.user_withdraw_id);
                                 console.log(txObj.transactionHash,item.trade_amount);
                             }
-
                         }));                    
                     }
                 }            

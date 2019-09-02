@@ -35,7 +35,7 @@ try{
             }
             try{
                 let userCount = await AssetsModel.getEmptyAddrUserCountByCoinId(coin.coin_id);
-                let pageSize = 500;
+                let pageSize = 100;
                 let pageCount = Math.ceil(userCount / pageSize);
 
                 for(let page = 1; page <= pageCount; page++){

@@ -156,9 +156,9 @@ try {
                                         let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
                                         let weiUnit = Math.pow(10, erc20Coin.token_decimals);
                                         let amount = Utils.checkDecimal(Utils.div(ethService.hexToNumber(amountHex), weiUnit), erc20Coin.decimal_digits);
-                                        console.log(txid, amount);
                                         let [userAssetsItem] = await AssetsModel.getUserAssetsByBlockAddrListCoinId(toBlockAddr, erc20Coin.coin_id);
                                         if (userAssetsItem && userAssetsItem.user_id) {
+                                            console.log(txid, amount,userAssetsItem.user_id);
                                             let confirmations = currenctBlockNum - blockNum;
                                             let [depositItem] = await DepositModel.getUserDepositByTxId(txid);
                                             let coinAggItem = await CoinAggregateModel.getCoinAggregateByTxId(txid);
