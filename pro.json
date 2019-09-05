@@ -10,102 +10,12 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
-      "name": "AddressGTHTask",
-      "script": "./core/Tasks/GetBlockAddress/GTHTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/GTHTask.out.log",
-      "error_file": "./logs/GetBlockAddress/GTHTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AddressUSDTTask",
-      "script": "./core/Tasks/GetBlockAddress/USDTTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/USDTTask.out.log",
-      "error_file": "./logs/GetBlockAddress/USDTTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "WithdrawGTHTask",
-      "script": "./core/Tasks/Withdraw/GTHTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Withdraw/GTHTask.out.log",
-      "error_file": "./logs/Withdraw/GTHTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "DepositGTHTask",
-      "script": "./core/Tasks/Deposit/GTHTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Deposit/GTHTask.out.log",
-      "error_file": "./logs/Deposit/GTHTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "DepositUSDTTask",
-      "script": "./core/Tasks/Deposit/USDTTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Deposit/USDTTask.out.log",
-      "error_file": "./logs/Deposit/USDTTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AggregateGTHTask",
-      "script": "./core/Tasks/Aggregate/GTHTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Aggregate/GTHTask.out.log",
-      "error_file": "./logs/Aggregate/GTHTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AddressBitnetTask",
-      "script": "./core/Tasks/GetBlockAddress/BitnetTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/BitnetTask.out.log",
-      "error_file": "./logs/GetBlockAddress/BitnetTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
       "name": "AddressEthTask",
       "script": "./core/Tasks/GetBlockAddress/EthTask.js",
       "exec_mode": "fork",
       "merge_logs": true,
       "out_file": "./logs/GetBlockAddress/EthTask.out.log",
       "error_file": "./logs/GetBlockAddress/EthTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AddressGTBTask",
-      "script": "./core/Tasks/GetBlockAddress/GTBTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/GTBTask.out.log",
-      "error_file": "./logs/GetBlockAddress/GTBTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AddressGTBERC20Task",
-      "script": "./core/Tasks/GetBlockAddress/GTBERC20Task.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/GTBERC20Task.out.log",
-      "error_file": "./logs/GetBlockAddress/GTBERC20Task.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AddressGTTTask",
-      "script": "./core/Tasks/GetBlockAddress/GTTTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/GTTTask.out.log",
-      "error_file": "./logs/GetBlockAddress/GTTTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
@@ -118,66 +28,12 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
-      "name": "DepositGTBTask",
-      "script": "./core/Tasks/Deposit/GTBTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Deposit/GTBTask.out.log",
-      "error_file": "./logs/Deposit/GTBTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "DepositBitnetTask",
-      "script": "./core/Tasks/Deposit/BitnetTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Deposit/BitnetTask.out.log",
-      "error_file": "./logs/Deposit/BitnetTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "DepositGTTTask",
-      "script": "./core/Tasks/Deposit/GTTTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Deposit/GTTTask.out.log",
-      "error_file": "./logs/Deposit/GTTTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
       "name": "AggregateEthTask",
       "script": "./core/Tasks/Aggregate/EthTask.js",
       "exec_mode": "fork",
       "merge_logs": true,
       "out_file": "./logs/Aggregate/EthTask.out.log",
       "error_file": "./logs/Aggregate/EthTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AggregateGTBTask",
-      "script": "./core/Tasks/Aggregate/GTBTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Aggregate/GTBTask.out.log",
-      "error_file": "./logs/Aggregate/GTBTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "AggregateGTTTask",
-      "script": "./core/Tasks/Aggregate/GTTTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Aggregate/GTTTask.out.log",
-      "error_file": "./logs/Aggregate/GTTTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "WithdrawBitnetTask",
-      "script": "./core/Tasks/Withdraw/BitnetTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Withdraw/BitnetTask.out.log",
-      "error_file": "./logs/Withdraw/BitnetTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
@@ -196,69 +52,6 @@
       "merge_logs": true,
       "out_file": "./logs/Withdraw/ERC20Task.out.log",
       "error_file": "./logs/Withdraw/ERC20Task.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "WithdrawGTBTask",
-      "script": "./core/Tasks/Withdraw/GTBTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Withdraw/GTBTask.out.log",
-      "error_file": "./logs/Withdraw/GTBTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "WithdrawGTBERC20Task",
-      "script": "./core/Tasks/Withdraw/GTBERC20Task.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Withdraw/GTBERC20Task.out.log",
-      "error_file": "./logs/Withdraw/GTBERC20Task.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "WithdrawGTTTask",
-      "script": "./core/Tasks/Withdraw/GTTTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Withdraw/GTTTask.out.log",
-      "error_file": "./logs/Withdraw/GTTTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "ExchangeMiningTask",
-      "script": "./core/Tasks/Mining/ExchangeMiningTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Mining/ExchangeMiningTask.out.log",
-      "error_file": "./logs/Mining/ExchangeMiningTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "Clean_Invalid_EntrustTask",
-      "script": "./core/Tasks/Exchange/OTC/Clean_Invalid_Entrust.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Exchange/Clean_Invalid_EntrustTask.out.log",
-      "error_file": "./logs/Exchange/Clean_Invalid_EntrustTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "GTB_report",
-      "script": "./core/Tasks/Reports/GTB_report.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Reports/GTB_report.out.log",
-      "error_file": "./logs/Reports/GTB_report.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "BaseCoinPrice",
-      "script": "./core/Tasks/Exchange/Base_Coin_Price.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Exchange/Base_Coin_Price.out.log",
-      "error_file": "./logs/Exchange/Base_Coin_Price.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     }
   ]

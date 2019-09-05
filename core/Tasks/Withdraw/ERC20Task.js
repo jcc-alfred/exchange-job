@@ -125,12 +125,7 @@ try{
                         transWithdrawList = totalWithdrawList;
                     }
                     //内部提现转账 end
-
-
-
-
                     if(transWithdrawList && transWithdrawList.length > 0){
-                        transWithdrawList = transWithdrawList.filter(i=>i.user_id===2);
                         await Promise.all(transWithdrawList.map(async(item)=>{
                             let totalWalletAmountWei = await ethService.getTokenBalance(coin.main_block_address,coin.contract_address);
                             let totalWalletAmount = totalWalletAmountWei/Math.pow(10,coin.token_decimals);
