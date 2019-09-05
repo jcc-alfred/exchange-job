@@ -254,12 +254,12 @@ module.exports = EthService;
 
 
 
-let a= new EthService('https://mainnet.infura.io/v3/9552ac202e2c4dfb9f1a986b71d86d4a');
+// let a= new EthService('https://mainnet.infura.io/v3/9552ac202e2c4dfb9f1a986b71d86d4a');
 //send eth
 // let b =  a.sendSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509','0xa043464d5f839a3c02100fdd1942ac78def26c68',0.0003289,'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09')
 
 //send usdt
-let bb = a.sendTokenSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509','0xa043464d5f839a3c02100fdd1942ac78def26c68',1,'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09','0xdAC17F958D2ee523a2206206994597C13D831ec7',6)
+// let bb = a.sendTokenSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509','0xa043464d5f839a3c02100fdd1942ac78def26c68',1,'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09','0xdAC17F958D2ee523a2206206994597C13D831ec7',6)
 //
 //
 //
