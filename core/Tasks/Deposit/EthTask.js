@@ -49,6 +49,7 @@ try {
                 for (var blockNum = parseInt(lastProcBlockNum) + 1; blockNum <= currenctBlockNum; blockNum++) {
                     let block = await ethService.getBlock(blockNum);
                     if (block == null || block.transactions == null) {
+                        console.log('block null or transactions null');
                         isRun = false;
                         return;
                     }
