@@ -44,7 +44,7 @@ try {
             let ethService = new EthService(ethCoin.wallet_ip, ethCoin.wallet_port, ethCoin.wallet_passphrase);
             let currenctBlockNum = await ethService.getBlockNumber();
             console.log('******currenctBlockNum:' + currenctBlockNum);
-            currenctBlockNum = currenctBlockNum-lastProcBlockNum >50? lastProcBlockNum +50 :currenctBlockNum;
+            currenctBlockNum = Utils.sub(currenctBlockNum, lastProcBlockNum) > 50 ? Utils.add(lastProcBlockNum, 50) : currenctBlockNum;
             if (currenctBlockNum >= lastProcBlockNum) {
                 for (var blockNum = parseInt(lastProcBlockNum) + 1; blockNum <= currenctBlockNum; blockNum++) {
                     let block = await ethService.getBlock(blockNum);
@@ -159,7 +159,7 @@ try {
                                         let amount = Utils.checkDecimal(Utils.div(ethService.hexToNumber(amountHex), weiUnit), erc20Coin.decimal_digits);
                                         let [userAssetsItem] = await AssetsModel.getUserAssetsByBlockAddrListCoinId(toBlockAddr, erc20Coin.coin_id);
                                         if (userAssetsItem && userAssetsItem.user_id) {
-                                            console.log(txid, amount,userAssetsItem.user_id);
+                                            console.log(txid, amount, userAssetsItem.user_id);
                                             let confirmations = currenctBlockNum - blockNum;
                                             let [depositItem] = await DepositModel.getUserDepositByTxId(txid);
                                             let coinAggItem = await CoinAggregateModel.getCoinAggregateByTxId(txid);
