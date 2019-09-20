@@ -19,6 +19,15 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
+      "name": "AddressEthERC20Task",
+      "script": "./core/Tasks/GetBlockAddress/ERC20Task.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/GetBlockAddress/ERC20Task.out.log",
+      "error_file": "./logs/GetBlockAddress/ERC20Task.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
       "name": "DepositEthTask",
       "script": "./core/Tasks/Deposit/EthTask.js",
       "exec_mode": "fork",
