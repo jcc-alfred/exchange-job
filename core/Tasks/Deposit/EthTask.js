@@ -21,7 +21,7 @@ let UserModel = require('../../Model/UserModel');
 
 try {
     let isRun = false;
-    var job = schedule.scheduleJob('1 */5 * * * *', async () => {
+    var job = schedule.scheduleJob('1 * * * * *', async () => {
 
         if (isRun) {
             return;
