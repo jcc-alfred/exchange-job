@@ -28,24 +28,16 @@ try {
     let isRun = false;
     let File_DIR = __dirname;
     let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-    // let job = schedule.scheduleJob('* * * * * *', async () => {
+        // let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
             return;
         }
         isRun = true;
         let date = moment().format('YYYY-MM-DD');
-        // let date = '2019-03-28';
-        console.log(Utils.formatString("ruh report for date : {0}", [date]));
+        // let date = '2019-09-23';
+        console.log(Utils.formatString("run report for date : {0}", [date]));
 
-        let unlock_Data = await rp({
-            method: 'POST',
-            uri: 'https://www.gttdollar.com:8090/gtb/unlock-analysis',
-            formData: {
-                startDate: date,
-                endDate: date
-            },
-            json: true
-        });
+
         let startTime = moment(date).add(-7,'d').format('x');
         let endTime = moment(date).format('x');
         let res = await rp({
@@ -66,14 +58,24 @@ try {
         let coin_list = await CoinModel.getCoinList();
         let GTB_Coin = coin_list.find(i => i.coin_name === "GTB");
         let GTT_Coin = coin_list.find(i => i.coin_name === "GTT");
+        let AIM_Coin = coin_list.find(i => i.coin_name === "AIM");
+        let USDT_Coin = coin_list.find(i => i.coin_name === "USDT");
         let GTB_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(GTB_Coin.coin_id, date);
+        let AIM_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(AIM_Coin.coin_id,date);
 
         let coin_exchange_list = await CoinModel.getCoinExchangeList();
         let GTB_GTT = coin_exchange_list.find(i => i.coin_id === GTB_Coin.coin_id && i.exchange_coin_id === GTT_Coin.coin_id);
         let GTB_GTT_transaction_sumary = await OrderModel.getcoin_exchange_amount(GTB_GTT.coin_exchange_id, date);
 
-        let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id, date);
+        let USDT_PendingWithdraw = await WithdrawModel.getCoinWithdrawPending(USDT_Coin.coin_id);
 
+        let USDT_PendingWithdrawSummary = await WithdrawModel.getCoinWithdrawPendingSumary(USDT_Coin.coin_id);
+
+
+
+
+        let GTT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(GTT_Coin.coin_id, date);
+        let USDT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(USDT_Coin.coin_id, date);
         let UserAssets = await AssetsModel.getUserAssetsSummary();
         let AssetsSumary = {};
         let cache= await Cache.init(config.cacheDB.order);
@@ -103,33 +105,17 @@ try {
         let html = fs.readFileSync(File_DIR + '/report_template.html', {encoding: 'utf-8'});
 
         let data = {
-            GTB_UNLOCK_TOTAL: unlock_Data['data']['allData'],
-            GTB_UNLOCK_DAY: unlock_Data['data']['filterData'],
+            USDT_PendingWithdraw:USDT_PendingWithdraw,
+            USDT_PendingWithdrawSummary:USDT_PendingWithdrawSummary,
             GTB_DEPOSIT_DAY: GTB_Deposit,
+            AIM_DEPOSIT_DAY:AIM_Deposit,
             GTB_TRASACTION_DAY: GTB_GTT_transaction_sumary,
             GTB_WITHDRAW_DAY: GTT_Withdraw,
+            USDT_WITHDRAW_DAY:USDT_Withdraw,
             UserAssets:UserAssets,
             date: date,
-            dica:dica
         };
 
-        if ("filterTokenDataMap" in unlock_Data['data']) {
-            if ("FAC" in unlock_Data['data']["filterTokenDataMap"]) {
-                data.FAC_UNLOCK_DAY= unlock_Data['data']["filterTokenDataMap"]["FAC"]
-
-            }
-            if ("FGTB" in unlock_Data['data']["filterTokenDataMap"]) {
-                    data.FGTB_UNLOCK_DAY= unlock_Data['data']["filterTokenDataMap"]["FGTB"]
-            }
-        }
-        if ("allTokenDataMap" in unlock_Data['data']) {
-            if ("FAC" in unlock_Data['data']["allTokenDataMap"]) {
-                    data.FAC_UNLOCK_TOTAL= unlock_Data['data']["allTokenDataMap"]["FAC"]
-            }
-            if ("FGTB" in unlock_Data['data']["allTokenDataMap"]) {
-                    data.FGTB_UNLOCK_TOTAL= unlock_Data['data']["allTokenDataMap"]["FGTB"]
-            }
-        }
         let email_content = ejs.render(html, data);
 
 
