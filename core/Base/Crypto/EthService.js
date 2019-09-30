@@ -4,11 +4,15 @@ let Tx = require('ethereumjs-tx');
 class EthService{
     constructor(host,port,walletPassphrase){
         //let hostUrl = 'https://mainnet.infura.io/7cc86955d18e40f9902439589fa71a4d';
-        //let hostUrl = 'https://rinkeby.infura.io/7cc86955d18e40f9902439589fa71a4d';
+        // let hostUrl = 'https://rinkeby.infura.io/7cc86955d18e40f9902439589fa71a4d';
         //let hostUrl = 'http://' + host +':' + port;
         let hostUrl = host;
         this.web3 = new Web3(new Web3.providers.HttpProvider(hostUrl));
     }
+    async toAscii(input){
+        return this.web3.utils.toAscii(input);
+    }
+
     async createAccount(){
         return this.web3.eth.accounts.create();
     }
@@ -238,3 +242,7 @@ class EthService{
 }
 
 module.exports = EthService;
+
+
+// a= new EthService();
+// console.log(a.toAscii('0xa9059cbb000000000000000000000000c2f24c45a2dea5af655f6b5443c499cbd79d337700000000000000000000000000000000000000000000000000000000cc532100'))
