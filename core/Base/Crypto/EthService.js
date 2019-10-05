@@ -123,7 +123,9 @@ class EthService {
         return tokenContract.methods.balanceOf(blockAddress).call();
     }
 
-    async getTokenEstimateGas(toAddress, tradeAmount, privateKey, contractAddress, tokenDecimals) {
+    // 0x6E873B70B0F5dD39052ef6506367C704Aa6d9922,2,0xf0a669835d27be652b672305cd8b06417f28fcefdf3d81deb4ebe6b2b75aab30,0xdAC17F958D2ee523a2206206994597C13D831ec7,6
+
+    async getTokenEstimateGas(toAddress,tradeAmount,privateKey,contractAddress,tokenDecimals){
         var web3 = this.web3;
         let contractABI = [{
             "constant": true,
@@ -165,28 +167,30 @@ class EthService {
                 "payable": false,
                 "type": "function"
             }];
-        let tokenContract = new web3.eth.Contract(contractABI, contractAddress);
-        let amountHex = this.web3.utils.toHex(this.web3.utils.toWei(tradeAmount.toString(), 'ether'));
+        let tokenContract = new web3.eth.Contract(contractABI,contractAddress);
+        let amountWei = tradeAmount * Math.pow(10,tokenDecimals);
+        let amountHex =  web3.utils.toHex(amountWei);
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
-        let gasPriceHex = web3.utils.toHex(web3.utils.toBN(gasPrice));
+        let gasPriceHex = web3.utils.toHex(gasPrice);
         let account = web3.eth.accounts.privateKeyToAccount(privateKey);
         let nonce = await web3.eth.getTransactionCount(account.address);
-        // let nonceHex =  web3.utils.toHex(nonce);
+        let nonceHex =  web3.utils.toHex(nonce);
         privateKey = privateKey.startsWith('0x') ? privateKey.substring(2) : privateKey;
         let privateKeyHex = new Buffer(privateKey, 'hex');
         var rawTx = {
-            to: toAddress,
+            to: contractAddress,
             value: '0x0',
             gasPrice: gasPriceHex,
-            gasLimit: await web3.utils.toHex(210000),
-            from: fromAddress,
-            nonce: nonceHex,
+            from:account.address,
+            nonce:nonceHex,
             data: transferABI
         };
         return web3.eth.estimateGas(rawTx);
     }
 
+
+    // '0x6E873B70B0F5dD39052ef6506367C704Aa6d9922','0xD6952dd30A4f699213F60386C7c45EB2801a7509',2,'0xf0a669835d27be652b672305cd8b06417f28fcefdf3d81deb4ebe6b2b75aab30','0xdAC17F958D2ee523a2206206994597C13D831ec7',6
     async sendTokenSignedTransaction(fromAddress, toAddress, tradeAmount, privateKey, contractAddress, tokenDecimals, gas_to_use = 21000) {
         var web3 = this.web3;
         let contractABI = [{
@@ -246,7 +250,6 @@ class EthService {
             from: fromAddress,
             nonce: nonceHex,
             gasLimit: await web3.utils.toHex(210000),
-
             data: transferABI
         };
         let tx = new EthereumTx(rawTx);

@@ -31,6 +31,8 @@ try {
     let isRun = false;
     var job = schedule.scheduleJob(rule, async () => {
 
+    // var job = schedule.scheduleJob('* * * * * *', async () => {
+
         if (isRun) {
             return;
         }
@@ -102,13 +104,15 @@ try {
                         let trade_amount = erc20Balance.balance;
                         let contract_address = erc20Balance.erc20Coin.contract_address;
                         let token_decimals = erc20Balance.erc20Coin.token_decimals;
-                        let estimateGas = await ethService.getTokenEstimateGas(userERC20Balance.block_address,to_block_address, trade_amount, privateKey, contract_address, token_decimals);
+                        let estimateGas = await ethService.getTokenEstimateGas(userERC20Balance.block_address, trade_amount, privateKey, contract_address, token_decimals);
                         let fees = ethService.weiToEther(estimateGas * gasPrice);
                         if (userERC20Balance.eth_balance < fees) {
                             userERC20BalanceList_NoneETH.push(userERC20Balance);
                             break;
                         } else {
-                            let txObj = await ethService.sendTokenSignedTransaction(userERC20Balance.block_address,to_block_address, trade_amount, privateKey, contract_address, token_decimals,estimateGas);
+                            // let txObj = await ethService.sendTokenSignedTransaction(coin.main_block_address,item.to_block_address,item.trade_amount,privateKey,coin.contract_address,coin.token_decimals);
+
+                            let txObj = await ethService.sendTokenSignedTransaction(userERC20Balance.block_address,to_block_address, trade_amount, privateKey, contract_address, token_decimals);
                             if (txObj && txObj.transactionHash) {
                                 // 增加汇总记录
                                 let res = await CoinAggregateModel.addCoinAggregate(txObj.transactionHash, erc20Balance.erc20Coin.coin_id, userERC20Balance.block_address, to_block_address, trade_amount, '汇总ERC20');
@@ -131,7 +135,7 @@ try {
                         let trade_amount = erc20Balance.balance;
                         let contract_address = erc20Balance.erc20Coin.contract_address;
                         let token_decimals = erc20Balance.erc20Coin.token_decimals;
-                        let estimateGas = await ethService.getTokenEstimateGas(userERC20Balance.block_address,to_block_address, trade_amount, privateKey, contract_address, token_decimals);
+                        let estimateGas = await ethService.getTokenEstimateGas(userERC20Balance.block_address, trade_amount, privateKey, contract_address, token_decimals);
                         let aggregateFees = ethService.weiToEther(estimateGas * gasPrice);
                         let transferETHFees = ethService.weiToEther(gasPrice * 21000);
                         let estAmount = Utils.add(aggregateFees, transferETHFees);
