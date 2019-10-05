@@ -29,7 +29,7 @@ try {
     rule.minute = 0;
 
     let isRun = false;
-    var job = schedule.scheduleJob(rule, async () => {
+    var job = schedule.scheduleJob('1 */10 * * * * ', async () => {
 
     // var job = schedule.scheduleJob('* * * * * *', async () => {
 
