@@ -69,7 +69,6 @@ try {
                             private_key: item.private_key,
                             eth_balance: balance
                         });
-
                     }));
                 }
                 let userERC20BalanceList = [];//需要汇总ERC20的列表有eth余额
@@ -87,14 +86,12 @@ try {
                         if (coin.min_aggregate_amount > 0 && balance >= coin.min_aggregate_amount) {
                             erc20BalanceList.push({erc20Coin: coin, balance: balance});
                         }
-
                     }));
                     if (userETHBalance.eth_balance > 0 && erc20BalanceList.length > 0) {
                         userERC20BalanceList.push({...userETHBalance, erc20List: erc20BalanceList});
                     } else if (erc20BalanceList.length > 0) {
                         userERC20BalanceList_NoneETH.push({...userETHBalance, erc20List: erc20BalanceList});
                     }
-
                 }));
                 let gasPrice = await ethService.getGasPrice();
                 await Promise.all(userERC20BalanceList.map(async (userERC20Balance) => {
@@ -110,8 +107,6 @@ try {
                             userERC20BalanceList_NoneETH.push(userERC20Balance);
                             break;
                         } else {
-                            // let txObj = await ethService.sendTokenSignedTransaction(coin.main_block_address,item.to_block_address,item.trade_amount,privateKey,coin.contract_address,coin.token_decimals);
-
                             let txObj = await ethService.sendTokenSignedTransaction(userERC20Balance.block_address,to_block_address, trade_amount, privateKey, contract_address, token_decimals);
                             if (txObj && txObj.transactionHash) {
                                 // 增加汇总记录
@@ -122,9 +117,7 @@ try {
                                 TransferFeesLogModel.addTransferFees(erc20Balance.erc20Coin.coin_id, txObj.transactionHash, ethCoin.coin_id, fees, '汇总ERC20');
                             }
                         }
-
                     }
-
                 }));
                 let ethPrivateKey = CryptoUtils.aesDecode(ethCoin.main_block_address_private_key);
                 await Promise.all(userERC20BalanceList_NoneETH.map(async (userERC20Balance) => {

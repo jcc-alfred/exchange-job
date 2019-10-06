@@ -255,9 +255,15 @@ class EthService {
         let tx = new EthereumTx(rawTx);
         tx.sign(privateKeyHex);
         let serializedTx = tx.serialize();
-        let txObj = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
-        console.log(txObj);
-        return txObj
+        try {
+            let txObj = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
+            console.log(txObj);
+            return txObj
+        }catch (e) {
+            console.log(e);
+            return null
+        }
+
     }
 }
 
