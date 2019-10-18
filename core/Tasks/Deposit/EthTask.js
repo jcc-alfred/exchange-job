@@ -46,7 +46,7 @@ try {
             // fs.readFileSync(__dirname + '/BlockNumber', {encoding: 'utf-8', flag: 'r'});
             console.log('lastProcBlockNum', lastProcBlockNum);
             let ethService = new EthService(ethCoin.wallet_ip, ethCoin.wallet_port, ethCoin.wallet_passphrase);
-            let currenctBlockNum = 8758228;
+            let currenctBlockNum = 8758229;
                 // await ethService.getBlockNumber();
             console.log('******currenctBlockNum:' + currenctBlockNum);
             currenctBlockNum = Utils.sub(currenctBlockNum, lastProcBlockNum) > 50 ? Utils.add(lastProcBlockNum, 50) : currenctBlockNum;
