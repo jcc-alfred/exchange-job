@@ -13,7 +13,7 @@ class WithdrawModel {
     async getUnProcListByCoinId(coinId, page, pageSize = 10) {
         try {
             //已审核并且未处理列表
-            let sql = "select * from m_user_withdraw where coin_id = ? and confirm_status = 1 and (txid = '' or txid is null) and record_status = 1";
+            let sql = "select * from m_user_withdraw where coin_id = ? and confirm_status = 1 and (txid = '' or txid is null) and record_status = 1 group by to_block_address";
             let cnt = await DB.cluster('slave');
             let res = cnt.page(sql, coinId, page, pageSize);
 
