@@ -27,8 +27,8 @@ let Cache = require('../../Base/Data/Cache');
 try {
     let isRun = false;
     let File_DIR = __dirname;
-    let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-    // let job = schedule.scheduleJob('* * * * * *', async () => {
+    // let job = schedule.scheduleJob('0 50 23 * * *', async () => {
+    let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
             return;
         }
@@ -79,24 +79,28 @@ try {
         let UserAssets = await AssetsModel.getUserAssetsSummary();
         let AssetsSumary = {};
         let cache= await Cache.init(config.cacheDB.order);
-        let coin_price = await cache.hgetall(config.cacheKey.Sys_Base_Coin_Prices);
+        // let coin_price = await cache.hgetall(config.cacheKey.Sys_Base_Coin_Prices);
         await cache.select(config.cacheDB.system);
         let base_price = await cache.hgetall(config.cacheKey.Sys_Base_Coin_Prices);
-        coin_price[17]=JSON.parse(base_price.gtt).price_usd;
-        coin_price[1]=JSON.parse(base_price.btc).price_usd;
-        coin_price[3]=JSON.parse(base_price.eth).price_usd;
+        // coin_price[17]=JSON.parse(base_price.gtt).price_usd;
+        // coin_price[1]=JSON.parse(base_price.btc).price_usd;
+        // coin_price[3]=JSON.parse(base_price.eth).price_usd;
         await cache.close();
         UserAssets.map(item=>{
             AssetsSumary[item.coin_name]=item;
-            if(coin_price[item.coin_id]) {
-                AssetsSumary[item.coin_name]['price_usd'] = Utils.checkDecimal(Utils.mul(coin_price[item.coin_id], item.total_assets), 2)
+            const price_list = Object.values(base_price).map(i=> JSON.parse(i));
+            let coin_price = price_list.find(i=>i.symbol.toLowerCase()===item.coin_name.toLowerCase());
+            if(coin_price) {
+                AssetsSumary[item.coin_name]['price_usd'] = Utils.checkDecimal(Utils.mul(coin_price['price_usd'], item.total_assets), 2)
             }else {
                 AssetsSumary[item.coin_name]['price_usd'] =0
             }
         });
         UserAssets=UserAssets.map(function (item) {
-            if(coin_price[item.coin_id]) {
-                item['price_usd'] = Utils.checkDecimal(Utils.mul(coin_price[item.coin_id], item.total_assets), 2);
+            const price_list = Object.values(base_price).map(i=> JSON.parse(i));
+            let coin_price = price_list.find(i=>i.symbol.toLowerCase()===item.coin_name.toLowerCase());
+            if(coin_price) {
+                item['price_usd'] = Utils.checkDecimal(Utils.mul(coin_price['price_usd'], item.total_assets), 2);
             }else {
                 item['price_usd'] = 0
             }
