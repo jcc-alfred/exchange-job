@@ -24,7 +24,7 @@ abiDecoder.addABI(contractABI);
 
 try {
     let isRun = false;
-    var job = schedule.scheduleJob('* * * * * *', async () => {
+    var job = schedule.scheduleJob('1 * * * * *', async () => {
         if (isRun) {
             return;
         }
