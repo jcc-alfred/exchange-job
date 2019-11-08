@@ -43,12 +43,10 @@ try {
             return;
         }
         try {
-            let lastProcBlockNum = 1817975;
-                // fs.readFileSync(__dirname + '/GTBBlockNumber', {encoding: 'utf-8', flag: 'r'});
+            let lastProcBlockNum = fs.readFileSync(__dirname + '/GTBBlockNumber', {encoding: 'utf-8', flag: 'r'});
             console.log('lastProcBlockNum', lastProcBlockNum);
             let ethService = new EthService(ethCoin.wallet_ip, ethCoin.wallet_port, ethCoin.wallet_passphrase);
-            let currenctBlockNum = 1817976;
-                // await ethService.getBlockNumber();
+            let currenctBlockNum = await ethService.getBlockNumber();
             console.log('******currenctBlockNum:' + currenctBlockNum);
             if (parseInt(currenctBlockNum) >= parseInt(lastProcBlockNum)) {
                 for (var blockNum = parseInt(lastProcBlockNum) + 1; blockNum <= currenctBlockNum; blockNum++) {
@@ -156,7 +154,7 @@ try {
                                     try {
                                         let txid = txObj.hash;
                                         let result = abiDecoder.decodeMethod(txObj.input);
-                                        let toBlockAddr = result.params.find(i=>i.name==='_to').value;
+                                        let toBlockAddr = result.params.find(i => i.name === '_to').value;
                                         // let toBlockAddr = "0x" + txObj.input.substring(34, 74);
                                         // if(toBlockAddr =='0x94b64d8e3ff1a5a1822419a6a08d5c92508dc904'){
                                         //     console.log(txObj);
@@ -165,7 +163,7 @@ try {
                                         let [erc20Coin] = coinList.filter(coin => coin.contract_address.toLowerCase() == txObj.to.toLowerCase());
                                         let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
                                         let weiUnit = Math.pow(10, erc20Coin.token_decimals);
-                                        let amount256 = result.params.find(i=>i.name==='_value').value;
+                                        let amount256 = result.params.find(i => i.name === '_value').value;
                                         let amount = Utils.checkDecimal(Utils.div(amount256, weiUnit), erc20Coin.decimal_digits);
                                         console.log(txid, amount);
                                         let [userAssetsItem] = await AssetsModel.getUserAssetsByBlockAddrListCoinId(toBlockAddr, erc20Coin.coin_id);
