@@ -2,7 +2,7 @@ let schedule = require('node-schedule');
 let fs= require('fs');
 let _ = require('lodash');
 let CryptoUtils = require('../../Base/Utils/CryptoUtils');
-let EthService = require('../../Base/Crypto/EthService');
+let EthService = require('../../Base/Crypto/EthService1');
 let Utils = require('../../Base/Utils/Utils');
 let CoinModel = require('../../Model/CoinModel');
 let AssetsModel = require('../../Model/AssetsModel');
@@ -28,7 +28,7 @@ try{
     rule.minute = times;
 
     let isRun = false;
-    var job = schedule.scheduleJob('* */5 * * * *',async()=>{
+    var job = schedule.scheduleJob('* */1 * * * *',async()=>{
         
         if(isRun){
             return;
