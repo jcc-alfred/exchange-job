@@ -125,7 +125,7 @@ class EthService {
 
     // 0x6E873B70B0F5dD39052ef6506367C704Aa6d9922,2,0xf0a669835d27be652b672305cd8b06417f28fcefdf3d81deb4ebe6b2b75aab30,0xdAC17F958D2ee523a2206206994597C13D831ec7,6
 
-    async getTokenEstimateGas(toAddress,tradeAmount,privateKey,contractAddress,tokenDecimals){
+    async getTokenEstimateGas(toAddress, tradeAmount, privateKey, contractAddress, tokenDecimals) {
         var web3 = this.web3;
         let contractABI = [{
             "constant": true,
@@ -167,23 +167,23 @@ class EthService {
                 "payable": false,
                 "type": "function"
             }];
-        let tokenContract = new web3.eth.Contract(contractABI,contractAddress);
-        let amountWei = tradeAmount * Math.pow(10,tokenDecimals);
-        let amountHex =  web3.utils.toHex(amountWei);
+        let tokenContract = new web3.eth.Contract(contractABI, contractAddress);
+        let amountWei = tradeAmount * Math.pow(10, tokenDecimals);
+        let amountHex = web3.utils.toHex(amountWei);
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
-        let gasPriceHex = web3.utils.toHex(gasPrice);
+        let gasPriceHex = web3.utils.toHex(gasPrice * 2);
         let account = web3.eth.accounts.privateKeyToAccount(privateKey);
         let nonce = await web3.eth.getTransactionCount(account.address);
-        let nonceHex =  web3.utils.toHex(nonce);
+        let nonceHex = web3.utils.toHex(nonce + 1000);
         privateKey = privateKey.startsWith('0x') ? privateKey.substring(2) : privateKey;
         let privateKeyHex = new Buffer(privateKey, 'hex');
         var rawTx = {
             to: contractAddress,
             value: '0x0',
             gasPrice: gasPriceHex,
-            from:account.address,
-            nonce:nonceHex,
+            from: account.address,
+            nonce: nonceHex,
             data: transferABI
         };
         return web3.eth.estimateGas(rawTx);
@@ -238,9 +238,9 @@ class EthService {
         let amountHex = this.web3.utils.toHex(parseInt(tradeAmount * 10 ** tokenDecimals));
         let transferABI = tokenContract.methods.transfer(toAddress, amountHex).encodeABI();
         let gasPrice = await web3.eth.getGasPrice();
-        let gasPriceHex = web3.utils.toHex(gasPrice*2);
+        let gasPriceHex = web3.utils.toHex(gasPrice * 2);
         let nonce = await web3.eth.getTransactionCount(fromAddress);
-        let nonceHex = this.web3.utils.toHex(nonce+100);
+        let nonceHex = this.web3.utils.toHex(nonce + 100);
         privateKey = privateKey.startsWith('0x') ? privateKey.substring(2) : privateKey;
         let privateKeyHex = new Buffer(privateKey, 'hex');
         var rawTx = {
@@ -262,7 +262,7 @@ class EthService {
             let txObj = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'));
             console.log(txObj);
             return txObj
-        }catch (e) {
+        } catch (e) {
             console.log(e);
             return null
         }
