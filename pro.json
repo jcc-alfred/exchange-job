@@ -73,15 +73,6 @@
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
-      "name": "AddressEthTask",
-      "script": "./core/Tasks/GetBlockAddress/EthTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/EthTask.out.log",
-      "error_file": "./logs/GetBlockAddress/EthTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
       "name": "AddressGTBTask",
       "script": "./core/Tasks/GetBlockAddress/GTBTask.js",
       "exec_mode": "fork",
@@ -106,15 +97,6 @@
       "merge_logs": true,
       "out_file": "./logs/GetBlockAddress/GTTTask.out.log",
       "error_file": "./logs/GetBlockAddress/GTTTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "DepositEthTask",
-      "script": "./core/Tasks/Deposit/EthTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Deposit/EthTask.out.log",
-      "error_file": "./logs/Deposit/EthTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
@@ -144,15 +126,7 @@
       "error_file": "./logs/Deposit/GTTTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
-    {
-      "name": "AggregateEthTask",
-      "script": "./core/Tasks/Aggregate/EthTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Aggregate/EthTask.out.log",
-      "error_file": "./logs/Aggregate/EthTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
+
     {
       "name": "AggregateGTBTask",
       "script": "./core/Tasks/Aggregate/GTBTask.js",
@@ -178,15 +152,6 @@
       "merge_logs": true,
       "out_file": "./logs/Withdraw/BitnetTask.out.log",
       "error_file": "./logs/Withdraw/BitnetTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
-      "name": "WithdrawEthTask",
-      "script": "./core/Tasks/Withdraw/EthTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/Withdraw/EthTask.out.log",
-      "error_file": "./logs/Withdraw/EthTask.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
