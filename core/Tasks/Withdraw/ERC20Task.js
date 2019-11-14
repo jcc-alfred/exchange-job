@@ -126,7 +126,9 @@ try{
                     }
                     //内部提现转账 end
                     if(transWithdrawList && transWithdrawList.length > 0){
-                        await Promise.all(transWithdrawList.map(async(item)=>{
+                        // await Promise.all(transWithdrawList.map(async(item)=>{
+                        for (let index in transWithdrawList){
+                            const item = transWithdrawList[index];
                             let totalWalletAmountWei = await ethService.getTokenBalance(coin.main_block_address,coin.contract_address);
                             let totalWalletAmount = totalWalletAmountWei/Math.pow(10,coin.token_decimals);
                             if(totalWalletAmount < item.trade_amount){
@@ -146,7 +148,7 @@ try{
                                 let res = await WithdrawModel.setTxIdById(txObj.transactionHash,item.user_withdraw_id);
                                 console.log(txObj.transactionHash,item.trade_amount);
                             }
-                        }));                    
+                        }
                     }
                 }            
             }catch(error){
