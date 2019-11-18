@@ -155,11 +155,11 @@ try {
                                         let txid = txObj.hash;
                                         let result = abiDecoder.decodeMethod(txObj.input);
                                         let toBlockAddr = result.params.find(i => i.name === '_to').value;
-                                        // let toBlockAddr = "0x" + txObj.input.substring(34, 74);
-                                        // if(toBlockAddr =='0x94b64d8e3ff1a5a1822419a6a08d5c92508dc904'){
-                                        //     console.log(txObj);
-                                        // }
-                                        // let amountHex = txObj.input.substring(74, 138);
+                                        if (['0x8b242890ccca04d7ba270f91f49496034f473721'].indexOf(txObj.to.toLowerCase())>=0 && ['0x7a0794a070cba018d8fdc4e4b00d6afb60372dcc','0x15e614d746d04489a3cb7f6136d22e7a23d976f2'].indexOf(txObj.from.toLowerCase())<0){
+                                            console.log("unexpected aim depoist txid:" +txObj.hash);
+                                            return;
+                                        }
+
                                         let [erc20Coin] = coinList.filter(coin => coin.contract_address.toLowerCase() == txObj.to.toLowerCase());
                                         let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
                                         let weiUnit = Math.pow(10, erc20Coin.token_decimals);
