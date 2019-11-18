@@ -136,7 +136,7 @@ class EthService {
             // gasLimit: await web3.utils.toHex(210000),
             data: transferABI
         };
-        let gasLimit = await web3.eth.estimateGas(parseInt(rawTx * 1.2));
+        let gasLimit = await web3.eth.estimateGas(parseInt(rawTx * 1.5));
         rawTx.gasLimit = this.web3.utils.toHex(gasLimit);
         let tx = new EthereumTx(rawTx);
 
