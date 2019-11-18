@@ -146,7 +146,7 @@ try {
                             )));
                         if (erc20TxList && erc20TxList.length > 0) {
                             let w1 = await Promise.all(erc20TxList.map(async (txObj) => {
-                                if (!txObj || !txObj.input || txObj.input.length != 138) {
+                                if (!txObj || !txObj.input || txObj.input.length !== 138) {
                                     return;
                                 }
                                 let methodId = txObj.input.substring(0, 10).toLowerCase();
