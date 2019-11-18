@@ -81,46 +81,6 @@ class EthService {
     //ERC20 Token
     async getTokenBalance(blockAddress, contractAddress) {
         var web3 = this.web3;
-        let contractABI = [{
-            "constant": true,
-            "inputs": [
-                {
-                    "name": "_owner",
-                    "type": "address"
-                }
-            ],
-            "name": "balanceOf",
-            "outputs": [
-                {
-                    "name": "balance",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_to",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_value",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "transfer",
-                "outputs": [
-                    {
-                        "name": "success",
-                        "type": "bool"
-                    }
-                ],
-                "payable": false,
-                "type": "function"
-            }];
         let tokenContract = new web3.eth.Contract(contractABI, contractAddress);
         return tokenContract.methods.balanceOf(blockAddress).call();
     }
@@ -129,46 +89,6 @@ class EthService {
 
     async getTokenEstimateGas(toAddress, tradeAmount, privateKey, contractAddress, tokenDecimals) {
         var web3 = this.web3;
-        let contractABI = [{
-            "constant": true,
-            "inputs": [
-                {
-                    "name": "_owner",
-                    "type": "address"
-                }
-            ],
-            "name": "balanceOf",
-            "outputs": [
-                {
-                    "name": "balance",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_to",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_value",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "transfer",
-                "outputs": [
-                    {
-                        "name": "success",
-                        "type": "bool"
-                    }
-                ],
-                "payable": false,
-                "type": "function"
-            }];
         let tokenContract = new web3.eth.Contract(contractABI, contractAddress);
         let amountWei = tradeAmount * Math.pow(10, tokenDecimals);
         let amountHex = web3.utils.toHex(amountWei);
@@ -203,7 +123,7 @@ class EthService {
         let gasPrice = await web3.eth.getGasPrice();
         let gasPriceHex = web3.utils.toHex(gasPrice * 2);
         // let nonce = await web3.eth.getTransactionCount(fromAddress);
-        let nonce = await web3.eth.getTransactionCount(fromAddress,'pending');
+        let nonce = await web3.eth.getTransactionCount(fromAddress, 'pending');
         let nonceHex = this.web3.utils.toHex(nonce);
         privateKey = privateKey.startsWith('0x') ? privateKey.substring(2) : privateKey;
         let privateKeyHex = new Buffer(privateKey, 'hex');
@@ -213,11 +133,11 @@ class EthService {
             gasPrice: gasPriceHex,
             from: fromAddress,
             nonce: nonceHex,
-            gasLimit: await web3.utils.toHex(210000),
+            // gasLimit: await web3.utils.toHex(210000),
             data: transferABI
         };
-        // let gasLimit = await web3.eth.estimateGas(rawTx);
-        // rawTx.gasLimit = this.web3.utils.toHex(gasLimit);
+        let gasLimit = await web3.eth.estimateGas(parseInt(rawTx * 1.2));
+        rawTx.gasLimit = this.web3.utils.toHex(gasLimit);
         let tx = new EthereumTx(rawTx);
 
         tx.sign(privateKeyHex);
@@ -238,12 +158,12 @@ class EthService {
 module.exports = EthService;
 
 // console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
-// let a= new EthService('https://mainnet.infura.io/v3/9552ac202e2c4dfb9f1a986b71d86d4a');
+let a = new EthService('https://mainnet.infura.io/v3/9552ac202e2c4dfb9f1a986b71d86d4a');
 //send eth
 // let b =  a.sendSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509','0xa043464d5f839a3c02100fdd1942ac78def26c68',0.0003289,'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09')
 
 //send usdt
-// a.sendTokenSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509','0x4528b65c130d2200780bb8bb8cb8370a082f6a62',0.1,'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09','0xdAC17F958D2ee523a2206206994597C13D831ec7',6)
+a.sendTokenSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509', '0x4528b65c130d2200780bb8bb8cb8370a082f6a62', 0.1, 'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09', '0xdAC17F958D2ee523a2206206994597C13D831ec7', 6)
 
 //
 //
