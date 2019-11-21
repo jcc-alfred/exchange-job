@@ -1,15 +1,6 @@
 {
   "apps": [
     {
-      "name": "AddressInitTask",
-      "script": "./core/Tasks/GetBlockAddress/InitTask.js",
-      "exec_mode": "fork",
-      "merge_logs": true,
-      "out_file": "./logs/GetBlockAddress/InitTask.out.log",
-      "error_file": "./logs/GetBlockAddress/InitTask.err.log",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss"
-    },
-    {
       "name": "AddressEthTask",
       "script": "./core/Tasks/GetBlockAddress/EthTask.js",
       "exec_mode": "fork",
