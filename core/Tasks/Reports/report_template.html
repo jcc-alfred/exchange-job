@@ -28,6 +28,28 @@
     <h1><%= date %> GTB交易所数据统计</h1>
     <div class="myblock">
         <div class="myblock">
+            <h2 style="margin-top: 10px">USDT充值提现历史</h2>
+            <table id="USDT_HISTORY" data-height=80>
+                <thead>
+                <tr>
+                    <th data-field="serialNumber">时间</th>
+                    <th data-field="userID">USDT充值</th>
+                    <th data-field="amount">USDT提现</th>
+                    <th data-field="amount">USDT入金</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i < USDT_HISTORY.length; i++) { %>
+                <tr>
+                    <td><%= USDT_HISTORY[i].day %></td>
+                    <td><%= USDT_HISTORY[i].deposit_amount %></td>
+                    <td><%= USDT_HISTORY[i].withdraw_amount %></td>
+                    <td><%= USDT_HISTORY[i].absolute_amount %></td>
+
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
             <h2 style="margin-top: 10px">AIM存币数据</h2>
             <table id="AIM_DEPOSIT_DAY_table" data-height=80>
                 <thead>
@@ -109,63 +131,6 @@
             </tbody>
         </table>
 
-        <div class="myblock">
-            <h2 style="margin-top: 10px">GTB存币数据</h2>
-            <table id="GTB_DEPOSIT_DAY_table" data-height=80>
-                <thead>
-                <tr>
-                    <th data-field="distinct_user">用户数</th>
-                    <th data-field="count">次数</th>
-                    <th data-field="total_deposit_amount">存币数额</th>
-                    <th data-field="coin_id">货币id</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><%= GTB_DEPOSIT_DAY.distinct_user %></td>
-                    <td><%= GTB_DEPOSIT_DAY.count %></td>
-                    <td><%= GTB_DEPOSIT_DAY.total_deposit_amount %></td>
-                    <td><%= GTB_DEPOSIT_DAY.coin_id %></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="myblock">
-            <h2 style="margin-top: 10px">GTB/GTT交易额数据</h2>
-            <table id="GTB_TRASACTION_DAY_table" data-height=80>
-                <thead>
-                <tr>
-                    <th data-field="trade_amount">交易额</th>
-                    <th data-field="count">次数</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><%= GTB_TRASACTION_DAY.trade_amount %></td>
-                    <td><%= GTB_TRASACTION_DAY.count %></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="myblock">
-            <h2 style="margin-top: 10px">GTT提现数据</h2>
-            <table id="GTB_WITHDRAW_DAY_table" data-height=80>
-                <thead>
-                <tr>
-                    <th data-field="withdraw_amount">提现数额</th>
-                    <th data-field="count">次数</th>
-                    <th data-field="unique_user">用户数</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><%= GTB_WITHDRAW_DAY.withdraw_amount %></td>
-                    <td><%= GTB_WITHDRAW_DAY.count %></td>
-                    <td><%= GTB_WITHDRAW_DAY.unique_user %></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
 
         <h2 style="margin-top: 10px">交易所资产数据</h2>
         <table id="AssetSumaryTable" data-height=80>

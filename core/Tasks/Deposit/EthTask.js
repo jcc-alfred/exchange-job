@@ -24,7 +24,7 @@ abiDecoder.addABI(contractABI);
 
 try {
     let isRun = false;
-    var job = schedule.scheduleJob('*/30 * * * * *', async () => {
+    var job = schedule.scheduleJob('*/20 * * * * *', async () => {
 
         if (isRun) {
             return;
@@ -156,11 +156,6 @@ try {
                                         let txid = txObj.hash;
                                         let result = abiDecoder.decodeMethod(txObj.input);
                                         let toBlockAddr = result.params.find(i=>i.name==='_to').value;
-                                        // let toBlockAddr = "0x" + txObj.input.substring(34, 74);
-                                        // if(toBlockAddr =='0x94b64d8e3ff1a5a1822419a6a08d5c92508dc904'){
-                                        //     console.log(txObj);
-                                        // }
-                                        // let amountHex = txObj.input.substring(74, 138);
                                         let [erc20Coin] = coinList.filter(coin => coin.contract_address.toLowerCase() == txObj.to.toLowerCase());
                                         let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
                                         let weiUnit = Math.pow(10, erc20Coin.token_decimals);
@@ -269,12 +264,26 @@ try {
                             if (txObj && txObj.input && txObj.input.length == 138) {
                                 let methodId = txObj.input.substring(0, 10).toLowerCase();
                                 if (methodId == '0xa9059cbb') {
-                                    let toBlockAddr = "0x" + txObj.input.substring(34, 74);
-                                    let amountHex = txObj.input.substring(74, 138);
+                                    let txid = txObj.hash;
+                                    let result = abiDecoder.decodeMethod(txObj.input);
+                                    let toBlockAddr = result.params.find(i=>i.name==='_to').value;
+                                    // let toBlockAddr = "0x" + txObj.input.substring(34, 74);
+                                    // if(toBlockAddr =='0x94b64d8e3ff1a5a1822419a6a08d5c92508dc904'){
+                                    //     console.log(txObj);
+                                    // }
+                                    // let amountHex = txObj.input.substring(74, 138);
                                     let [erc20Coin] = coinList.filter(coin => coin.contract_address.toLowerCase() == txObj.to.toLowerCase());
                                     let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
                                     let weiUnit = Math.pow(10, erc20Coin.token_decimals);
-                                    let amount = Utils.checkDecimal(Utils.div(ethService.hexToNumber(amountHex), weiUnit), erc20Coin.decimal_digits);
+                                    let amount256 = result.params.find(i=>i.name==='_value').value;
+                                    let amount = Utils.checkDecimal(Utils.div(amount256, weiUnit), erc20Coin.decimal_digits);
+                                    //
+                                    // let toBlockAddr = "0x" + txObj.input.substring(34, 74);
+                                    // let amountHex = txObj.input.substring(74, 138);
+                                    // let [erc20Coin] = coinList.filter(coin => coin.contract_address.toLowerCase() == txObj.to.toLowerCase());
+                                    // let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
+                                    // let weiUnit = Math.pow(10, erc20Coin.token_decimals);
+                                    // let amount = Utils.checkDecimal(Utils.div(ethService.hexToNumber(amountHex), weiUnit), erc20Coin.decimal_digits);
                                     let confirmations = currenctBlockNum - txObj.blockNumber;
                                     let confirmStatus = confirmations >= confirmCount ? 1 : 0;
                                     if (confirmStatus == 1) {

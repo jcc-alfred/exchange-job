@@ -73,10 +73,22 @@ class WithdrawModel {
         }
     }
 
+    async getCoinWithdrawHistory(coin_id, duration = 7) {
+        try {
+            let cnt = await DB.cluster('slave');
+            let res = await cnt.execQuery(`select sum(submit_amount) as withdraw_amount, date(create_time) as day 
+            from m_user_withdraw where coin_id =? and txid !='' and create_time >= date(DATE_SUB(NOW(), INTERVAL ? DAY))  group by day order by day desc;`, [coin_id, duration]);
+            cnt.close();
+            return res;
+        } catch (error) {
+            throw error
+        }
+    }
+
     async getCoinWithdrawPending(coin_id) {
         try {
             let cnt = await DB.cluster('slave');
-            let res = await cnt.execQuery(`select serial_num, user_id, coin_id ,txid as transactionID, submit_amount,confirm_status_name, create_time from m_user_withdraw where coin_id =? and confirm_status in (0) and user_id not in (select user_id from m_user where record_status=0) and user_id not in (select distinct user_id from m_user_deposit where coin_id= 20)`, [coin_id]);
+            let res = await cnt.execQuery(`select serial_num, user_id, coin_id ,txid as transactionID, submit_amount,confirm_status_name, create_time from m_user_withdraw where coin_id =? and confirm_status in (0,1)  `, [coin_id]);
             cnt.close();
             return res;
         } catch (error) {
@@ -87,7 +99,7 @@ class WithdrawModel {
     async getCoinWithdrawPendingSumary(coin_id) {
         try {
             let cnt = await DB.cluster('slave');
-            let res = await cnt.execQuery(`select count(distinct(user_id)) as user, count(1) as total_withdraw_request, sum(submit_amount) as withdraw_amount from m_user_withdraw where coin_id =? and confirm_status in (0) and user_id not in (select user_id from m_user where record_status=0) and user_id not in (select distinct user_id from m_user_deposit where coin_id= 20)`, [coin_id]);
+            let res = await cnt.execQuery(`select count(distinct(user_id)) as user, count(1) as total_withdraw_request, sum(submit_amount) as withdraw_amount from m_user_withdraw where coin_id =? and txid='' and confirm_status in (0,1)`, [coin_id]);
             cnt.close();
             return res[0];
         } catch (error) {

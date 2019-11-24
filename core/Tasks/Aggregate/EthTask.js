@@ -183,7 +183,7 @@ try {
                 let privateKey = CryptoUtils.aesDecode(userETHBalance.private_key);
                 let trade_amount = Utils.sub(userETHBalance.eth_balance, transferETHFees);
                 if (trade_amount > 0) {
-                    let txObj = await eth_ethService.sendSignedTransaction(ethCoin.main_block_address, trade_amount, privateKey);
+                    let txObj = await eth_ethService.sendSignedTransaction(userETHBalance.block_address,ethCoin.main_block_address, trade_amount, privateKey);
                     if (txObj && txObj.transactionHash) {
                         // 增加汇总记录
                         let res = await CoinAggregateModel.addCoinAggregate(txObj.transactionHash, ethCoin.coin_id, userETHBalance.block_address, ethCoin.main_block_address, trade_amount, '汇总ETH');
