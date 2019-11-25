@@ -28,7 +28,7 @@ try {
     rule.minute = times;
 
     let isRun = false;
-    var job = schedule.scheduleJob(rule, async () => {
+    var job = schedule.scheduleJob('* */2 * * * *', async () => {
 
         if (isRun) {
             return;
