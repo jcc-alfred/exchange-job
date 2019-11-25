@@ -36,7 +36,7 @@ class EthService{
         let gasLimitHex = this.web3.utils.toHex(gasLimit);
         let amountHex =  this.web3.utils.toHex(this.web3.utils.toWei(tradeAmount.toString(), 'ether'));
         let gasPrice = await this.web3.eth.getGasPrice();
-        let gasPriceHex = this.web3.utils.toHex(gasPrice);
+        let gasPriceHex = this.web3.utils.toHex(parseInt(gasPrice)*5);
         let account = this.web3.eth.accounts.privateKeyToAccount(privateKey);
         let nonce = await this.web3.eth.getTransactionCount(account.address);
         let nonceHex =  this.web3.utils.toHex(nonce);
