@@ -155,17 +155,17 @@ try {
                                     try {
                                         let txid = txObj.hash;
                                         let result = abiDecoder.decodeMethod(txObj.input);
-                                        let toBlockAddr = result.params.find(i=>i.name==='_to').value;
+                                        let toBlockAddr = result.params.find(i => i.name === '_to').value;
                                         let [erc20Coin] = coinList.filter(coin => coin.contract_address.toLowerCase() == txObj.to.toLowerCase());
                                         let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
                                         let weiUnit = Math.pow(10, erc20Coin.token_decimals);
-                                        let amount256 = result.params.find(i=>i.name==='_value').value;
+                                        let amount256 = result.params.find(i => i.name === '_value').value;
                                         let amount = Utils.checkDecimal(Utils.div(amount256, weiUnit), erc20Coin.decimal_digits);
 
                                         // let amount = Utils.checkDecimal(Utils.div(ethService.hexToNumber(amountHex), weiUnit), erc20Coin.decimal_digits);
                                         let [userAssetsItem] = await AssetsModel.getUserAssetsByBlockAddrListCoinId(toBlockAddr, erc20Coin.coin_id);
                                         if (userAssetsItem && userAssetsItem.user_id) {
-                                            console.log('txid: '+txid,' user_id: '+userAssetsItem.user_id, ' amount: '+ amount);
+                                            console.log('txid: ' + txid, ' user_id: ' + userAssetsItem.user_id, ' amount: ' + amount);
                                             let confirmations = currenctBlockNum - blockNum;
                                             let [depositItem] = await DepositModel.getUserDepositByTxId(txid);
                                             let coinAggItem = await CoinAggregateModel.getCoinAggregateByTxId(txid);
@@ -266,7 +266,7 @@ try {
                                 if (methodId == '0xa9059cbb') {
                                     let txid = txObj.hash;
                                     let result = abiDecoder.decodeMethod(txObj.input);
-                                    let toBlockAddr = result.params.find(i=>i.name==='_to').value;
+                                    let toBlockAddr = result.params.find(i => i.name === '_to').value;
                                     // let toBlockAddr = "0x" + txObj.input.substring(34, 74);
                                     // if(toBlockAddr =='0x94b64d8e3ff1a5a1822419a6a08d5c92508dc904'){
                                     //     console.log(txObj);
@@ -275,7 +275,7 @@ try {
                                     let [erc20Coin] = coinList.filter(coin => coin.contract_address.toLowerCase() == txObj.to.toLowerCase());
                                     let confirmCount = erc20Coin.confirm_count > 0 ? erc20Coin.confirm_count : 12;
                                     let weiUnit = Math.pow(10, erc20Coin.token_decimals);
-                                    let amount256 = result.params.find(i=>i.name==='_value').value;
+                                    let amount256 = result.params.find(i => i.name === '_value').value;
                                     let amount = Utils.checkDecimal(Utils.div(amount256, weiUnit), erc20Coin.decimal_digits);
                                     //
                                     // let toBlockAddr = "0x" + txObj.input.substring(34, 74);
