@@ -45,7 +45,7 @@ try {
             let lastProcBlockNum = fs.readFileSync(__dirname + '/BlockNumber', {encoding: 'utf-8', flag: 'r'});
             console.log('lastProcBlockNum', lastProcBlockNum);
             let ethService = new EthService(ethCoin.wallet_ip, ethCoin.wallet_port, ethCoin.wallet_passphrase);
-            let currenctBlockNum =  await ethService.getBlockNumber();
+            let currenctBlockNum = await ethService.getBlockNumber();
             console.log('******currenctBlockNum:' + currenctBlockNum);
             currenctBlockNum = Utils.sub(currenctBlockNum, lastProcBlockNum) > 50 ? Utils.add(lastProcBlockNum, 50) : currenctBlockNum;
             if (currenctBlockNum >= lastProcBlockNum) {
@@ -138,7 +138,7 @@ try {
                         //erc20代币的充值记录 - txObj.to 是否为合约地址
                         let erc20TxList = transList.filter((tx) => (
                             erc20List.find((erc20) => {
-                                    if (erc20.contract_address && tx.to && erc20.contract_address && erc20.contract_address.toLowerCase() == tx.to.toLowerCase()) {
+                                    if (erc20.contract_address && tx && tx.to && erc20.contract_address && erc20.contract_address.toLowerCase() == tx.to.toLowerCase()) {
                                         return true;
                                     } else {
                                         return false;
