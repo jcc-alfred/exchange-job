@@ -11,6 +11,7 @@ let UserAlertModel = require('../../Model/UserAlertModel');
 let UserModel = require('../../Model/UserModel');
 let TransferFeesLogModel = require('../../Model/TransferFeesLogModel');
 let AssetsLogModel = require('../../Model/AssetsLogModel');
+let GTB_Token_ABI = require('../../Base/ABI/GTB_Token_ABI');
 
 // *    *    *    *    *    *
 // ┬    ┬    ┬    ┬    ┬    ┬
@@ -28,7 +29,7 @@ try {
     rule.minute = times;
 
     let isRun = false;
-    var job = schedule.scheduleJob('1 * * * * *', async () => {
+    var job = schedule.scheduleJob('* * * * * *', async () => {
 
         if (isRun) {
             return;
@@ -141,12 +142,23 @@ try {
                                 console.error('钱包ETH余额手续费不足：totalETHWalletAmount:' + totalETHWalletAmount);
                                 return;
                             }
+                            if(item.trade_amount<=0){
+                                return;
+                            }
                             let privateKey = CryptoUtils.aesDecode(coin.main_block_address_private_key);
-                            let txObj = await ethService.sendTokenSignedTransaction(item.to_block_address, item.trade_amount, privateKey, coin.contract_address, coin.token_decimals);
-                            if (txObj && txObj.transactionHash) {
+                            let txObj = null;
+                            let tokenABI = GTB_Token_ABI[coin.coin_name.toUpperCase()];
+                            if (tokenABI) {
+                                txObj = await  ethService.sendTokenSignedTransactionNew(coin.main_block_address, item.to_block_address, item.trade_amount, privateKey, coin.contract_address, coin.token_decimals, tokenABI)
+                            } else {
+                                txObj = await ethService.sendTokenSignedTransaction(item.to_block_address, item.trade_amount, privateKey, coin.contract_address, coin.token_decimals);
+                                txObj.hash = txObj.transactionHash
+                            }
+
+                            if (txObj && txObj.hash) {
                                 // 修改数据库
-                                let res = await WithdrawModel.setTxIdById(txObj.transactionHash, item.user_withdraw_id);
-                                console.log(txObj.transactionHash, item.trade_amount);
+                                let res = await WithdrawModel.setTxIdById(txObj.hash, item.user_withdraw_id);
+                                console.log(txObj.hash, item.trade_amount);
                             }
 
                         }));
