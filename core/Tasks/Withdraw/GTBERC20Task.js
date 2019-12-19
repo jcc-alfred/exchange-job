@@ -29,7 +29,7 @@ try {
     rule.minute = times;
 
     let isRun = false;
-    var job = schedule.scheduleJob('* * * * * *', async () => {
+    var job = schedule.scheduleJob('*/5 * * * * *', async () => {
 
         if (isRun) {
             return;
