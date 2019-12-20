@@ -1,12 +1,12 @@
 {
   "apps": [
     {
-      "name": "GTB_Report",
-      "script": "./core/Tasks/Reports/GTB_Report.js",
+      "name": "GTB_report",
+      "script": "./core/Tasks/Reports/GTB_report.js",
       "exec_mode": "fork",
       "merge_logs": true,
-      "out_file": "./logs/Reports/GTB_Report.out.log",
-      "error_file": "./logs/Reports/GTB_Report.err.log",
+      "out_file": "./logs/Reports/GTB_report.out.log",
+      "error_file": "./logs/Reports/GTB_report.err.log",
       "log_date_format": "YYYY-MM-DD HH:mm:ss"
     },
     {
