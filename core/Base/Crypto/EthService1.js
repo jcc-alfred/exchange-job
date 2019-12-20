@@ -2,6 +2,8 @@ let Web3 = require('web3');
 let Tx = require('ethereumjs-tx');
 let EthereumTx = require('ethereumjs-tx').Transaction;
 let moment = require('moment');
+const ethers = require('ethers');
+
 
 let contractABI = require('./ABI');
 
@@ -10,8 +12,10 @@ class EthService {
         // let hostUrl = 'https://mainnet.infura.io/7cc86955d18e40f9902439589fa71a4d';
         //let hostUrl = 'https://rinkeby.infura.io/7cc86955d18e40f9902439589fa71a4d';
         //let hostUrl = 'http://' + host +':' + port;
-        let hostUrl = host;
-        this.web3 = new Web3(new Web3.providers.HttpProvider(hostUrl));
+        this.hostUrl = host;
+        let currentProvider = new Web3.providers.HttpProvider(host);
+        this.web3 = new Web3(currentProvider);
+        this.newweb3 = new ethers.providers.Web3Provider(currentProvider);
     }
 
     async createAccount() {
@@ -36,6 +40,19 @@ class EthService {
 
     async getGasPrice() {
         return this.web3.eth.getGasPrice();
+    }
+
+
+    async sendTokenSignedTransactionNew(fromAddress, toAddress, tradeAmount, privateKey, contractAddress, tokenDecimals, abi) {
+        let wallet = new ethers.Wallet(privateKey, this.newweb3);
+        let contract = new ethers.Contract(contractAddress, abi, wallet);
+        let nonce = await this.newweb3.getTransactionCount(fromAddress, 'pending');
+        let overideOptions = {
+            nonce: nonce
+        };
+        let txObj = await  contract.transfer(toAddress, ethers.utils.parseUnits(tradeAmount.toString(), tokenDecimals), overideOptions);
+        console.log(txObj);
+        return txObj;
     }
 
     async sendSignedTransaction(fromAddress, toAddress, tradeAmount, privateKey) {
@@ -159,11 +176,14 @@ module.exports = EthService;
 
 // console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
 // let a = new EthService('https://mainnet.infura.io/v3/9552ac202e2c4dfb9f1a986b71d86d4a');
+// let ETHABIS = require('../ABI/ETH_Token_ABI');
 //send eth
 // let b =  a.sendSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509','0xa043464d5f839a3c02100fdd1942ac78def26c68',0.0003289,'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09')
 
 //send usdt
 // a.sendTokenSignedTransaction('0xD6952dd30A4f699213F60386C7c45EB2801a7509', '0x4528b65c130d2200780bb8bb8cb8370a082f6a62', 0.1, 'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09', '0xdAC17F958D2ee523a2206206994597C13D831ec7', 6)
+// a.sendTokenSignedTransactionNew('0xD6952dd30A4f699213F60386C7c45EB2801a7509','0xa043464d5f839a3c02100fdd1942ac78def26c68',0.1,'ed9686e8b7d6226a16575d1ab77ae8a26dca69b1bd71cc268add8bbe37df2b09','0xdAC17F958D2ee523a2206206994597C13D831ec7',6,ETHABIS['USDT'])
+
 
 //
 //
