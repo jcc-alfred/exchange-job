@@ -76,7 +76,7 @@ class WithdrawModel {
     async getCoinWithdrawHistory(coin_id, duration = 7) {
         try {
             let cnt = await DB.cluster('slave');
-            let res = await cnt.execQuery(`select sum(submit_amount) as withdraw_amount, date(create_time) as day 
+            let res = await cnt.execQuery(`select sum(submit_amount) as withdraw_amount, date(update_time) as day 
             from m_user_withdraw where coin_id =? and txid !='' and create_time >= date(DATE_SUB(NOW(), INTERVAL ? DAY))  group by day order by day desc;`, [coin_id, duration]);
             cnt.close();
             return res;

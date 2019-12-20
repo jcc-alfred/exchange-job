@@ -5,7 +5,7 @@ let DepositModel = require('../../Model/DepositModel');
 let MailUtils = require('../../Base/Utils/MailUtils');
 let rp = require('request-promise');
 let WithdrawModel = require('../../Model/WithdrawModel');
-let AssetsModel =require('../../Model/AssetsModel');
+let AssetsModel = require('../../Model/AssetsModel');
 let OrderModel = require('../../Model/OrderModel');
 let moment = require('moment');
 let SystemModel = require('../../Model/SystemModel');
@@ -41,26 +41,31 @@ try {
         console.log(Utils.formatString("run report for date : {0}", [date]));
 
         await AIM_Client.init();
-
-
-        let usdtHistory = await WithdrawModel.getCoinWithdrawHistory(5, 100);
-        await Promise.all(
-            usdtHistory.map(async (data, index) => {
-                usdtHistory[index]['day']=moment(usdtHistory[index]['day']).format("YYYY-MM-DD");
-                usdtHistory[index]["deposit_amount"] = await AIM_Client.getUSDTDepositbyDay(moment(data.day).subtract(1,'days').format("YYYY-MM-DD"),
-                    moment(data.day).format("YYYY-MM-DD"));
-                usdtHistory[index]["absolute_amount"]= usdtHistory[index]["deposit_amount"]-usdtHistory[index]["withdraw_amount"]
-
-            })
-        );
-
-
         let coin_list = await CoinModel.getCoinList();
         let GTB_Coin = coin_list.find(i => i.coin_name === "GTB");
         let GTT_Coin = coin_list.find(i => i.coin_name === "GTT");
         let AIM_Coin = coin_list.find(i => i.coin_name === "AIM");
         let USDT_Coin = coin_list.find(i => i.coin_name === "USDT");
-        // let GTB_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(GTB_Coin.coin_id, date);
+
+        let usdtHistory = await WithdrawModel.getCoinWithdrawHistory(5, 100);
+        await Promise.all(
+            usdtHistory.map(async (data, index) => {
+                usdtHistory[index]['day'] = moment(usdtHistory[index]['day']).format("YYYY-MM-DD");
+                usdtHistory[index]["AIM_Sys_deposit_amount"] = await AIM_Client.getUSDTDepositbyDay(moment(data.day).subtract(1, 'days').format("YYYY-MM-DD"),
+                    moment(data.day).format("YYYY-MM-DD"));
+                let USDT_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(USDT_Coin.coin_id, moment(data.day).format("YYYY-MM-DD"));
+                if (USDT_Deposit) {
+                    usdtHistory[index]["exchange_deposit_amount"] = USDT_Deposit['total_deposit_amount'];
+                } else {
+                    usdtHistory[index]["exchange_deposit_amount"] = 0;
+                }
+
+                usdtHistory[index]["absolute_amount"] = usdtHistory[index]["AIM_Sys_deposit_amount"] + usdtHistory[index]["exchange_deposit_amount"] - usdtHistory[index]["withdraw_amount"]
+
+            })
+        );
+
+
         let AIM_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(AIM_Coin.coin_id, date);
 
         // let coin_exchange_list = await CoinModel.getCoinExchangeList();
@@ -99,7 +104,7 @@ try {
         let html = fs.readFileSync(File_DIR + '/report_template.html', {encoding: 'utf-8'});
 
         let data = {
-            USDT_HISTORY:usdtHistory,
+            USDT_HISTORY: usdtHistory,
             USDT_PendingWithdraw: USDT_PendingWithdraw,
             USDT_PendingWithdrawSummary: USDT_PendingWithdrawSummary,
             AIM_DEPOSIT_DAY: AIM_Deposit,

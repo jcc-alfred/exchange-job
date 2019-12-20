@@ -1,6 +1,15 @@
 {
   "apps": [
     {
+      "name": "GTB_Report",
+      "script": "./core/Tasks/Reports/GTB_Report.js",
+      "exec_mode": "fork",
+      "merge_logs": true,
+      "out_file": "./logs/Reports/GTB_Report.out.log",
+      "error_file": "./logs/Reports/GTB_Report.err.log",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss"
+    },
+    {
       "name": "AddressEthTask",
       "script": "./core/Tasks/GetBlockAddress/EthTask.js",
       "exec_mode": "fork",

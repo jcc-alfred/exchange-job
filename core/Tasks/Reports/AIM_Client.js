@@ -18,7 +18,7 @@ class AIM_Client {
 
     async init(){
         let dest = 'code.gif';
-        let url = 'http://aim.gmiio.com/Common/ValidateCode';
+        let url = 'http://aimpro.co/Common/ValidateCode';
         let fff = await rp({
             method: "GET",
             uri: url,
@@ -42,15 +42,15 @@ class AIM_Client {
         if( code) {
             let res = await rp({
                 method: 'POST',
-                uri: 'http://aim.gmiio.com/Console/Account/Login',
+                uri: 'http://aimpro.co/Console/Account/Login',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'Referer': 'http://aim.gmiio.com/Console/Account/Login',
+                    'Referer': 'http://aimpro.co/Console/Account/Login',
                     "cookie": cookie
                 },
                 formData: {
                     loginName: 'admin',
-                    loginPwd: 'SYStem111333',
+                    loginPwd: 'uuhello123',
                     Code: code
                 },
                 simple: false,
@@ -65,14 +65,14 @@ class AIM_Client {
     async getUSDTDepositbyDay(fromDate,endDate){
         let res11 = await rp({
             method: 'GET',
-            uri: "http://aim.gmiio.com/Console/Home/MbrCharge",
+            uri: "http://aimpro.co/Console/Home/MbrCharge",
             qs: {
                 K: 'usdt',
                 T1: fromDate,
                 T2: endDate
             },
             headers: {
-                'Referer': 'http://aim.gmiio.com/Console/Home/Main',
+                'Referer': 'http://aimpro.co/Console/Home/Main',
                 "cookie": this.cookie
             },
             resolveWithFullResponse: true

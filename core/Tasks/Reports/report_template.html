@@ -33,7 +33,8 @@
                 <thead>
                 <tr>
                     <th data-field="serialNumber">时间</th>
-                    <th data-field="userID">USDT充值</th>
+                    <th data-field="userID">USDT充值(内盘)</th>
+                    <th data-field="userID">USDT充值(交易所)</th>
                     <th data-field="amount">USDT提现</th>
                     <th data-field="amount">USDT入金</th>
                 </tr>
@@ -42,7 +43,8 @@
                 <% for(var i=0; i < USDT_HISTORY.length; i++) { %>
                 <tr>
                     <td><%= USDT_HISTORY[i].day %></td>
-                    <td><%= USDT_HISTORY[i].deposit_amount %></td>
+                    <td><%= USDT_HISTORY[i].AIM_Sys_deposit_amount %></td>
+                    <td><%= USDT_HISTORY[i].exchange_deposit_amount %></td>
                     <td><%= USDT_HISTORY[i].withdraw_amount %></td>
                     <td><%= USDT_HISTORY[i].absolute_amount %></td>
 

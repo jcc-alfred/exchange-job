@@ -39,8 +39,8 @@ class DepositModel{
         let cnt = await DB.cluster('slave');
         try {
             let sql = `select count(distinct(user_id)) as distinct_user, count(1) as count, COALESCE(sum(trade_amount),0) as total_deposit_amount,coin_id from m_user_deposit where date(confirm_time)=? and coin_id =? `;
-            let res = await cnt.execQuery(sql,[date,coin_id]);
-            return res[0];
+            let res = await cnt.execReader(sql,[date,coin_id]);
+            return res;
         } catch (error) {
             throw error;
         }finally {
