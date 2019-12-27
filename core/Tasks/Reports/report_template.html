@@ -19,143 +19,128 @@
     }
 
     .myblock {
-        display: inline-block;
-        margin: 10px;
+        display: block;
+    }
+    .container{
+        display: inline-flex;
     }
 </style>
 <body>
-<div class="container" style="display:inline-block;width: 50%">
-    <h1><%= date %> GTB交易所数据统计</h1>
-    <div class="myblock">
-        <div class="myblock">
-            <h2 style="margin-top: 10px">USDT充值提现历史</h2>
-            <table id="USDT_HISTORY" data-height=80>
-                <thead>
-                <tr>
-                    <th data-field="serialNumber">时间</th>
-                    <th data-field="userID">USDT充值(内盘)</th>
-                    <th data-field="userID">USDT充值(交易所)</th>
-                    <th data-field="amount">USDT提现</th>
-                    <th data-field="amount">USDT入金</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for(var i=0; i < USDT_HISTORY.length; i++) { %>
-                <tr>
-                    <td><%= USDT_HISTORY[i].day %></td>
-                    <td><%= USDT_HISTORY[i].AIM_Sys_deposit_amount %></td>
-                    <td><%= USDT_HISTORY[i].exchange_deposit_amount %></td>
-                    <td><%= USDT_HISTORY[i].withdraw_amount %></td>
-                    <td><%= USDT_HISTORY[i].absolute_amount %></td>
-
-                </tr>
-                <% } %>
-                </tbody>
-            </table>
-            <h2 style="margin-top: 10px">AIM存币数据</h2>
-            <table id="AIM_DEPOSIT_DAY_table" data-height=80>
-                <thead>
-                <tr>
-                    <th data-field="distinct_user">用户数</th>
-                    <th data-field="count">次数</th>
-                    <th data-field="total_deposit_amount">存币数额</th>
-                    <th data-field="coin_id">货币id</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><%= AIM_DEPOSIT_DAY.distinct_user %></td>
-                    <td><%= AIM_DEPOSIT_DAY.count %></td>
-                    <td><%= AIM_DEPOSIT_DAY.total_deposit_amount %></td>
-                    <td><%= AIM_DEPOSIT_DAY.coin_id %></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="myblock">
-            <h2 style="margin-top: 10px">USDT提现数据</h2>
-            <table id="USDT_WITHDRAW_DAY_table" data-height=80>
-                <thead>
-                <tr>
-                    <th data-field="withdraw_amount">提现数额</th>
-                    <th data-field="count">次数</th>
-                    <th data-field="unique_user">用户数</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><%= USDT_WITHDRAW_DAY.withdraw_amount %></td>
-                    <td><%= USDT_WITHDRAW_DAY.count %></td>
-                    <td><%= USDT_WITHDRAW_DAY.unique_user %></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="myblock">
-            <h2 style="margin-top: 10px">USDT提现申请概括</h2>
-            <table id="USDT_WITHDRAW_RequestSummary" data-height=80>
-                <thead>
-                <tr>
-                    <th data-field="withdraw_amount">提现数额</th>
-                    <th data-field="count">次数</th>
-                    <th data-field="unique_user">用户数</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><%= USDT_PendingWithdrawSummary.withdraw_amount %></td>
-                    <td><%= USDT_PendingWithdrawSummary.total_withdraw_request %></td>
-                    <td><%= USDT_PendingWithdrawSummary.user %></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h2 style="margin-top: 10px">USDT提现申请记录(审核中)</h2>
-        <table id="USDT_Withdraw" data-height=80>
+<div class="container">
+    <div class="myblock" style="flex: 1;">
+        <h2 style="margin-top: 10px">USDT充值提现历史</h2>
+        <table id="USDT_HISTORY" data-height=80>
             <thead>
             <tr>
-                <th data-field="serialNumber">序列号</th>
-                <th data-field="userID">用户ID</th>
-                <th data-field="amount">申请提现数量</th>
-                <th data-field="createtime">申请时间</th>
+                <th data-field="serialNumber">时间</th>
+                <th data-field="userID">USDT充值(内盘)</th>
+                <th data-field="userID">USDT充值(交易所)</th>
+                <th data-field="amount">USDT提现</th>
+                <th data-field="amount">USDT现金流</th>
             </tr>
             </thead>
             <tbody>
-            <% for(var i=0; i < USDT_PendingWithdraw.length; i++) { %>
+            <% for(var i=0; i < USDT_HISTORY.length; i++) { %>
             <tr>
-                <td><%= USDT_PendingWithdraw[i].serial_number %></td>
-                <td><%= USDT_PendingWithdraw[i].user_id %></td>
-                <td><%= USDT_PendingWithdraw[i].submit_amount %></td>
-                <td><%= USDT_PendingWithdraw[i].create_time %></td>
-            </tr>
-            <% } %>
-            </tbody>
-        </table>
+                <td><%= USDT_HISTORY[i].day %></td>
+                <td><%= USDT_HISTORY[i].AIM_Sys_deposit_amount %></td>
+                <td><%= USDT_HISTORY[i].exchange_deposit_amount %></td>
+                <td><%= USDT_HISTORY[i].withdraw_amount %></td>
+                <td><%= USDT_HISTORY[i].absolute_amount %></td>
 
-
-        <h2 style="margin-top: 10px">交易所资产数据</h2>
-        <table id="AssetSumaryTable" data-height=80>
-            <thead>
-            <tr>
-                <th data-field="coin_name">货币名称</th>
-                <th data-field="distinct_user">拥有用户</th>
-                <th data-field="total_assets">总共资产</th>
-                <th data-field="USD_Value">资产价值（USD）</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% for(var i=0; i < UserAssets.length; i++) { %>
-            <tr>
-                <td><%= UserAssets[i].coin_name %></td>
-                <td><%= UserAssets[i].distinct_user %></td>
-                <td><%= UserAssets[i].total_assets %></td>
-                <td><%= UserAssets[i].price_usd %></td>
             </tr>
             <% } %>
             </tbody>
         </table>
     </div>
+    <div class="myblock", style="flex: 1;margin-left: 10px;">
+        <div class="myblock" >
+            <h2 style="margin-top: 10px">AIM内盘资产数据</h2>
+            <table id="aimAssetSumaryTable" data-height=80>
+                <thead>
+                <tr>
+                    <th data-field="coin_name">货币名称</th>
+                    <th data-field="distinct_user">拥有用户</th>
+                    <th data-field="total_assets">总共资产</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i < aimUserAssets.length; i++) { %>
+                <tr>
+                    <td><%= aimUserAssets[i].CoinKey %></td>
+                    <td><%= aimUserAssets[i].Count %></td>
+                    <td><%= aimUserAssets[i].Money %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="myblock">
+            <h2 style="margin-top: 10px">AIM新用户数据，总共有效用户：<%= aimTotalActiveUserCount %></h2>
+            <table id="aimNewUser" data-height=80>
+                <thead>
+                <tr>
+                    <th data-field="coin_name">日期</th>
+                    <th data-field="distinct_user">新增用户</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i < aimNewUsers.length; i++) { %>
+                <tr>
+                    <td><%= aimNewUsers[i].Day %></td>
+                    <td><%= aimNewUsers[i].Count %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="myblock" >
+            <h2 style="margin-top: 10px">AIM矿机数据 %></h2>
+            <table id="aimMiner" data-height=80>
+                <thead>
+                <tr>
+                    <th data-field="coin_name">日期</th>
+                    <th data-field="distinct_user">购买矿机金额</th>
+                    <th data-field="distinct_user">矿机数量</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i < ActiveMiners.length; i++) { %>
+                <tr>
+                    <td><%= ActiveMiners[i].Day %></td>
+                    <td><%= ActiveMiners[i].Money %></td>
+                    <td><%= ActiveMiners[i].Amount %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="myblock" >
+            <h2 style="margin-top: 10px">交易所资产数据</h2>
+            <table id="AssetSumaryTable" data-height=80>
+                <thead>
+                <tr>
+                    <th data-field="coin_name">货币名称</th>
+                    <th data-field="distinct_user">拥有用户</th>
+                    <th data-field="total_assets">总共资产</th>
+                    <th data-field="USD_Value">资产价值（USD）</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var i=0; i < UserAssets.length; i++) { %>
+                <tr>
+                    <td><%= UserAssets[i].coin_name %></td>
+                    <td><%= UserAssets[i].distinct_user %></td>
+                    <td><%= UserAssets[i].total_assets %></td>
+                    <td><%= UserAssets[i].price_usd %></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 
 </body>
 </html>

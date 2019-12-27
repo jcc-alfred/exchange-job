@@ -14,7 +14,7 @@ let fs = require('fs');
 let ejs = require('ejs');
 let Cache = require('../../Base/Data/Cache');
 let AIM_Client = require('./AIM_Client');
-
+let AIMModel = require('../../Model/AIMModel');
 
 // *    *    *    *    *    *
 // ┬    ┬    ┬    ┬    ┬    ┬
@@ -29,8 +29,8 @@ let AIM_Client = require('./AIM_Client');
 try {
     let isRun = false;
     let File_DIR = __dirname;
-    let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-    // let job = schedule.scheduleJob('* * * * * *', async () => {
+    // let job = schedule.scheduleJob('0 50 23 * * *', async () => {
+    let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
             return;
         }
@@ -40,19 +40,16 @@ try {
         let date = moment().format('YYYY-MM-DD');
         console.log(Utils.formatString("run report for date : {0}", [date]));
 
-        await AIM_Client.init();
+        await AIMModel.init();
         let coin_list = await CoinModel.getCoinList();
-        let GTB_Coin = coin_list.find(i => i.coin_name === "GTB");
-        let GTT_Coin = coin_list.find(i => i.coin_name === "GTT");
+
         let AIM_Coin = coin_list.find(i => i.coin_name === "AIM");
         let USDT_Coin = coin_list.find(i => i.coin_name === "USDT");
-
         let usdtHistory = await WithdrawModel.getCoinWithdrawHistory(5, 100);
         await Promise.all(
             usdtHistory.map(async (data, index) => {
                 usdtHistory[index]['day'] = moment(usdtHistory[index]['day']).format("YYYY-MM-DD");
-                usdtHistory[index]["AIM_Sys_deposit_amount"] = await AIM_Client.getUSDTDepositbyDay(moment(data.day).subtract(1, 'days').format("YYYY-MM-DD"),
-                    moment(data.day).format("YYYY-MM-DD"));
+                usdtHistory[index]["AIM_Sys_deposit_amount"] = await AIMModel.getDepositByCoinNameDay('USDT', moment(data.day).subtract(1, 'days').format("YYYY/MM/DD"));
                 let USDT_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(USDT_Coin.coin_id, moment(data.day).format("YYYY-MM-DD"));
                 if (USDT_Deposit) {
                     usdtHistory[index]["exchange_deposit_amount"] = USDT_Deposit['total_deposit_amount'];
@@ -65,15 +62,12 @@ try {
             })
         );
 
+        let aimUserAssets = await AIMModel.getUserAssetSummary();
 
-        let AIM_Deposit = await DepositModel.getDepostSumarybyCoinIdDate(AIM_Coin.coin_id, date);
+        let aimUserSummary = await AIMModel.getActiveUserSumary();
 
-        // let coin_exchange_list = await CoinModel.getCoinExchangeList();
-        let USDT_PendingWithdraw = await WithdrawModel.getCoinWithdrawPending(USDT_Coin.coin_id);
+        let aimTotalActiveUserCount = aimUserSummary.map(a => a.Count).reduce((i, j) => i + j);
 
-        let USDT_PendingWithdrawSummary = await WithdrawModel.getCoinWithdrawPendingSumary(USDT_Coin.coin_id);
-
-        let USDT_Withdraw = await WithdrawModel.getCoinWithdrawSumary(USDT_Coin.coin_id, date);
         let UserAssets = await AssetsModel.getUserAssetsSummary();
         let AssetsSumary = {};
         let cache = await Cache.init(config.cacheDB.order);
@@ -101,15 +95,17 @@ try {
             }
             return item
         });
+
+
         let html = fs.readFileSync(File_DIR + '/report_template.html', {encoding: 'utf-8'});
 
         let data = {
             USDT_HISTORY: usdtHistory,
-            USDT_PendingWithdraw: USDT_PendingWithdraw,
-            USDT_PendingWithdrawSummary: USDT_PendingWithdrawSummary,
-            AIM_DEPOSIT_DAY: AIM_Deposit,
-            USDT_WITHDRAW_DAY: USDT_Withdraw,
+            ActiveMiners: await AIMModel.getActiveMinerSumary(),
+            aimTotalActiveUserCount: aimTotalActiveUserCount,
+            aimNewUsers: aimUserSummary.slice(0, 7),
             UserAssets: UserAssets,
+            aimUserAssets: aimUserAssets,
             date: date,
         };
 
