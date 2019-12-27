@@ -4,7 +4,7 @@ const config = {
     coinmarket_secret:'c236b6e8-ede0-40a8-9a66-e60a039aff80',
     currency_api: 'https://openexchangerates.org/api/latest.json',
     currency_app_id:'e1a28f4ff94b410787a1a3e581dc468c',
-    report_emails:['jie.xiao@gtdollar.com',"paul@gtdollar.com","xie.chao@gtdollar.com"],
+    report_emails:['jie.xiao@gtdollar.com',"paul@gtdollar.com","xie.chao@gtdollar.com","mark.jiang@gtdollar.com"],
 
     Sys_Notifications:[
         {
@@ -12,6 +12,12 @@ const config = {
             phone_number:"87140718"
         }
     ],
+    mssql:{
+        user: 'sa',
+        password:'Q12aQSgdgFsBLA31Q',
+        server: '13.228.249.107', // You can use 'localhost\\instance' to connect to named instance
+        database: 'Direct20190711',
+    },
     sys:{
         domain:'www.asiaedx.com',     //域名
         ipRegisterMaxNum:100,       //IP注册最大次数

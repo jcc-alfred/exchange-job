@@ -12,6 +12,12 @@ const config = {
             phone_number:"87140718"
         }
     ],
+    mssql:{
+        user: 'sa',
+        password:'Q12aQSgdgFsBLA31Q',
+        server: '13.228.249.107', // You can use 'localhost\\instance' to connect to named instance
+        database: 'Direct20190711',
+    },
     sys:{
         domain:'www.asiaedx.com',     //域名
         ipRegisterMaxNum:100,       //IP注册最大次数
