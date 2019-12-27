@@ -13,7 +13,7 @@ let config = require('../../Base/config');
 let fs = require('fs');
 let ejs = require('ejs');
 let Cache = require('../../Base/Data/Cache');
-let AIM_Client = require('./AIM_Client');
+// let AIM_Client = require('./AIM_Client');
 let AIMModel = require('../../Model/AIMModel');
 
 // *    *    *    *    *    *
@@ -29,8 +29,8 @@ let AIMModel = require('../../Model/AIMModel');
 try {
     let isRun = false;
     let File_DIR = __dirname;
-    // let job = schedule.scheduleJob('0 50 23 * * *', async () => {
-    let job = schedule.scheduleJob('* * * * * *', async () => {
+    let job = schedule.scheduleJob('0 50 23 * * *', async () => {
+    // let job = schedule.scheduleJob('* * * * * *', async () => {
         if (isRun) {
             return;
         }
